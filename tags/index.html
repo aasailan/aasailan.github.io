@@ -309,6 +309,7 @@
         white-space: nowrap;
         transition: .6s;
         opacity: .85;
+        color: #2dd734!important;
     }
 
     .material-tagscloud a:hover{
@@ -321,7 +322,7 @@
 
 <div class=" material-tagscloud">
     <div class="material-post mdl-grid">
-        
+        <a href="/tags/blog/" style="font-size: 16px; color: #757575">blog</a> <a href="/tags/hexo/" style="font-size: 16px; color: #757575">hexo</a> <a href="/tags/教程/" style="font-size: 16px; color: #757575">教程</a>
     </div>
 </div>
 
@@ -438,7 +439,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                
+                <a class="sidebar_archives-link" href="/categories/hexo/">hexo<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -665,6 +666,10 @@ It will not impact the appearance and can give developers a lot of support :)
 <!-- Import prettify js  -->
 
 
+    
+        <script>lsloader.load("hanabi","/js/hanabi-browser-bundle.js?5+2z7ZZmFuZK5IcimlZbxw==", true)</script>
+    
+
 
 <!-- Window Load -->
 <!-- add class for prettify -->
@@ -675,6 +680,10 @@ It will not impact the appearance and can give developers a lot of support :)
     });
 
     
+    
+        
+        
+        HanabiBrowser.start('pre code',true);
     
 </script>
 
