@@ -43,6 +43,8 @@
     
     <title>
         
+            vscode debugging | 
+        
         aasailan的blog
     </title>
 
@@ -52,7 +54,7 @@
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="aasailan的blog">
-    <meta name="keywords" content="">
+    <meta name="keywords" content=",vscode">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -213,7 +215,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="aasailan的blog">
-    <meta name="msapplication-starturl" content="http://yoursite.com/">
+    <meta name="msapplication-starturl" content="http://yoursite.com/2018/06/20/vscode-debugging-译文/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="aasailan的blog">
@@ -228,13 +230,16 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://yoursite.com/">
+    <meta property="og:url" content="http://yoursite.com/2018/06/20/vscode-debugging-译文/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="aasailan的blog">
+    <meta property="og:title" content="vscode debugging | aasailan的blog">
     <meta property="og:image" content="/img/favicon.png">
     <meta property="og:description" content="aasailan的blog">
-    
+    <meta property="og:article:tag" content="vscode"> 
 
+    
+        <meta property="article:published_time" content="Wed Jun 20 2018 18:34:34 GMT+0800">
+        <meta property="article:modified_time" content="Wed Jun 20 2018 20:26:06 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -242,35 +247,43 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://yoursite.com" />
+        <link rel="canonical" href="http://yoursite.com/2018/06/20/vscode-debugging-译文/index.html" />
     
 
     <!-- Structured-data for SEO -->
     
         
+
+
 <script type="application/ld+json">
 {
-    "@context": "http://schema.org",
-    "@type": "Website",
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yoursite.com/2018/06/20/vscode-debugging-译文/index.html",
+    "headline": "vscode debugging",
+    "datePublished": "Wed Jun 20 2018 18:34:34 GMT+0800",
+    "dateModified": "Wed Jun 20 2018 20:26:06 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "aasailan",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/touxiang.jpg"
+        },
+        "description": "程序员是一个值得自豪的职业"
+    },
     "publisher": {
         "@type": "Organization",
         "name": "aasailan的blog",
-        "logo": "/img/favicon.png"
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
     },
-    "url": "http://yoursite.com",
-    "image": {
-        "@type": "ImageObject",
-        "url": "/img/favicon.png"
-    },
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "http://yoursite.com"
-    },
-    "description": "aasailan的blog"
+    "keywords": ",vscode",
+    "description": "aasailan的blog",
 }
 </script>
-
-
 
 
     
@@ -304,277 +317,254 @@
                         </button>
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
+                    <!-- Post TOC -->
+
     
-        <!-- Paradox Header -->
-        <!-- Daily pic -->
-<div class="mdl-card mdl-shadow--2dp daily-pic mdl-cell mdl-cell--8-col index-top-block">
-
-    <!-- Pic & Slogan -->
-    <div class="mdl-card__media mdl-color-text--grey-50" style="background-image:url(/img/daily_pic.png)">
-        <p class="index-top-block-slogan"><a href="#">
-        
-            
-                程序员是一个值得自豪的职业
-            
-        
-        </a></p>
-    </div>
-
-    <!-- Avatar & Name -->
-    <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-        <!-- Author Avatar -->
-        <div id="author-avatar">
-            <img src="/img/touxiang.jpg" width="32px" height="32px" alt="avatar">
-        </div>
-        <div>
-            <strong>aasailan</strong>
-        </div>
-    </div>
-</div>
-
-        <!-- Blog info -->
-<div class="mdl-card mdl-shadow--2dp something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop index-top-block">
-
-    <!-- Search -->
-    
-    <!-- Google -->
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable" method="post" action="">
-        <label id="search-label" class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent mdl-shadow--4dp" for="search">
-            <i class="material-icons mdl-color-text--white" role="presentation">search</i>
-        </label>
-
-        <form autocomplete="off" id="search-form" method="get" action="//google.com/search" accept-charset="UTF-8" class="mdl-textfield__expandable-holder" target="_blank">
-            <input class="mdl-textfield__input search-input" type="search" name="q" id="search" placeholder="">
-            <label id="search-form-label" class="mdl-textfield__label" for="search"></label>
-
-            <input type="hidden" name="sitesearch" value="http://yoursite.com">
-        </form>
-    </div>
-
-
-
-
-
-
-
-    <!-- LOGO -->
-    <div class="something-else-logo mdl-color--white mdl-color-text--grey-600">
-        <a href="#" target="_blank">
-            <img src="/img/logo.png" alt="logo" />
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
         </a>
     </div>
+    -->
 
-    <!-- Infomation -->
-    <div class="mdl-card__supporting-text meta meta--fill mdl-color-text--grey-600">
-        <!-- Blog Title -->
-        <div>
-            <strong>aasailan的blog</strong>
-        </div>
-        <div class="section-spacer"></div>
 
-        <!-- Pages -->
-        <button id="show-pages-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-            <i class="material-icons" role="presentation">view_carousel</i>
-            <span class="visuallyhidden">Pages</span>
-        </button>
-        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="show-pages-button">
-            
-                <a class="index_share-link" href="/tags" title="标签云">
-                    <li class="mdl-menu__item mdl-js-ripple-effect">
-                        标签云
-                    </li>
-                </a>
-            
-                <a class="index_share-link" href="/timeline" title="时间轴">
-                    <li class="mdl-menu__item mdl-js-ripple-effect">
-                        时间轴
-                    </li>
-                </a>
-            
-        </ul>
-
-        <!-- Menu -->
-        <button id="menubtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-            <i class="material-icons" role="presentation">more_vert</i>
-            <span class="visuallyhidden">show menu</span>
-        </button>
-        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="menubtn">
-            
-
-            
-
-            
-
-            
-
-            
-
-            
-
-            
-
-            
-
-            
-        </ul>
-    </div>
-</div>
-
+    <!-- Left aligned menu below button -->
     
-    <div class="locate-thumbnail-symbol"></div>
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
 
-    <!-- Pin on top -->
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Debugging"><span class="post-toc-number">1.</span> <span class="post-toc-text">Debugging</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Debugger-extensions（debugger拓展）"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Debugger extensions（debugger拓展）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Launch-configurations"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Launch configurations</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#debug-in-nodejs"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">debug in nodejs</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Supported-Node-like-runtimes"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">Supported Node-like runtimes</span></a></li></ol></li></ol></li></ol>
+    </ul>
     
 
-    <!-- Normal Post -->
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
 
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2018/06/20/vscode-debugging-译文/">vscode debugging</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-今天看到vscode调试相关的教程，发现vscode的调试功能比我想象的要强大的多。觉得有必要好好阅读一下vscode的d...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2018/06/20/vscode-debugging-译文/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/touxiang.jpg" width="44px" height="44px" alt="aasailan's avatar">
-            </div>
-            <div>
-                <strong>aasailan</strong>
-                <span>6月 20, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/翻译系列/">翻译系列</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2018/06/19/使用hexo加gitpage搭建一个个人blog/">使用hexo加gitpage搭建一个个人blog</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-前几天端午放假，舍友旅游的旅游，回家的回家，省下自己一人呆在深圳。闲来无聊，发现了 
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2018/06/19/使用hexo加gitpage搭建一个个人blog/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/touxiang.jpg" width="44px" height="44px" alt="aasailan's avatar">
-            </div>
-            <div>
-                <strong>aasailan</strong>
-                <span>6月 19, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/hexo/">hexo</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-
-    
-
-    
-        <script type="text/ls-javascript" id="thumbnail-script">
-    var randomNum;
-
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
-        randomNum = Math.floor(Math.random() * 19 + 1);
-
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
     $('.post_thumbnail-random').addClass('lazy');
-
-        locatePost = locatePost.next();
-    }
 </script>
 
+        
+    
+            <p class="article-headline-p">
+                vscode debugging
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/touxiang.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>aasailan</strong>
+        <span>6月 20, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/vscode/">vscode</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
     
 </div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <blockquote>
+<p>今天看到vscode调试相关的教程，发现vscode的调试功能比我想象的要强大的多。觉得有必要好好阅读一下vscode的debug文档。以下是<a href="https://code.visualstudio.com/docs/editor/debugging" target="_blank" rel="noopener"><strong>vscode debug的官方文档</strong></a>的非完全译文，主要包括了launch.json文件选项的一些属性翻译</p>
+</blockquote>
+<h1 id="Debugging"><a href="#Debugging" class="headerlink" title="Debugging"></a>Debugging</h1><p>vscode一个关键特性就是它强大的调试能力，vscode内置了强大的debugger。</p>
+<p><img src="https://code.visualstudio.com/assets/docs/editor/debugging/debugging_hero.png"></p>
+<h2 id="Debugger-extensions（debugger拓展）"><a href="#Debugger-extensions（debugger拓展）" class="headerlink" title="Debugger extensions（debugger拓展）"></a>Debugger extensions（debugger拓展）</h2><p>vscode内置的debugger原生支持nodejs runtime，可以支持调试js，ts和其他一些能转译成js的语言。</p>
+<p>如果需要调试其他语言（例如：php, Ruby， Go， C#， python等），则需要安装相应的 debugger extensions。下面是一些流行的debugger extensions。</p>
+<blockquote>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python" target="_blank" rel="noopener"><strong>python调试</strong></a><br><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools" target="_blank" rel="noopener"><strong>c/c++调试</strong></a><br><a href="https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome" target="_blank" rel="noopener"><strong>Debugger for Chrome</strong></a><br><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp" target="_blank" rel="noopener"><strong>C#</strong></a>    </p>
+</blockquote>
+<h2 id="Launch-configurations"><a href="#Launch-configurations" class="headerlink" title="Launch configurations"></a>Launch configurations</h2><p>最简单的调试：<strong>按下F5</strong>，vscode会进入调试模式，并且尝试调试你当前的文件。</p>
+<p>为了更加精确的调试，通常需要配置一个<strong>launch.json</strong>文件，该文件通常位于项目根目录的.vscode文件夹下。</p>
+<p>vscode debugger通常支持以debug模式加载(launch)一个程序或者依附(attah)在一个正在以debug模式运行的程序上面这两种调试方式。这两种调试模式是vscode调试的基础。</p>
+<p>vscode调试最重要的一步莫过于配置launch.json文件，以下是关于这个文件一些关键配置项的解析：</p>
+<blockquote>
+<p>launch configuration的必要字段：</p>
+<ul>
+<li>type - 使用哪种类型的debugger进行debug，可以使内置的”node”，或者是安装其他调试插件后提供的debugger，比如安装debugger for chrome插件后可以使用”chrome”。</li>
+<li>request - “launch” or “attach”，使用launch，vscode会尝试以debug模式加载运行程序；使用attach，vscode则会依附在一个已经运行的程序上进行调试。</li>
+<li>name - 当前调试配置的别名</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>launch configuration的非必要字段</p>
+<ul>
+<li>preLaunchTask - 在启动调试之前，运行一个task。task的具体配置定义在<a href="https://code.visualstudio.com/docs/editor/tasks" target="_blank" rel="noopener"><strong>.vscode/tasks.json</strong></a>文件夹内。</li>
+<li>postDebugTask - 在调试结束的时候，运行一个task。该task同样定义在上述的tasks.json文件中</li>
+<li>program - 调试启动时需要需要运行的文件。</li>
+<li>args - 需要传递给program的参数</li>
+<li>env - 设置环境变量</li>
+<li>cwd - 设置当前工作目录</li>
+<li>port - 当以依附模式(attach)运行时，被调试的程序的调试监听端口。</li>
+<li>stopOnEntry - true or false。当程序加载完时是否需要立刻断点停止</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>一些常用的变量：<br>launch.json里面允许使用一些常用的模板变量：   </p>
+<ul>
+<li>${workspaceFolder} 代表当前工作文件夹</li>
+<li>${file}代表当前编辑器正打开激活的文件</li>
+<li>${env:Name}代表环境变量名<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;type&quot;: &quot;node&quot;,</span><br><span class="line">    &quot;request&quot;: &quot;launch&quot;,</span><br><span class="line">    &quot;name&quot;: &quot;Launch Program&quot;,</span><br><span class="line">    &quot;program&quot;: &quot;$&#123;workspaceFolder&#125;/app.js&quot;,</span><br><span class="line">    &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;&quot;,</span><br><span class="line">    &quot;args&quot;: [ &quot;$&#123;env:USERNAME&#125;&quot; ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<h2 id="debug-in-nodejs"><a href="#debug-in-nodejs" class="headerlink" title="debug in nodejs"></a>debug in nodejs</h2><p>以下文档专门介绍关于<a href="https://code.visualstudio.com/docs/nodejs/nodejs-debugging" target="_blank" rel="noopener"><strong>nodejs的调试</strong></a></p>
+<p>此外github上面的一些例子值得参考：</p>
+<ul>
+<li><a href="https://github.com/jagreehal/node-typescript-debug-example.git" target="_blank" rel="noopener"><strong>在node中调试typescript</strong></a></li>
+<li><a href="https://github.com/katopz/vscode-debug-nodejs-es6.git" target="_blank" rel="noopener"><strong>在node中调试es6</strong></a></li>
+<li><a href="http://jerryzou.com/posts/vscode-debug-guide/" target="_blank" rel="noopener"><strong>vscode调试不完全指南</strong></a></li>
+</ul>
+<h3 id="Supported-Node-like-runtimes"><a href="#Supported-Node-like-runtimes" class="headerlink" title="Supported Node-like runtimes"></a>Supported Node-like runtimes</h3><p>nodejs debugger 与 nodejs runtime之间通过 <a href="https://en.wikipedia.org/wiki/Wire_protocol" target="_blank" rel="noopener">wire protocols</a>协议连接，具体使用哪种协议则由runtime支持哪种协议决定。当前的wire protocols存在两种类型的协议：</p>
+<blockquote>
+<ul>
+<li>legacy: 旧版本的nodejs(node version &lt; 6.3)支持的协议</li>
+<li>inspector: 新版本nodejs开始支持的协议(node version &gt;= 6.3)    </li>
+</ul>
+</blockquote>
+<p>以下是其他runtime对两种协议的支持情况：<br><img src="/img/rumtime.png"></p>
+<p>未完待续…</p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/06/19/使用hexo加gitpage搭建一个个人blog/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     
@@ -893,12 +883,6 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
 
-
-    <!-- Swiftye -->
-    
-
-    <!-- Local Search-->
-    
 
 
 <!-- UC Browser Compatible -->
