@@ -82,9 +82,9 @@ vscode内置的nodejs debugger 与 nodejs runtime之间通过 [wire protocols](h
 以下是其他runtime对两种协议的支持情况：
 <img src="/img/rumtime.png">
 
->下面是一些重要的launch configuration选项：
+>下面的选项在attach和launch模式下都可以使用：
 > * protocol - "auto" or "inspector" or "legacy"; auto是默认值，vscode会尝试自动判断使用哪种协议;"inspector"强制使用新版的inspector协议，在确认runtime支持的时候可以使用；"legacy"强制使用旧版的协议，在确认runtime支持的时候可以使用。（应该尽量使用新版协议）
->* port - 9229(示例：9229端口); 使用attach模式或者进行远程调试时的调试端口，如果使用的runtime使用的协议是inspector，则默认端口是9229，如果使用的协议是legacy，则默认端口是5858。
+>* port - 9229(示例：9229端口); 使用attach模式或者进行远程调试时的调试端口，如果使用的runtime使用的协议是inspector，则默认端口是9229，如果使用的协议是legacy，则默认端口是5858。(在launch模式，port起什么作用？？？？)
 >* address - 127.0.0.1(示例：本机ip); 使用attach模式或者进行远程调试时被调试的runtime的IP地址
 >* sourceMaps - true(default) or false，是否开启scourceMaps
 >* outFiles - ["path to generated JavaScript files"]; 数组对象，每个元素都是一个路径。路径是编译出的js文件的所在路径，当使用例如ts这种可以编译为js的语言时通常需要配置这一项。如果编译出的js文件不在源文件旁边而是在某一个单独的目录，则需要使用这个选项来帮助vscode debugger找到编译后js文件。
