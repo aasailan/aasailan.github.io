@@ -80,5 +80,5 @@ theme: material
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:aasailan/aasailan.github.io.git
+  repo: https://github.com/aasailan/aasailan.github.io.git
   branch: master

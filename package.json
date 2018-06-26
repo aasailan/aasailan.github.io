@@ -8,7 +8,8 @@
   "scripts": {
     "build": "hexo clean && hexo g",
     "dev": "npm run build && hexo s",
-    "deploy": "npm run build && hexo d"
+    "deploy": "npm run build && hexo d",
+    "addPost": "hexo new"
   },
   "dependencies": {
     "hexo": "^3.2.0",
