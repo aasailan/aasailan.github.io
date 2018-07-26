@@ -43,7 +43,7 @@
     
     <title>
         
-            分类: 翻译系列 | 
+            关于h5页面在移动端的适配 | 
         
         aasailan的blog
     </title>
@@ -54,7 +54,7 @@
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="aasailan的blog">
-    <meta name="keywords" content="">
+    <meta name="keywords" content=",前端,h5,移动端,css">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -215,7 +215,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="aasailan的blog">
-    <meta name="msapplication-starturl" content="http://yoursite.com/categories/翻译系列/">
+    <meta name="msapplication-starturl" content="http://yoursite.com/2018/07/19/关于h5页面在移动端的适配/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="aasailan的blog">
@@ -230,13 +230,16 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://yoursite.com/categories/翻译系列/">
+    <meta property="og:url" content="http://yoursite.com/2018/07/19/关于h5页面在移动端的适配/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="分类: 翻译系列 | aasailan的blog">
+    <meta property="og:title" content="关于h5页面在移动端的适配 | aasailan的blog">
     <meta property="og:image" content="/img/favicon.png">
     <meta property="og:description" content="aasailan的blog">
-    
+    <meta property="og:article:tag" content="前端"> <meta property="og:article:tag" content="h5"> <meta property="og:article:tag" content="移动端"> <meta property="og:article:tag" content="css"> 
 
+    
+        <meta property="article:published_time" content="Thu Jul 19 2018 19:05:18 GMT+0800">
+        <meta property="article:modified_time" content="Thu Jul 26 2018 19:49:27 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -244,13 +247,43 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://yoursite.com/categories/翻译系列/index.html" />
+        <link rel="canonical" href="http://yoursite.com/2018/07/19/关于h5页面在移动端的适配/index.html" />
     
 
     <!-- Structured-data for SEO -->
     
         
 
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yoursite.com/2018/07/19/关于h5页面在移动端的适配/index.html",
+    "headline": "关于h5页面在移动端的适配",
+    "datePublished": "Thu Jul 19 2018 19:05:18 GMT+0800",
+    "dateModified": "Thu Jul 26 2018 19:49:27 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "aasailan",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/touxiang.jpg"
+        },
+        "description": "程序员是一个值得自豪的职业"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "aasailan的blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",前端,h5,移动端,css",
+    "description": "aasailan的blog",
+}
+</script>
 
 
     
@@ -284,99 +317,271 @@
                         </button>
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
+                    <!-- Post TOC -->
 
-    <!-- Pin on top -->
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#适配目标"><span class="post-toc-number">1.</span> <span class="post-toc-text">适配目标</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设计师规范"><span class="post-toc-number">2.</span> <span class="post-toc-text">设计师规范</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前端实现"><span class="post-toc-number">3.</span> <span class="post-toc-text">前端实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#flexible方案"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">flexible方案</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#vw方案"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">vw方案</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#demo示例"><span class="post-toc-number">4.</span> <span class="post-toc-text">demo示例</span></a></li></ol>
+    </ul>
     
 
-    <!-- Normal Post -->
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
 
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2018/06/20/vscode-debugging-译文/">vscode debugging</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-今天看到vscode调试相关的教程，发现vscode的调试功能比我想象的要强大的多。觉得有必要好好阅读一下vscode的d...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2018/06/20/vscode-debugging-译文/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/touxiang.jpg" width="44px" height="44px" alt="aasailan's avatar">
-            </div>
-            <div>
-                <strong>aasailan</strong>
-                <span>6月 20, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/翻译系列/">翻译系列</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-
-    
-
-    
-        <script type="text/ls-javascript" id="thumbnail-script">
-    var randomNum;
-
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
-        randomNum = Math.floor(Math.random() * 19 + 1);
-
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
     $('.post_thumbnail-random').addClass('lazy');
-
-        locatePost = locatePost.next();
-    }
 </script>
 
+        
+    
+            <p class="article-headline-p">
+                关于h5页面在移动端的适配
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/touxiang.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>aasailan</strong>
+        <span>7月 19, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/css/">css</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/h5/">h5</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/前端/">前端</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/移动端/">移动端</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
     
 </div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>最近为了学习egg，就用egg框架在重构一个微信小程序商城的后台的。这个项目几乎占用了我所有的业余时间，不过也算收获颇丰，有兴趣的话可以到<a href="https://github.com/aasailan/egg-nideshop" target="_blank" rel="noopener"><strong>这个仓库</strong></a>看看^^。也因为这个，很久没有发过blog。今天这篇blog的主题是h5页面在移动端的适配问题，</p>
+<h2 id="适配目标"><a href="#适配目标" class="headerlink" title="适配目标"></a>适配目标</h2><p>首先移动端的屏幕适配要达到的目标主要是以下两点：  </p>
+<ol>
+<li>如何在不同比例的屏幕下实现各种元素的等比缩放，保持布局上的观感</li>
+<li>如何在retina屏幕下保证图片的清晰显示，以及在retina屏幕下显示 <strong>物理像素</strong> 级别的1px线</li>
+</ol>
+<p>从前端工程的管理与实现上又主要分为两个部分：  </p>
+<ol>
+<li>设计师的设计规范、标注稿、切图的交付规范。</li>
+<li>前端的具体适配方案以及代码实现。</li>
+</ol>
+<h2 id="设计师规范"><a href="#设计师规范" class="headerlink" title="设计师规范"></a>设计师规范</h2><p>首先谈谈设计师的设计规范、标注稿、切图规范。   </p>
+<ol>
+<li>设计稿用375px宽度（iphone6的逻辑像素宽度），但是给前端的标注稿使用750px宽度（iphone6的物理像素宽度）。    </li>
+<li>所有切图按设计稿的3倍进行放大（就是切图稿是1125px宽度），这是为了保证dpr为3的iphoneX的高清屏，并且也覆盖到了1080p的屏幕。</li>
+<li>3倍放大后的切图上传到<a href="https://tinypng.com/" target="_blank" rel="noopener"><strong>tinypng</strong></a>进行压缩，然后再使用。</li>
+</ol>
+<p>以上是设计师需要遵守的约定。这里推荐一下 <a href="https://lanhuapp.com" target="_blank" rel="noopener">https://lanhuapp.com</a> 这个网站。设计师将自己做好的设计稿上传，前端工程师可以非常方便的获取到各种标注信息以及切图^^</p>
+<h2 id="前端实现"><a href="#前端实现" class="headerlink" title="前端实现"></a>前端实现</h2><p>以下是前端的具体工程实现。这里又分为两种方案，两种方案都是参考手淘团队 ^^：</p>
+<ol>
+<li><a href="http://www.w3cplus.com/mobile/lib-flexible-for-html5-layout.html" target="_blank" rel="noopener"><strong>flexible方案</strong></a></li>
+<li><a href="https://www.w3cplus.com/mobile/vw-layout-in-vue.html" target="_blank" rel="noopener"><strong>vw方案</strong></a></li>
+</ol>
+<p>在介绍两个方案之前，有一些关于移动端屏幕的基础知识需要了解：</p>
+<ul>
+<li>设备像素：屏幕的物理像素，平时说的1080p就是指手机的设备像素宽度达到了1080个像素点。iphone6的设备像素宽度是750px。</li>
+<li>逻辑像素（css像素）：软件能操作的像素，在css代码中写上1px代表的像素。iphone6的逻辑像素宽度是375px。</li>
+<li>dpr（设备像素比）：dpr = 物理像素 / 设备独立像素。iphone6的dpr = 750 / 375 = 2。</li>
+<li>viewport：浏览器视图属性，具体参见<a href="http://www.w3cplus.com/css/viewports.html" target="_blank" rel="noopener"><strong>viewports剖析</strong></a>这篇文章</li>
+</ul>
+<h4 id="flexible方案"><a href="#flexible方案" class="headerlink" title="flexible方案"></a>flexible方案</h4><p>先来介绍flexible方案，flexible是手淘团队以前的移动端适配方案。其主要的思想有三点：   </p>
+<ol>
+<li>通过flexible.js来根据手机浏览器信息动态修改dpr以及root-font-size（关于dpr的知识请自行了解）</li>
+<li>根据dpr的值来修改缩放viewport，进而实现显示 <strong>物理像素</strong> 级别的 1px 细线</li>
+<li>使用less或者scss等css拓展语言，将代码中的px转换为rem，实现等比缩放</li>
+</ol>
+<p>flexible适配的优点：  </p>
+<ol>
+<li>rem的浏览器兼容性很好，详情见：<a href="https://caniuse.com/#search=rem" target="_blank" rel="noopener">https://caniuse.com/#search=rem</a></li>
+<li>淘宝提供了flexible.js的<a href="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js" target="_blank" rel="noopener"><strong>cdn加速</strong></a>，引用非常方便</li>
+</ol>
+<p>flexible适配的缺点：</p>
+<ol>
+<li>flexible.js仅对ios进行了dpr的检测判断，android因为dpr分布过于碎片化，所以统一设置为dpr等于1。这导致在android的retina屏幕上面，实际上没有对viewport进行缩放，所以无法显示 <strong>物理像素</strong> 级别的 1px 细线。</li>
+<li>flexible方案由于缩放了viewport，所以会导致一些意想不到的问题，比如微信浏览器中无法长按二维码进行扫面，详见：<a href="https://github.com/amfe/lib-flexible/issues/99" target="_blank" rel="noopener">https://github.com/amfe/lib-flexible/issues/99</a>  flexible官方github的issue中还有各种神奇的bug</li>
+</ol>
+<p>前端实现的关键步骤：   </p>
+<ol>
+<li>在html页面的head标签内引用淘宝提供flexible.js文件，cdn地址为：<a href="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js" target="_blank" rel="noopener">http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js</a>    </li>
+<li>在使用less或者scss编写针对font-size的mixin，让font-size在不同dpr下面使用不同的值，保证不同dpr屏幕上字体大小的相对一致</li>
+<li>使用less或者scss的数学计算将px转换为rem。规定标注稿为750px的情况下，1rem=750px / 100 * 10=75px。（至于为什么这样规定，请参考<a href="http://www.w3cplus.com/mobile/lib-flexible-for-html5-layout.html" target="_blank" rel="noopener"><strong>使用Flexible实现手淘H5页面的终端适配</strong></a>^^）</li>
+</ol>
+<h4 id="vw方案"><a href="#vw方案" class="headerlink" title="vw方案"></a>vw方案</h4><p>vw适配的主要思想是：</p>
+<ol>
+<li>利用css3新单位vw的特性来实现等比缩放（vw的知识请自行了解）</li>
+<li>利用border-image、background-image加svg图片的方式来显示 <strong>物理像素</strong> 级别的1px细线</li>
+</ol>
+<p>工程实现上主要有两个要点：</p>
+<ol>
+<li>使用postcss-px-to-viewport插件将px自动转换为vw单位</li>
+<li>使用postcss-write-svg插件可以在css中定义svg图片</li>
+</ol>
+<p>vw适配的优点：</p>
+<ol>
+<li>无论是ios还是android，都能实现较好的等比缩放</li>
+<li>无论是ios还是android，都能较好的显示 <strong>物理像素</strong> 级别的1px细线</li>
+</ol>
+<p>vw适配的缺点：</p>
+<ol>
+<li>vw的浏览器兼容性不如rem好，详见：<a href="https://caniuse.com/#search=vw" target="_blank" rel="noopener">https://caniuse.com/#search=vw</a></li>
+</ol>
+<p>前端实现的关键步骤：</p>
+<ol>
+<li>借助postcss-px-to-viewport将px转换为vw单位（包括元素的宽高，内外边距，字体大小），1px边框分割线显示除外。</li>
+<li>借助postcss-write-svg插件以及 background-image、border-image属性实现<strong>物理像素</strong>级别的1px显示。</li>
+</ol>
+<h2 id="demo示例"><a href="#demo示例" class="headerlink" title="demo示例"></a>demo示例</h2><p>最后才是重点，<strong>附上我写的demo项目仓库！！</strong>，可以在这个项目中获得参考：<a href="https://github.com/aasailan/h5-mobile-layout" target="_blank" rel="noopener">https://github.com/aasailan/h5-mobile-layout</a><br>^^</p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/06/26/centos7下docker安装指南/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     
