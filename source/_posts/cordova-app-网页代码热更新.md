@@ -10,7 +10,7 @@ tags:
 comments: false
 ---
 <!-- post5 -->
-最近实践了cordova app网页代码热更新的功能，觉得有必要记录一下。cordova app由h5提供界面功能，在实现网页代码热更新后，开发者就可以随时发布新版app页面，而用户无需重新安装app^^。以下教程基于cordova andorid平台。
+cordova app由h5提供界面功能，在实现网页代码热更新后，开发者就可以随时发布新版app页面，而用户无需重新安装app^^。以下教程基于cordova andorid平台。
 cordova 网页代码热更新的实现主要依赖以下几个插件：   
 1. [**cordova-hot-code-push**](https://github.com/nordnet/cordova-hot-code-push) 代码热更新主要由此插件完成
 2. [**cordova-hot-code-push-local-dev-addon**](https://github.com/nordnet/cordova-hot-code-push-local-dev-addon) 本地部署测试时需要安装该插件，正式发布时最好将此插件移除
