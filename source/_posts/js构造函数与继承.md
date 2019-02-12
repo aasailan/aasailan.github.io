@@ -22,7 +22,7 @@ var xiaoming = new Person();
 ### 使用new关键字时的关键处理（构造函数的内部处理）
 当使用new关键字调用构造函数生成一个对象实例时，js做出的关键处理如下：   
 1. 创建一个新的对象，将构造函数内this指针指向新建对象。
-2. 将新建对象的__protp__属性设置成构造函数的prototype属性，确保新建对象是构造函数实例
+2. 将新建对象的\_\_proto\_\_属性设置成构造函数的prototype属性，确保新建对象是构造函数实例
 3. 运行一遍构造函数，如果构造函数本身需要返回一个object或者array对象，则舍去新创建对象，返回构造函数需要返回的对象;否则返回新建对象
 ### 使用es5模拟new关键字调用构造函数
 ```javascript
@@ -35,7 +35,6 @@ var xiaoming = new Person();
  */
 function mockNew(constructor) {
   // 新建一个对象
-
   var obj = {};
   // 修改对象的__proto__ 确保使用instanceof关键字时没有问题
   obj.__proto__ = constructor.prototype;
@@ -52,19 +51,7 @@ function mockNew(constructor) {
   return obj;
 }
 
-// 定义一个构造函数
-function Person(name, age) {
-  this.name = name;
-  this.age = age;
-} 
-
-// 使用mockNew调用构造函数模拟new关键字
-var xiaoming = mockNew(Person, 'xiaoming', 26);
-```
-测试截图如下:   
-定义两个构造函数，分别返回一个对象和不返回对象，并且分别使用mockNew调用和new关键字调用。
-测试代码如下：
-```javascript
+// 定义两个构造函数，分别使用mockNew调用以及使用new关键字调用
 function Person(name, age) {
   this.name = name;
   this.age = age;
@@ -215,16 +202,16 @@ console.log(xiaoming);
 <img src="/img/post/post6/class.png" alt="es6 class继承展示">
 
 下面使用es5实现继承，继承需要注意两个点：  
-1. 分别继承类的属性和类的方法
-2. new出的实例应该是其父类以及继承的祖先类的实例，使用instanceof 关键字判断时返回true
+1. 继承有两大部分，继承属性与继承方法
+2. new出的实例应该是其父类以及祖先类的实例，使用instanceof 关键字判断时返回true
 
 如果对instanceof关键字的执行原理不明白，可参照[**JavaScript instanceof 运算符深入剖析**](https://www.ibm.com/developerworks/cn/web/1306_jiangjj_jsinstanceof/index.html)
 
 ## 组合式继承   
-组合式继承：组合式继承顾名思义这种**继承有两个部分组合在一起**实现：构造函数中实现属性继承；构造函数的prototype属性中实现方法继承。这两个组合在一起实现继承
+组合式继承：组合式继承顾名思义这种**继承有两个部分组合在一起**实现：构造函数中实现属性继承；构造函数的prototype属性中实现方法继承。这两个部分组合在一起实现继承
 
 组合式继承的两个要点：   
-1. 在构造函数中调用父类构造函数，实现父类属性继承
+1. 在构造函数中调用父类构造函数，实现父类属性继承（注意改变this指针）
 2. 使用父类的实例设置子类构造函数的的prototype属性，实现父类方法的继承
 
 ```javascript
@@ -280,11 +267,11 @@ console.log(xiaoming);
 1. 在子类实例的原型上多了许多不必要的父类属性，浪费内存
 
 ## 寄生组合式继承
-寄生组合式继承：顾名思义，与组合式继承一样，继承来自于两部分继承的组合，区别在于对子类prototype的处理，为了避免组合式继承的缺点，将父类prototype对象处理过后赋值给子类构造函数。
+寄生组合式继承：顾名思义，与组合式继承一样，继承来自于两部分继承的组合，区别在于对子类构造函数prototype的处理，为了避免组合式继承的缺点，需要将父类prototype对象处理过后赋值给子类构造函数。
 
 寄生组合式继承的两个要点：   
 1. 在构造函数中调用父类构造函数，实现父类属性继承
-2. 使用父类的prototype设置子类构造函数的prototype属性，实现父类方法的继承
+2. 使用父类的prototype对象设置子类构造函数的prototype属性，实现父类方法的继承
 
 ```javascript
 function Person(name, age) {
@@ -342,8 +329,44 @@ console.log(xiaoming);
 # 多继承（mixin）
 js中事实上无法实现多继承，只能通过mixin的手段来模拟，这种方式可以实现继承多个类的属性、方法。但是无法使用instanceof关键字做出正确判断。事实上这种方式不叫多继承，称之为mixin
 
-mixin的思想是将需要复用的属性或者方法**混入**目标类构造函数的prototype对象中
+mixin的思想是将需要复用的属性或者方法**混入**目标对象中，本质上是属性复制
 
 ```javascript
-// js mixin实现
+/**
+ * @description mixin
+ * @param {*} target 需要混入的目标对象
+ * @param {*} sources target后面的所有参数，提供复用属性和方法的对象
+ * @returns target
+ */
+function mixin(target) {
+  sources = Array.prototype.splice.call(arguments, 1);
+  sources.forEach(source => {
+    for(var key in source) {
+      target[key] = source[key];
+    }
+  })
+  return target;
+}
+
+// 测试用例
+var xiaoming = {
+  name: 'xiaoming',
+}
+
+var xiaohong = {
+  age: 26
+}
+
+var xiaoqiao = {
+  sayName: function() {
+    console.log(this.name);
+  },
+  sayAge: function() {
+    console.log(this.age);
+  }
+}
+
+var xiaoming = mixin(xiaoming, xiaohong, xiaoqiao);
+xiaoming.sayName(); // xiaoming
+xiaoming.sayAge(); // 26
 ```
