@@ -8,6 +8,7 @@ tags:
   - javascript
 comments: false
 ---
+<!-- post6 -->
 # js构造函数
 js中定义一个function，当使用new关键字调用这个function的时候，这个function成为一个构造函数。如下所示：
 ```javascript
