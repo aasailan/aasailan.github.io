@@ -12,7 +12,7 @@ comments: false
 <!-- post7 -->
 # 设计模式概要
 ## 什么是设计模式：   
-A pattern is a reusable solution that can be applied to commonly occurring problems in software design.  Another way of looking at pattern are as templates for how we solve problems - ones which can be used in quite a few different situations.    
+A pattern is a **reusable solution** that can be applied to commonly occurring problems **in software design**.  Another way of looking at pattern are as templates for how we solve problems - ones which can be used in quite a few different situations.    
 
 ## 设计模式的好处：
   1. pattern are proven solutions（设计模式是被证明过的解决方案）: They provide solid approaches to solving issues in software development using proven techniques that reflect the experience and insights the developers that helped define them bring to the paern. 
@@ -30,14 +30,14 @@ A pattern is a reusable solution that can be applied to commonly occurring probl
   * 建造者模式（builder）
   * 原型模式（prototype）
   * 单例模式（singleton）
-* 结构型设计模式（Structural）
+* 结构型设计模式（Structural）：关注对象之间的组合结构
   * 适配器模式（adapter）
   * 桥接模式（Bridge）
   * 组合模式（Composite）
   * 外观模式（Facade）
   * 享元模式（Flyweight）
   * 代理模式（proxy）
-* 行为型设计模式（Behavioral）  
+* 行为型设计模式（Behavioral）：提高系统内相互独立的对象之间的交流通讯
   * 解释器模式（Interpreter）
   * 模板方法模式（template method）
   * 职责链模式（Chain of  Responsibility ）
@@ -419,6 +419,119 @@ var count = after(count, function() {
 count(); // 1 \n 2 \n 3
 ```
 
+### 代理模式
+代理模式是为一个对象提供一个代用品或者占位符，以便控制对它的访问。用户实际上访问的是代理对象，代理对象对请求做出一些处理后，再把请求转交给本地对象。
+
+代理分类：
+1. 保护代理：代理在接受请求后，会根据某些规则过滤掉一些请求不转发给本体对象
+2. 虚拟代理：虚拟代理把一些开销很大的对象，延迟到真正需要的时候才去创建
+
+代理模式的特点：
+1. 用户不需要了解代理对象与本体对象的区别，代理对用户来说是透明的
+2. 在任何使用本体对象的地方都可以替换成使用代理对象
+
+使用代理模式实现图片预加载
+```javascript
+function MyImage() {
+  var imageNode = document.createElement('img');
+  document.body.appendChild(imageNode);
+  this.image = imageNode;
+} 
+MyImage.prototype.setSrc = function(src) {
+  this.image.src = src;
+}
+
+function ImageProxy() {
+  this.myImage = new MyImage();
+}
+ImageProxy.prototype.setSrc = function(src) {
+  this.myImage.setSrc('loading.png'); // 设置loading图片
+  var loadImage = document.createElement('img');
+  loadImage.onload = function() {
+    this.myImage.setSrc(src);
+  }
+  loadImage.src = src;
+}
+
+// 直接使用
+var image = new MyImage();
+image.setSrc(src);
+
+// 使用代理
+var imageProxy = new ImageProxy();
+imageProxy.setSrc(src);
+```
+上面的例子中，如果只是为了完成预加载的效果，可以把预加载的逻辑直接写在MyImage类中，使用代理是为了让类的职责更加单一和分明
+
+**使用代理的意义**：类的单一职责原则。如果一个对象（类）承担了多项责任，就意味着这个对象（类）将变得非常巨大，引起它变化的原因会增多，这会导致这个对象（类）变得不稳定，可能经常需要修改。
+
+创建代理时需要注意代理对象与本地对象接口的一致性，像上述例子，代理与本体的接口都是setSrc，如此用户便无需了解代理与本体的区别。有需求变化的时候直接替换代理对象即可。
+
+**代理模式和装饰器模式的区别**：装饰器模式中有一种实现方式也出现了代理对象，可认为是代理模式。但是从根本上，这两种模式的目的是不一致的，代理模式是为了控制对本体对象的访问，装饰器模式是为了向本体对象添加新功能。
+
+### 组合模式
+组合模式将对象组合成树形结构，以表示“部分-整体”的层次结构，通过对象的多态性表现，使得用户对单个对象和组合对象的使用具有**一致性**。   
+<img src="/img/post/post7/composite_pattern.png" alt="组合模式">
+在组合模式中，一个组合对象接受到的请求会按照一定的规则向下传递，直到一个叶对象处理这个请求。
+
+使用组合模式模拟文件与文件夹系统
+```javascript
+function File(name) {
+  this.name = name;
+}
+File.prototype.add = function() {
+  throw new Error('文件下无法添加子文件');
+}
+File.prototype.scan = function() {
+  console.log('扫描文件：' + this.name);
+}
+
+function Folder(name) {
+  this.name = name;
+  this.files = {};
+}
+Folder.prototype.add = function(file) {
+  this.files[file.name] = file;
+}
+Folder.prototype.scan = function() {
+  console.log('扫描文件夹：' + this.name);
+  for (var key in this.files){
+    this.files[key].scan();
+  }
+}
+
+// 测试
+var fileA = new File('疯狂的石头.mp4');
+var fileB = new File('疯狂的外星人.mp4');
+var folderA = new Folder('疯狂系列');
+folderA.add(fileA);
+folderA.add(fileB);
+
+var fileC = new File('护戒使者.mp4');
+var fileD = new File('双塔奇兵.mp4');
+var fileE = new File('王者归来.mp4');
+var folderB = new Folder('指环王系列');
+folderB.add(fileC);
+folderB.add(fileD);
+folderB.add(fileE); 
+
+var folderC = new Folder('电影');
+folderC.add(folderA);
+folderC.add(folderB);
+
+folderC.scan();
+// 扫描文件夹：电影
+// 扫描文件夹：疯狂系列
+// 扫描文件：疯狂的石头.mp4
+// 扫描文件：疯狂的外星人.mp4
+// 扫描文件夹：指环王系列
+// 扫描文件：护戒使者.mp4
+// 扫描文件：双塔奇兵.mp4
+// 扫描文件：王者归来.mp4
+```
+
+组合模式中要求组合对象与叶对象，叶对象之间都拥有相同的接口，这使得它们面向用户时有一致性。上述示例中就是文件夹与文件都有scan这个接口，但是文件夹的scan把请求委托给文件继续进行。
+
 ## 行为型设计模式（Behavioral）
 Behavioral pattern focus on improving or streamlining the communication between disparate objects in a system.   
 行为型设计模式关注于提高系统内相互独立的对象之间的交流通讯
@@ -480,7 +593,7 @@ subject.notify();
 比起观察者模式，js中更常见的是发布订阅模式，发布订阅模式是观察者模式的一个变种，它们之前的不同在于，观察者模式没有自定义事件，当subject对象发出更新通知，所有的observer都需要做出响应，而发布订阅模式实际上是一个自定义的事件系统，通过不同的事件订阅来区分不同的observer。   
 发布订阅者模式的两种对象和三个关键方法
 1. publisher：维护一系列的subscriber对象，提供三种基本操作方式：被订阅（注册监听方法 subscribe(event, handler)），被取消订阅（移除监听方法 unsubscribe(event, handler)），触发事件（publish(event)）。
-2. subscribers，相当于原来的observer对象，通过监听事件进行业务处理
+2. subscribers：相当于原来的observer对象，通过监听事件进行业务处理
 
 ```javascript
 function Publisher() {
@@ -538,7 +651,7 @@ publisher.publish('js');
 publisher.publish('java');
 ```
 
-## 中介者模式
+### 中介者模式
 If it appears a system has too many direct relationships between components, it may be time to have a central point of control that components communicate through instead. The Mediator promotes loose coupling by ensuring that instead of components referring to each other explicitly, their interaction is handled through this central point. This can help us decouple systems and improve the potential for component reusability.   
 如果一个系统内有大量的组件之间存在直接关联（通常表现为相互持有引用），此时应该设置一个中央节点来控制组件之间的联系。这个中央节点既能保持组件之间的联系（组件之间任然能通信），又能让组件之间充分解耦（让组件不再相互持有引用）。这就是中介者模式，中央节点就是中介者。   
 真实世界中 机场控制系统就是典型的中介者模式，机场控制系统接管了所有的通信和业务处理，而不是把通信留给飞机和飞机之间。集中化控制是这个系统的特点，机场控制系统就是其中中介者的角色
@@ -633,6 +746,222 @@ xiaohong.die(); // xiaohong lose
 1. 观察者（事件）模式基于事件系统让不同的对象进行通信，目的在于让系统耦合松散。而中介者模式使用一个中介者对象进行业务逻辑处理，其余对象都与中介者通信，通信的手段通常使用事件系统，然而不一定就只用事件系统。所以可以说中介者模式通常使用了观察者模式作为通信手段。
 2. 关于第三方对象：观察者（事件）模式中，publisher or subject 是一个第三方对象，他们的作用在于提供事件总线来传递事件。而中介者模式中，中介者是第三方对象，它的职责在于处理业务逻辑，保持其余对象之间的联系，为其余对象解耦
 
-## 状态模式
+### 状态模式（state）
+GoF对状态模式的定义：允许一个对象在内部状态改变的时候改变它的行为，对象看起来似乎修改了它的类。这句话可以分为两部分理解：1、需要将状态封装成独立的类，并且将请求委托给状态类处理，这样可以实现当对象内部状态改变时，有不同的行为变化。2、从用户的角度看，一个对象在状态不同的情况下有截然不同的行为，实际上是将请求委托给状态类对象处理产生的结果。
 
-## 策略模式
+状态模式的结构通常有两个重要角色：
+1. 上下文对象（Context）：上下文对象是面向用户的对象，也是持有状态并且在不同状态下表现出不同行为的对象。上下文对象需要持有状态对象的引用，以便将请求委托给状态类对象处理
+2. 状态类对象（State）：状态类对象代表某一种状态以及这种状态下需要处理的业务逻辑和状态切换。
+
+下面使用状态模式编写一个可以在强光 - 弱光 - 关灯 三个状态之间切换的台灯。状态切换逻辑如下图所示：
+<img src="/img/post/post7/state_pattern.png" alt="台灯状态切换">
+
+```javascript
+function StrongLightState(lamp) {
+  this.lamp = lamp;
+}
+StrongLightState.prototype.nextState = function() {
+  console.log('关闭台灯');
+  this.lamp.setState(this.lamp.offLightState);
+}
+
+function WeakLightState(lamp) {
+  this.lamp = lamp;
+}
+WeakLightState.prototype.nextState = function() {
+  console.log('打开强光');
+  this.lamp.setState(this.lamp.strongLightState);
+}
+
+function OffLightState(lamp) {
+  this.lamp = lamp;
+}
+OffLightState.prototype.nextState = function() {
+  console.log('打开弱光');
+  this.lamp.setState(this.lamp.weakLightState);
+}
+
+function Lamp() {
+  this.strongLightState = new StrongLightState(this);
+  this.weakLightState = new WeakLightState(this);
+  this.offLightState = new OffLightState(this);
+
+  this.state = this.offLightState;
+}
+Lamp.prototype.pressButton = function() {
+  this.state.nextState();
+}
+Lamp.prototype.setState = function(state) {
+  this.state = state;
+}
+
+// 测试
+var lamp = new Lamp();
+lamp.pressButton(); // 打开弱光
+lamp.pressButton(); // 打开强光
+lamp.pressButton(); // 关闭台灯
+```
+
+状态模式的优点：
+1. 使用状态类将当前状态以及当前状态的行为封装起来，通过新增状态类，可以容易的在状态机中新加状态。
+2. 避免了在context对象中书写冗长的状态判断逻辑，使得context对象更加稳定。
+
+缺点：
+1. 状态之间的切换散布在各个状态类之间，无法对所有状态之间的切换逻辑一目了然。（需要用整体设计图弥补）
+2. 可能会产生数量庞大的状态类对象（可以用享元模式优化内存）
+
+### 策略模式（strategy）
+策略模式：定义一系列的算法，把它们封装起来，使得在不同条件下可以调用不同的算法。   
+策略模式至少由两部分组成：
+1. 上下文（Context）：Context面向用户，接受用户请求，并将用户请求委托给策略类进行处理。
+2. 策略类（strategy）：算法封装类，向Context提供不同类型的算法。
+
+下面使用策略模式实现表单校验功能
+```javascript
+// context对象，接受用户校验请求，然后委托给策略对象处理
+function Validator(strategy) {
+  this.strategy = strategy;
+  this.rules = [];
+}
+Validator.prototype.addRule = function(value, strategyName, errorMsg) {
+  this.rules.push({
+    strategyName: strategyName,
+    value: value,
+    errorMsg: errorMsg,
+  });
+}
+Validator.prototype.start = function() {
+  var errorMsg;
+  for (var i = 0, rule; i < this.rules.length; i++ ) {
+    rule = this.rules[i];
+    errorMsg = this.strategy[rule.strategyName] && this.strategy[rule.strategyName](rule.value, rule.errorMsg);
+    if (errorMsg) {
+      return errorMsg;
+    }
+  }
+}
+
+// 测试用例
+function test(formData, validator) {
+  validator.addRule(formData.name, 'notEmpty', '姓名不能为空');
+  validator.addRule(formData.phone, 'notEmpty', '手机号不能为空');
+  validator.addRule(formData.phone, 'phone', '需要填入正确的手机号');
+
+  var errorMsg = validator.start();
+  if (errorMsg) {
+    console.log(errorMsg);
+  } else {
+    console.log('校验通过');
+  }
+}
+
+test({
+  name: 'xiaoming',
+  phone: '13525220867'
+}, new Validator(strategy));
+// 检验通过
+
+test({
+  name: '',
+  phone: '13525220867'
+}, new Validator(strategy));
+// 姓名不能为空
+
+test({
+  name: 'xiaoming',
+  phone: ''
+}, new Validator(strategy));
+// 手机号不能为空
+```
+
+策略模式与状态模式的相同点：
+1. 都有context对象来接受用户请求，并且context对象都把请求委托给状态类对象or策略类对象来处理。
+2. 这两种模式本质上都是利用context对象作为代理，将面向用户的对象和具体的业务执行逻辑进行拆分解耦。
+
+不同点：
+1. 策略模式中，各种策略之间是平等平行的，没有联系。状态模式中状态类一般会封装好状态和状态对应的行为这两样东西，不同状态之间往往存在切换，并且状态切换这个事情发生在状态模式内部。
+
+### 职责链模式（Chain of  Responsibility）
+职责链模式：多个对象组成一条链，让请求在这条链中传递，直到有一个对象处理它为止。
+<img src="/img/post/post7/responsibility_chain.png" alt="职责链模式">
+
+使用职责链模式模拟用户订单处理
+```javascript
+// 订单类型
+var ORDER_TYPE = {
+  vip: 1, // vip订单
+  priority: 2, // 优先订单
+  normal: 3, // 普通订单
+};
+
+var stock = 12; // 库存
+
+// 定义订单处理函数，返回true表示处理成功，false表示处理失败。
+function handlerVip(orderType) {
+  if (orderType === ORDER_TYPE.vip && stock > 0) {
+    console.log('vip订单：出货');
+    stock--;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function handlerPriority(orderType) {
+  if (orderType === ORDER_TYPE.priority && stock > 10) {
+    console.log('优先订单：出货');
+    stock--;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function handlerNormal(orderType) {
+  if (orderType === ORDER_TYPE.normal && stock > 11) {
+    console.log('普通订单：出货');
+    stock--;
+    return true;
+  } else {
+    console.log('库存不足，出货失败');
+    false;
+  }
+}
+
+function ChainNode(handler) {
+  this.handler = handler;
+}
+ChainNode.prototype.setNextHandler = function(nextHandler) {
+  this.nextHandler = nextHandler;
+}
+ChainNode.prototype.passRequest = function(orderType) {
+!this.handler(orderType) && this.nextHandler && this.nextHandler.passRequest(orderType);  
+}
+
+// 测试用例
+var vipNode = new ChainNode(handlerVip);
+var priorityNode = new ChainNode(handlerPriority);
+var normalNode = new ChainNode(handlerNormal);
+
+vipNode.setNextHandler(priorityNode);
+priorityNode.setNextHandler(normalNode);
+
+vipNode.passRequest(ORDER_TYPE.normal);
+vipNode.passRequest(ORDER_TYPE.priority);
+vipNode.passRequest(ORDER_TYPE.vip);
+vipNode.passRequest(ORDER_TYPE.normal);
+
+// 普通订单：出货
+// 优先订单：出货
+// vip订单：出货
+// 库存不足，出货失败
+```
+
+职责链可以将对一个对象的多个不同处理很好的解耦开来，并且职责链节点可以重组方便修改可拓展逻辑。职责链的模式应用非常广，express等node后台框架的中间件设计就是应用了职责链模式。  
+如果职责链节点中包含了异步处理，那么处理函数中返回一个promise对象即可，职责链节点需要等待这个promise对象resolve或者reject之后，判断是否需要将请求传递给下一个节点。    
+职责链模式中有两个比较明显的缺点
+1. 往往需要注意节点之间的顺序来形成正确的处理流程
+2. 当链条过长，请求在节点之间传递会造成性能损耗
+
+# 后话
+本文总结了23中设计模式中的14种，里面的代码示例主要来源于《Learning JavaScript Design pattern》和《javascript设计模式与开发实践》这两本书。剩下的一些未总结的设计模式要么是这两本书内未提到的（毕竟不是所有设计模式在js中都适用），要么是自己觉得对这种模式还不够理解，不敢妄加评论。
