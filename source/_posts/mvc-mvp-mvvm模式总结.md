@@ -402,3 +402,5 @@ ViewModel与View之间的一致性：在mvvm中，通常使用 **数据绑定** 
 <img src="/img/post/post8/mvvm.png" alt="mvvm的关系模式">
 
 MVVM中view和ViewModel之间没有了MVP的界面接口，而是使用了数据绑定的形式，虽然提升了实现的难度，但却解决了 **用一种统一的集中的方式实现频繁需要被实现的数据更新** 问题。MVVM中最重要的不是如何同步view和ViewModel、ViewModel和model之间状态，而是mvvm创建了一个视图的抽象，让一个视图拥有了自己的状态和行为，这也更符合开发者对视图的思维逻辑。
+
+## 本文参考
