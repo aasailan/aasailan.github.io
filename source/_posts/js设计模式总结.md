@@ -37,6 +37,7 @@ A pattern is a **reusable solution** that can be applied to commonly occurring p
   * 外观模式（Facade）
   * 享元模式（Flyweight）
   * 代理模式（proxy）
+  * 装饰器模式（decorator）
 * 行为型设计模式（Behavioral）：提高系统内相互独立的对象之间的交流通讯
   * 解释器模式（Interpreter）
   * 模板方法模式（template method）
