@@ -77,55 +77,63 @@ comments: false
  ```javascript
 function createView(model, ctrl) {
   var _addButton, _removeButton, _container;
-  // view 维护dom元素逻辑
-  function _addPhone(data) {
-    var newPhone = data.slice(-1);
-    var img = document.createElement('img');
-    img.src = newPhone.src;
-    _container.appendChild(img);
+
+  // view维护dom元素方法
+  var _render = {
+    addPhoto: function(newPhoto) {
+      var img = document.createElement('img');
+      img.src = newPhoto.src;
+      _container.appendChild(img);
+    },
+    removePhoto: function() {
+      container.removeChild(container.lastElementChild);
+    }
   }
-  // view 维护dom元素逻辑
-  function _removePhone(data) {
-    container.removeChild(container.lastElementChild);
+
+  function _addPhotoHandler(event) {
+    // 保证处理方法回调时，方法内this指针指向dom元素
+    var element = this;
+    ctrl.addPhoto.call(element, event);
+  }
+
+  function _removePhotoHandler(event) {
+    var element = this;
+    ctrl.removePhoto.call(element, event);
   }
   return {
+    // 初始化view
     init: function() {
       _addButton = document.getElementById('add-btn');
       _removeButton = document.getElementById('remove-btn');
       _container = document.getElementById('container');
-      // 向model注册监听，并且在
-      model.subscribe('add', _addPhone)
-      model.subscribe('remove', _removePhone)
-
-      _addButton.addEventListener('click', this.addPhone);
-
-      _removeButton.addEventListener('click', this.removePhone);
+      // view obersve model，并且在响应中更新自己
+      model.subscribe('add', _render.addPhoto)
+      model.subscribe('remove', _render.removePhoto)
+      // view将事件委托给controller处理
+      _addButton.addEventListener('click', _addPhotoHandler);
+      _removeButton.addEventListener('click', _removePhotoHandler);
     },
     destroy: function() {
       var _addButton = document.getElementById('add-btn');
-      _addButton.removeEventListener('click', this.addPhone);
-      _removeButton.removeEventListener('click', this.removePhone);
+      _addButton.removeEventListener('click', _addPhotoHandler);
+      _removeButton.removeEventListener('click', _removePhotoHandler);
 
-      model.unsubscribe('add', _addPhone);
-      model.unsubscribe('remove', _removePhone);
+      model.unsubscribe('add', _render.addPhoto);
+      model.unsubscribe('remove', _render.removePhoto);
 
       _addButton = null;
       _removeButton = null;
       _container = null;
-    },
-    addPhone: function() {
-      ctrl.addPhone()
-    },
-    removePhone: function() {
-      ctrl.removePhone();
     }
   }
 };
 
+// 接受业务数据封装成model对象
 function createModel(data) {
   var _events = {};
-  var _phones = data;
+  var _photos = data;
   return {
+    // 订阅方法
     subscribe: function(event, subscriber) {
       if (!_events[event]) {
         _events[event] = [];
@@ -151,25 +159,36 @@ function createModel(data) {
         subscriber(modelData);
       });
     },
-    addPhone: function(phone) {
-      _phones.push(phone);
-      this.publish('add', _phones);
+    // model修改方法，修改数据后会发布事件，通知view更新
+    addPhoto: function(photo) {
+      var newPhoto = {
+        src: photo
+      };
+      _photos.push(newPhoto);
+      this.publish('add', newPhoto);
     },
-    removePhone: function() {
-      _phones.pop();
+    removePhoto: function() {
+      _photos.pop();
       this.publish('remove');
+    },
+    getData: function() {
+      return _photos;
     }
   }
 };
 
 function createController(model) {
   return {
-    addPhone: function() {
+    // controller对用户操作进行响应，然后修改model
+    addPhoto: function(event) {
       console.log('用户添加了一张图片');
-      model.addPhone('demo.jpg');
+      model.addPhoto('demo.jpg');
     },
-    removePhone: function() {
-      model.removePhone();
+    removePhoto: function(event) {
+      if (model.getData().length > 0) {
+        console.log('用户删除了一张图片');
+        model.removePhoto();
+      }
     }
   }
 };
@@ -212,6 +231,153 @@ MVP模式关系图如下：
 
 使用MVP模式修改上面MVC的例子
 ```javascript
+function createView() {
+  var _addButton, _removeButton, _container;
+
+  // view维护dom元素方法
+  var _render = {
+    addPhoto: function(newPhoto) {
+      var img = document.createElement('img');
+      img.src = newPhoto.src;
+      _container.appendChild(img);
+    },
+    removePhoto: function() {
+      container.removeChild(container.lastElementChild);
+    }
+  }
+  // 事件处理：运行view对外提供的接口方法进行事件处理
+  function _addPhotoHandler(event) {
+    // 保证处理方法回调时，方法内this指针指向dom元素
+    var element = this;
+    view.addPhotoHandler && view.addPhotoHandler.call(element, event);
+  }
+
+  function _removePhotoHandler(event) {
+    var element = this;
+    view.removePhotoHandler && view.removePhotoHandler.call(element, event);
+  }
+  var view = {
+    // 初始化view
+    init: function() {
+      _addButton = document.getElementById('add-btn');
+      _removeButton = document.getElementById('remove-btn');
+      _container = document.getElementById('container');
+
+      _addButton.addEventListener('click', _addPhotoHandler);
+      _removeButton.addEventListener('click', _removePhotoHandler);
+    },
+    destroy: function() {
+      var _addButton = document.getElementById('add-btn');
+      _addButton.removeEventListener('click', _addPhotoHandler);
+      _removeButton.removeEventListener('click', _removePhotoHandler);
+
+      _addButton = null;
+      _removeButton = null;
+      _container = null;
+    },
+    // view对象对外提供接口方法来更新自己
+    addPhoto: function(data) {
+      _render.addPhoto(data);
+    },
+    removePhoto: function() {
+      _render.removePhoto();
+    },
+    // view对外提供事件处理接口
+    addPhotoHandler: null,
+    removePhotoHandler: null,
+  }
+  return view;
+};
+
+// 接受业务数据封装成model对象
+function createModel(data) {
+  var _events = {};
+  var _photos = data;
+  return {
+    // 订阅方法
+    subscribe: function(event, subscriber) {
+      if (!_events[event]) {
+        _events[event] = [];
+      }
+      _events[event].push(subscriber);
+    },
+    unsubscribe: function(event, subscriber) {
+      if (!_events[event]) {
+        return;
+      }
+      var subscribers = _events[event];
+      var index = subscribers.indexOf(subscriber);
+      if (index !== -1) {
+        subscribers.splice(index, 1);
+      }
+    },
+    publish: function(event, modelData) {
+      if (!_events[event]) {
+        return;
+      }
+      var subscribers = _events[event];
+      subscribers.forEach(subscriber => {
+        subscriber(modelData);
+      });
+    },
+    // model修改方法，修改数据后会发布事件，通知view更新
+    addPhoto: function(photo) {
+      var newPhoto = {
+        src: photo
+      };
+      _photos.push(newPhoto);
+      this.publish('add', newPhoto);
+    },
+    removePhoto: function() {
+      _photos.pop();
+      this.publish('remove');
+    },
+    getData: function() {
+      return _photos;
+    }
+  }
+};
+
+function createPresenter(model, view) {
+  // presenter中负责订阅model，并且调用view的接口方法进行更新
+  function _addPhoto(newPhoto) {
+    view.addPhoto(newPhoto);
+  }
+  model.subscribe('add', _addPhoto);
+  model.subscribe('remove', view.removePhoto);
+
+  view.addPhotoHandler = function() {
+    console.log('用户添加了一张图片');
+    model.addPhoto('demo.jpg');
+  }
+
+  view.removePhotoHandler = function() {
+    if (model.getData().length > 0) {
+      console.log('用户删除了一张图片');
+      model.removePhoto();
+    }
+  }
+
+  return {
+    init: function() {
+      view.init();
+    },
+    destroy: function() {
+      model.unsubscribe('add', _addPhoto);
+      model.unsubscribe('remove', view.removePhoto);
+
+      view.destroy();
+    }
+  }
+};
+
+var model = createModel([]);
+var view = createView();
+var presenter = createPresenter(model, view);
+
+presenter.init();
+// ...用户操作
+presenter.destroy();
 ```
 
 MVP的好处：
