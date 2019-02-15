@@ -54,7 +54,7 @@ comments: false
 
 这样形成的MVC模式关系图如下：  
 <img src="/img/post/post8/mvc.png" alt="mvc模式关系图">    
-①②：view 在创建时observer model并且运行时将用户操作传递给Controller（通常通过event的形式）   
+①②：view 在创建时observe model并且在运行时将用户操作传递给Controller（通常通过event的形式）   
 ③：controller对业务逻辑进行执行，期间可能需要修改model   
 ④：model被修改后notify所有的observers，view在收到通知后对自己进行更新
 
@@ -67,7 +67,7 @@ comments: false
 
  ### view
  Views are a visual representation of models that present a filtered view of their current state. Whilst Smalltalk views are about painting and maintaining a bitmap, JavaScript views are about building and maintaining a DOM element. A view typically observes a model and is notified when the model changes, allowing the view to update itself accordingly.    
- view是model的虚拟展示，显示model的当前状态。在js中，view层通常负责创建和维护DOM元素。一个view通常会observer一个model，并且在model改变发出通知时，更新自己。
+ view是model的虚拟展示，显示model的当前状态。在js中，view层通常负责创建和维护DOM元素。一个view通常会observe一个model，并且在model改变发出通知时，更新自己。
 
  ### controllers
  Controllers are an intermediary between models and views which are classically responsible for updating the model when the user manipulates the view. 
@@ -80,11 +80,13 @@ function createView(model, ctrl) {
 
   // view维护dom元素方法
   var _render = {
+    // 向dom插入一张照片
     addPhoto: function(newPhoto) {
       var img = document.createElement('img');
       img.src = newPhoto.src;
       _container.appendChild(img);
     },
+    // 向dom移除一张照片
     removePhoto: function() {
       container.removeChild(container.lastElementChild);
     }
@@ -93,6 +95,7 @@ function createView(model, ctrl) {
   function _addPhotoHandler(event) {
     // 保证处理方法回调时，方法内this指针指向dom元素
     var element = this;
+    // 将事件委托给controller处理
     ctrl.addPhoto.call(element, event);
   }
 
@@ -181,13 +184,17 @@ function createController(model) {
   return {
     // controller对用户操作进行响应，然后修改model
     addPhoto: function(event) {
+      // 输出模拟业务逻辑操作
       console.log('用户添加了一张图片');
+      // 修改model数据
       model.addPhoto('demo.jpg');
     },
     removePhoto: function(event) {
       if (model.getData().length > 0) {
         console.log('用户删除了一张图片');
         model.removePhoto();
+      } else {
+        console.log('已经没有照片了');
       }
     }
   }
@@ -199,6 +206,8 @@ var controller = createController(model);
 var view = createView(model, controller);
 view.init();
 // 用户操作 ....
+
+// 销毁界面
 view.destroy();
  ```
 
@@ -213,13 +222,13 @@ MVC模式的问题：
 为了解决这个问题，MVC模式产生了一个变种MVP模式。
 
 ## MVP模式
-MVP模式中切断了View和Model的联系，View不再是一个Observer，成为一个**只提供更新视图接口**并等待调用更新的“被动”视图。Presenter充当了原来controller的大部分职责并且负责主动调用更新view。
+MVP模式中切断了View和Model的联系，View不再是一个Observer，成为一个**只提供更新视图接口**并等待调用更新的“被动视图”（Passive View）。Presenter充当了原来controller的大部分职责并且负责主动调用更新view。
 
 MVP描述如下：   
 The P in MVP stands for presenter. It's a component which contains the user-interface business logic for the view. Unlike MVC, invocations from the view are delegated to the presenter, which are decoupled from the view and instead talk to it through an interface. This allows for all kinds of useful things such as being able to mock views in unit tests.    
 The most common implementation of MVP is one which uses a Passive View (a view which is for all intents and purposes "dumb"), containing little to no logic. If MVC and MVP are different it is because the C and P do different things. In MVP, the P observes models and updates views when models change. The P effectively binds models to views, a responsibility which was previously held by controllers in MVC.    
 MVP中的P指presenter。与MVC模式不一样，MVP中的view通过提供接口的方式将自己的调用完全委托给presenter。这对view的单元测试很有帮助。    
-在MVP模式中通常会实现一个“Passive View”。在MVP中P负责observes model和调用view的接口来更新view并且负责以前Controller的责任。
+在MVP模式中通常会实现一个“Passive View”。在MVP中P负责observe model和调用view的接口来更新view并且负责以前Controller的责任（响应用户操作，执行业务逻辑，修改model）
 
 MVP模式关系图如下：   
 <img src="/img/post/post8/mvp.png" alt="mvc模式关系图">
@@ -346,6 +355,7 @@ function createPresenter(model, view) {
   model.subscribe('add', _addPhoto);
   model.subscribe('remove', view.removePhoto);
 
+  // 实现view对外提供的事件处理接口
   view.addPhotoHandler = function() {
     console.log('用户添加了一张图片');
     model.addPhoto('demo.jpg');
@@ -377,6 +387,8 @@ var presenter = createPresenter(model, view);
 
 presenter.init();
 // ...用户操作
+
+// 销毁presenter 和 视图
 presenter.destroy();
 ```
 
@@ -394,7 +406,7 @@ MVVM是基于MVC和MVP的变种，目的是让UI界面和业务逻辑进步一�
 MVVM由三部分组成Model、view、ViewModel。
 * Model任然代表应用的数据
 * view依然代表视图展示
-* ViewModel与Controller和Presenter都不同，ViewModel不再单纯的只负责执行业务逻辑和更新view，而是成为**视图的一个抽象**（这是之前的两种模式所没有涉及的）。视图本身是有状态和行为的，视图的状态通常来自于model的数据并且和model的数据保持同步，而视图的行为通常是执行业务逻辑。ViewModel作为视图的抽象，拥有自己的状态属性（代表当前视图状态）和行为方法（当前视图对用户的响应逻辑，通常会执行业务逻辑）。ViewModel需要维护自身状态与model的一致性、view层与自身的一致性、执行业务逻辑
+* ViewModel与Controller和Presenter都不同，ViewModel不再单纯的只负责执行业务逻辑和更新view，而是成为**视图的一个抽象**（这是之前的两种模式所没有涉及的）。视图本身是有状态和行为的，视图的状态通常来自于model的数据并且和model的数据保持同步，而视图的行为通常是执行业务逻辑。ViewModel作为视图的抽象，拥有自己的状态属性（代表当前视图状态）和行为方法（当前视图对用户的响应逻辑，通常会执行业务逻辑）。ViewModel需要维护**自身状态与model的一致性**、**view层与自身的一致性**、执行业务逻辑
 
 ViewModel与View之间的一致性：在mvvm中，通常使用 **数据绑定** 来维护view和 ViewModel 之间的一致性。数据绑定 通常由 声明式数据绑定（语法表现形式）和 隐藏的Binder层（实现声明式数据的具体实现）两部分实现。
 <img src="/img/post/post8/Binder-View-ViewModel.png" alt="双向数据绑定">
@@ -404,3 +416,7 @@ ViewModel与View之间的一致性：在mvvm中，通常使用 **数据绑定** 
 MVVM中view和ViewModel之间没有了MVP的界面接口，而是使用了数据绑定的形式，虽然提升了实现的难度，但却解决了 **用一种统一的集中的方式实现频繁需要被实现的数据更新** 问题。MVVM中最重要的不是如何同步view和ViewModel、ViewModel和model之间状态，而是mvvm创建了一个视图的抽象，让一个视图拥有了自己的状态和行为，这也更符合开发者对视图的思维逻辑。
 
 ## 本文参考
+1. [Learning Javascript Design Patterns](https://github.com/addyosmani/essential-js-design-patterns)
+2. [浅谈 MVC、MVP 和 MVVM 架构模式](https://draveness.me/mvx)
+3. [你对MVC、MVP、MVVM 三种组合模式分别有什么样的理解？](https://www.zhihu.com/question/20148405/answer/23813147)
+
