@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            mvc mvp mvvm模式总结 | 
+        
+        aasailan的blog
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" href="/img/favicon.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="aasailan的blog">
+    <meta name="keywords" content=",前端,javascript,设计模式">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #3F3F3F;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?ezyEvm8ST5CGfpA+kFFi1g==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="aasailan的blog">
+    <meta name="msapplication-starturl" content="http://yoursite.com/2019/02/14/mvc-mvp-mvvm模式总结/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="aasailan的blog">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yoursite.com/2019/02/14/mvc-mvp-mvvm模式总结/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="mvc mvp mvvm模式总结 | aasailan的blog">
+    <meta property="og:image" content="/img/favicon.png">
+    <meta property="og:description" content="aasailan的blog">
+    <meta property="og:article:tag" content="前端"> <meta property="og:article:tag" content="javascript"> <meta property="og:article:tag" content="设计模式"> 
+
+    
+        <meta property="article:published_time" content="Thu Feb 14 2019 10:12:16 GMT+0800">
+        <meta property="article:modified_time" content="Fri Feb 15 2019 11:47:29 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yoursite.com/2019/02/14/mvc-mvp-mvvm模式总结/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yoursite.com/2019/02/14/mvc-mvp-mvvm模式总结/index.html",
+    "headline": "mvc mvp mvvm模式总结",
+    "datePublished": "Thu Feb 14 2019 10:12:16 GMT+0800",
+    "dateModified": "Fri Feb 15 2019 11:47:29 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "aasailan",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/touxiang.jpg"
+        },
+        "description": "程序员是一个值得自豪的职业"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "aasailan的blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",前端,javascript,设计模式",
+    "description": "aasailan的blog",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span id="MD-burger-id" class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#对mvc-mvp-mvvm模式的总结"><span class="post-toc-number">1.</span> <span class="post-toc-text">对mvc mvp mvvm模式的总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么需要mv-模式"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">为什么需要mv* 模式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#交织在一起的UI代码和业务代码"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">交织在一起的UI代码和业务代码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分离展示层"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">分离展示层</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MVC模式"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">MVC模式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#model"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">model</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#view"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">view</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#controllers"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">controllers</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MVP模式"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">MVP模式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MVVM"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">MVVM</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#本文参考"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">本文参考</span></a></li></ol></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                mvc mvp mvvm模式总结
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/touxiang.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>aasailan</strong>
+        <span>2月 14, 2019</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/javascript/">javascript</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/前端/">前端</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/设计模式/">设计模式</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <!-- post8 -->
+<h1 id="对mvc-mvp-mvvm模式的总结"><a href="#对mvc-mvp-mvvm模式的总结" class="headerlink" title="对mvc mvp mvvm模式的总结"></a>对mvc mvp mvvm模式的总结</h1><h2 id="为什么需要mv-模式"><a href="#为什么需要mv-模式" class="headerlink" title="为什么需要mv* 模式"></a>为什么需要mv* 模式</h2><h3 id="交织在一起的UI代码和业务代码"><a href="#交织在一起的UI代码和业务代码" class="headerlink" title="交织在一起的UI代码和业务代码"></a>交织在一起的UI代码和业务代码</h3><p>最早的程序是汇编，那时候并没有UI界面，所谓的开发几乎都是用汇编编写一些机器指令，使用程序的也大多数是一些专业人士。哪个年代自然也不需要mv* 的模式。<br>随着行业发展，程序开始面向普通用户，程序也出现了用户界面（User Interface）和适用于界面的语言——标记语言（Markup Language）。普通用户通过操作UI来操作程序。这时程序内部的代码可以大概分为两部分：操纵UI和执行业务逻辑。在没有仔细规划的程序中，这两部分代码交织在一起，常常造成代码难以维护。  </p>
+<h3 id="分离展示层"><a href="#分离展示层" class="headerlink" title="分离展示层"></a>分离展示层</h3><p>根据上面的问题，GUI应用程序可以粗略的划分为两个部分：</p>
+<ol>
+<li>Presentation Layer：用于展示内容的展示层</li>
+<li>Domain Layer：包含数据和逻辑<br><img src="/img/post/post8/Presentation-Domain.jpg" alt="Presentation 与 Domain"></li>
+</ol>
+<p>继续细分下去，GUI应用程序在一个时间点上通常可以抽象为四个部分：</p>
+<ul>
+<li>界面</li>
+<li>数据</li>
+<li>事件</li>
+<li>业务   </li>
+</ul>
+<p>其中的联系一般为：<br><img src="/img/post/post8/GUI_app.png" alt="GUI程序中各个因素的联系"></p>
+<p>这样抽象过后，便会发现UI程序面临着两个主要问题：</p>
+<ol>
+<li>操作UI和执行业务的代码需要解耦和分开处理，以便提升可维护性</li>
+<li>如何更新数据和更新界面并且维护它们之间的一致性。     </li>
+</ol>
+<p>为了解决上述问题，开始出现了MV*模式。</p>
+<h2 id="MVC模式"><a href="#MVC模式" class="headerlink" title="MVC模式"></a>MVC模式</h2><p>在20世纪70年代<a href="https://zh.wikipedia.org/wiki/Smalltalk" target="_blank" rel="noopener"><strong>Smalltalk-80</strong></a>实现了MVC设计模式。Smalltalk-80实现的MVC模式有四个要点：</p>
+<ul>
+<li>A Model represented domain-specific data and was ignorant of the user-interface (Views and Controllers). When a model changed, it would inform its observers.<br>model代表着领域层（Domain Layer）的数据，并且独立于UI，当model变化时，会通知它的观察者们。</li>
+<li>A View represented the current state of a Model. The Observer pattern was used for letting the View know whenever the Model was updated or modified.<br>view显示着当前model的状态。通过观察者模式，view（充当Observer）可以知道model（充当Subject）的修改并且更新自己</li>
+<li>Presentation was taken care of by the View, but there wasn’t just a single View and Controller - a View-Controller pair was required for each section or element being displayed on the screen.<br>展示层通常由一个 view-Controller对实现，由这个view-Controller对来实现当前屏幕每一个元素的显示</li>
+<li>The Controllers role in this pair was handling user interaction (such as key-presses and actions e.g. clicks), making decisions for the View.<br>控制器主要负责处理UI事件，并且决定view如何更新</li>
+</ul>
+<p>这样形成的MVC模式关系图如下：<br><img src="/img/post/post8/mvc.png" alt="mvc模式关系图"><br>①②：view 在创建时observe model并且在运行时将用户操作传递给Controller（通常通过event的形式）<br>③：controller对业务逻辑进行执行，期间可能需要修改model<br>④：model被修改后notify所有的observers，view在收到通知后对自己进行更新</p>
+<p>其中各个角色的定义和描述如下：</p>
+<h3 id="model"><a href="#model" class="headerlink" title="model"></a>model</h3><p> Models manage the data for an application. They are concerned with neither the user-interface nor presentation layers but instead represent unique forms of data that an application may require. When a model changes (e.g when it is updated), it will typically notify its observers (e.g views, a concept we will cover shortly) that a change has occurred so that they may react accordingly.<br> model管理着应用的数据，它本身独立于UI和展示层。当model的数据变化时，需要通知它的所有observers，model已经发生变化，使得observers能做出反应。</p>
+<h3 id="view"><a href="#view" class="headerlink" title="view"></a>view</h3><p> Views are a visual representation of models that present a filtered view of their current state. Whilst Smalltalk views are about painting and maintaining a bitmap, JavaScript views are about building and maintaining a DOM element. A view typically observes a model and is notified when the model changes, allowing the view to update itself accordingly.<br> view是model的虚拟展示，显示model的当前状态。在js中，view层通常负责创建和维护DOM元素。一个view通常会observe一个model，并且在model改变发出通知时，更新自己。</p>
+<h3 id="controllers"><a href="#controllers" class="headerlink" title="controllers"></a>controllers</h3><p> Controllers are an intermediary between models and views which are classically responsible for updating the model when the user manipulates the view.<br> controllers是model和view之间的中介，负责响应用户对view的操作和更新model。</p>
+<p> 下面是MVC模式在js中的粗略实现。需求描述，页面存在add和remove两个按钮，点击add按钮在页面添加一张demo image，点击remove删除一张demo image。<br> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createView</span>(<span class="params">model, ctrl</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> _addButton, _removeButton, _container;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// view维护dom元素方法</span></span><br><span class="line">  <span class="keyword">var</span> _render = &#123;</span><br><span class="line">    <span class="comment">// 向dom插入一张照片</span></span><br><span class="line">    addPhoto: <span class="function"><span class="keyword">function</span>(<span class="params">newPhoto</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> img = <span class="built_in">document</span>.createElement(<span class="string">'img'</span>);</span><br><span class="line">      img.src = newPhoto.src;</span><br><span class="line">      _container.appendChild(img);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 向dom移除一张照片</span></span><br><span class="line">    removePhoto: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      container.removeChild(container.lastElementChild);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">_addPhotoHandler</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 保证处理方法回调时，方法内this指针指向dom元素</span></span><br><span class="line">    <span class="keyword">var</span> element = <span class="keyword">this</span>;</span><br><span class="line">    <span class="comment">// 将事件委托给controller处理</span></span><br><span class="line">    ctrl.addPhoto.call(element, event);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">_removePhotoHandler</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> element = <span class="keyword">this</span>;</span><br><span class="line">    ctrl.removePhoto.call(element, event);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">// 初始化view</span></span><br><span class="line">    init: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      _addButton = <span class="built_in">document</span>.getElementById(<span class="string">'add-btn'</span>);</span><br><span class="line">      _removeButton = <span class="built_in">document</span>.getElementById(<span class="string">'remove-btn'</span>);</span><br><span class="line">      _container = <span class="built_in">document</span>.getElementById(<span class="string">'container'</span>);</span><br><span class="line">      <span class="comment">// view obersve model，并且在响应中更新自己</span></span><br><span class="line">      model.subscribe(<span class="string">'add'</span>, _render.addPhoto)</span><br><span class="line">      model.subscribe(<span class="string">'remove'</span>, _render.removePhoto)</span><br><span class="line">      <span class="comment">// view将事件委托给controller处理</span></span><br><span class="line">      _addButton.addEventListener(<span class="string">'click'</span>, _addPhotoHandler);</span><br><span class="line">      _removeButton.addEventListener(<span class="string">'click'</span>, _removePhotoHandler);</span><br><span class="line">    &#125;,</span><br><span class="line">    destroy: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> _addButton = <span class="built_in">document</span>.getElementById(<span class="string">'add-btn'</span>);</span><br><span class="line">      _addButton.removeEventListener(<span class="string">'click'</span>, _addPhotoHandler);</span><br><span class="line">      _removeButton.removeEventListener(<span class="string">'click'</span>, _removePhotoHandler);</span><br><span class="line"></span><br><span class="line">      model.unsubscribe(<span class="string">'add'</span>, _render.addPhoto);</span><br><span class="line">      model.unsubscribe(<span class="string">'remove'</span>, _render.removePhoto);</span><br><span class="line"></span><br><span class="line">      _addButton = <span class="literal">null</span>;</span><br><span class="line">      _removeButton = <span class="literal">null</span>;</span><br><span class="line">      _container = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接受业务数据封装成model对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createModel</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> _events = &#123;&#125;;</span><br><span class="line">  <span class="keyword">var</span> _photos = data;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">// 订阅方法</span></span><br><span class="line">    subscribe: <span class="function"><span class="keyword">function</span>(<span class="params">event, subscriber</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!_events[event]) &#123;</span><br><span class="line">        _events[event] = [];</span><br><span class="line">      &#125;</span><br><span class="line">      _events[event].push(subscriber);</span><br><span class="line">    &#125;,</span><br><span class="line">    unsubscribe: <span class="function"><span class="keyword">function</span>(<span class="params">event, subscriber</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!_events[event]) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">var</span> subscribers = _events[event];</span><br><span class="line">      <span class="keyword">var</span> index = subscribers.indexOf(subscriber);</span><br><span class="line">      <span class="keyword">if</span> (index !== <span class="number">-1</span>) &#123;</span><br><span class="line">        subscribers.splice(index, <span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    publish: <span class="function"><span class="keyword">function</span>(<span class="params">event, modelData</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!_events[event]) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">var</span> subscribers = _events[event];</span><br><span class="line">      subscribers.forEach(<span class="function"><span class="params">subscriber</span> =&gt;</span> &#123;</span><br><span class="line">        subscriber(modelData);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// model修改方法，修改数据后会发布事件，通知view更新</span></span><br><span class="line">    addPhoto: <span class="function"><span class="keyword">function</span>(<span class="params">photo</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> newPhoto = &#123;</span><br><span class="line">        src: photo</span><br><span class="line">      &#125;;</span><br><span class="line">      _photos.push(newPhoto);</span><br><span class="line">      <span class="keyword">this</span>.publish(<span class="string">'add'</span>, newPhoto);</span><br><span class="line">    &#125;,</span><br><span class="line">    removePhoto: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      _photos.pop();</span><br><span class="line">      <span class="keyword">this</span>.publish(<span class="string">'remove'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    getData: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> _photos;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createController</span>(<span class="params">model</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">// controller对用户操作进行响应，然后修改model</span></span><br><span class="line">    addPhoto: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 输出模拟业务逻辑操作</span></span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'用户添加了一张图片'</span>);</span><br><span class="line">      <span class="comment">// 修改model数据</span></span><br><span class="line">      model.addPhoto(<span class="string">'demo.jpg'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    removePhoto: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (model.getData().length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'用户删除了一张图片'</span>);</span><br><span class="line">        model.removePhoto();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'已经没有照片了'</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 开始运行</span></span><br><span class="line"><span class="keyword">var</span> model = createModel([]);</span><br><span class="line"><span class="keyword">var</span> controller = createController(model);</span><br><span class="line"><span class="keyword">var</span> view = createView(model, controller);</span><br><span class="line">view.init();</span><br><span class="line"><span class="comment">// 用户操作 ....</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 销毁界面</span></span><br><span class="line">view.destroy();</span><br></pre></td></tr></table></figure></p>
+<p>MVC模式带来的好处：</p>
+<ol>
+<li>更好的可维护性。</li>
+<li>model和view的解耦使得单元测试可以更好的进行</li>
+<li>将业务逻辑和用户图形接口分开，使得开发者可以更好的关注业务逻辑</li>
+</ol>
+<p>MVC模式的问题：</p>
+<ol>
+<li>程序有变化时，往往需要维护三个对象和三个交互。</li>
+</ol>
+<p>为了解决这个问题，MVC模式产生了一个变种MVP模式。</p>
+<h2 id="MVP模式"><a href="#MVP模式" class="headerlink" title="MVP模式"></a>MVP模式</h2><p>MVP模式中切断了View和Model的联系，View不再是一个Observer，成为一个<strong>只提供更新视图接口</strong>并等待调用更新的“被动视图”（Passive View）。Presenter充当了原来controller的大部分职责并且负责主动调用更新view。</p>
+<p>MVP描述如下：<br>The P in MVP stands for presenter. It’s a component which contains the user-interface business logic for the view. Unlike MVC, invocations from the view are delegated to the presenter, which are decoupled from the view and instead talk to it through an interface. This allows for all kinds of useful things such as being able to mock views in unit tests.<br>The most common implementation of MVP is one which uses a Passive View (a view which is for all intents and purposes “dumb”), containing little to no logic. If MVC and MVP are different it is because the C and P do different things. In MVP, the P observes models and updates views when models change. The P effectively binds models to views, a responsibility which was previously held by controllers in MVC.<br>MVP中的P指presenter。与MVC模式不一样，MVP中的view通过提供接口的方式将自己的调用完全委托给presenter。这对view的单元测试很有帮助。<br>在MVP模式中通常会实现一个“Passive View”。在MVP中P负责observe model和调用view的接口来更新view并且负责以前Controller的责任（响应用户操作，执行业务逻辑，修改model）</p>
+<p>MVP模式关系图如下：<br><img src="/img/post/post8/mvp.png" alt="mvc模式关系图"><br>① view层将用户操作委托给 presenter处理<br>② presenter处理业务逻辑，修改model<br>④ model notify presenter数据更新<br>④ presenter根据view提供的接口进行调用来更新view</p>
+<p>使用MVP模式修改上面MVC的例子<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createView</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> _addButton, _removeButton, _container;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// view维护dom元素方法</span></span><br><span class="line">  <span class="keyword">var</span> _render = &#123;</span><br><span class="line">    addPhoto: <span class="function"><span class="keyword">function</span>(<span class="params">newPhoto</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> img = <span class="built_in">document</span>.createElement(<span class="string">'img'</span>);</span><br><span class="line">      img.src = newPhoto.src;</span><br><span class="line">      _container.appendChild(img);</span><br><span class="line">    &#125;,</span><br><span class="line">    removePhoto: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      container.removeChild(container.lastElementChild);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 事件处理：运行view对外提供的接口方法进行事件处理</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">_addPhotoHandler</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 保证处理方法回调时，方法内this指针指向dom元素</span></span><br><span class="line">    <span class="keyword">var</span> element = <span class="keyword">this</span>;</span><br><span class="line">    view.addPhotoHandler &amp;&amp; view.addPhotoHandler.call(element, event);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">_removePhotoHandler</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> element = <span class="keyword">this</span>;</span><br><span class="line">    view.removePhotoHandler &amp;&amp; view.removePhotoHandler.call(element, event);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> view = &#123;</span><br><span class="line">    <span class="comment">// 初始化view</span></span><br><span class="line">    init: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      _addButton = <span class="built_in">document</span>.getElementById(<span class="string">'add-btn'</span>);</span><br><span class="line">      _removeButton = <span class="built_in">document</span>.getElementById(<span class="string">'remove-btn'</span>);</span><br><span class="line">      _container = <span class="built_in">document</span>.getElementById(<span class="string">'container'</span>);</span><br><span class="line"></span><br><span class="line">      _addButton.addEventListener(<span class="string">'click'</span>, _addPhotoHandler);</span><br><span class="line">      _removeButton.addEventListener(<span class="string">'click'</span>, _removePhotoHandler);</span><br><span class="line">    &#125;,</span><br><span class="line">    destroy: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> _addButton = <span class="built_in">document</span>.getElementById(<span class="string">'add-btn'</span>);</span><br><span class="line">      _addButton.removeEventListener(<span class="string">'click'</span>, _addPhotoHandler);</span><br><span class="line">      _removeButton.removeEventListener(<span class="string">'click'</span>, _removePhotoHandler);</span><br><span class="line"></span><br><span class="line">      _addButton = <span class="literal">null</span>;</span><br><span class="line">      _removeButton = <span class="literal">null</span>;</span><br><span class="line">      _container = <span class="literal">null</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// view对象对外提供接口方法来更新自己</span></span><br><span class="line">    addPhoto: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">      _render.addPhoto(data);</span><br><span class="line">    &#125;,</span><br><span class="line">    removePhoto: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      _render.removePhoto();</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// view对外提供事件处理接口</span></span><br><span class="line">    addPhotoHandler: <span class="literal">null</span>,</span><br><span class="line">    removePhotoHandler: <span class="literal">null</span>,</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> view;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接受业务数据封装成model对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createModel</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> _events = &#123;&#125;;</span><br><span class="line">  <span class="keyword">var</span> _photos = data;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">// 订阅方法</span></span><br><span class="line">    subscribe: <span class="function"><span class="keyword">function</span>(<span class="params">event, subscriber</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!_events[event]) &#123;</span><br><span class="line">        _events[event] = [];</span><br><span class="line">      &#125;</span><br><span class="line">      _events[event].push(subscriber);</span><br><span class="line">    &#125;,</span><br><span class="line">    unsubscribe: <span class="function"><span class="keyword">function</span>(<span class="params">event, subscriber</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!_events[event]) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">var</span> subscribers = _events[event];</span><br><span class="line">      <span class="keyword">var</span> index = subscribers.indexOf(subscriber);</span><br><span class="line">      <span class="keyword">if</span> (index !== <span class="number">-1</span>) &#123;</span><br><span class="line">        subscribers.splice(index, <span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    publish: <span class="function"><span class="keyword">function</span>(<span class="params">event, modelData</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!_events[event]) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">var</span> subscribers = _events[event];</span><br><span class="line">      subscribers.forEach(<span class="function"><span class="params">subscriber</span> =&gt;</span> &#123;</span><br><span class="line">        subscriber(modelData);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// model修改方法，修改数据后会发布事件，通知view更新</span></span><br><span class="line">    addPhoto: <span class="function"><span class="keyword">function</span>(<span class="params">photo</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> newPhoto = &#123;</span><br><span class="line">        src: photo</span><br><span class="line">      &#125;;</span><br><span class="line">      _photos.push(newPhoto);</span><br><span class="line">      <span class="keyword">this</span>.publish(<span class="string">'add'</span>, newPhoto);</span><br><span class="line">    &#125;,</span><br><span class="line">    removePhoto: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      _photos.pop();</span><br><span class="line">      <span class="keyword">this</span>.publish(<span class="string">'remove'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    getData: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> _photos;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPresenter</span>(<span class="params">model, view</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// presenter中负责订阅model，并且调用view的接口方法进行更新</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">_addPhoto</span>(<span class="params">newPhoto</span>) </span>&#123;</span><br><span class="line">    view.addPhoto(newPhoto);</span><br><span class="line">  &#125;</span><br><span class="line">  model.subscribe(<span class="string">'add'</span>, _addPhoto);</span><br><span class="line">  model.subscribe(<span class="string">'remove'</span>, view.removePhoto);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 实现view对外提供的事件处理接口</span></span><br><span class="line">  view.addPhotoHandler = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'用户添加了一张图片'</span>);</span><br><span class="line">    model.addPhoto(<span class="string">'demo.jpg'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  view.removePhotoHandler = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (model.getData().length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'用户删除了一张图片'</span>);</span><br><span class="line">      model.removePhoto();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    init: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      view.init();</span><br><span class="line">    &#125;,</span><br><span class="line">    destroy: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      model.unsubscribe(<span class="string">'add'</span>, _addPhoto);</span><br><span class="line">      model.unsubscribe(<span class="string">'remove'</span>, view.removePhoto);</span><br><span class="line"></span><br><span class="line">      view.destroy();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> model = createModel([]);</span><br><span class="line"><span class="keyword">var</span> view = createView();</span><br><span class="line"><span class="keyword">var</span> presenter = createPresenter(model, view);</span><br><span class="line"></span><br><span class="line">presenter.init();</span><br><span class="line"><span class="comment">// ...用户操作</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 销毁presenter 和 视图</span></span><br><span class="line">presenter.destroy();</span><br></pre></td></tr></table></figure></p>
+<p>MVP的好处：</p>
+<ol>
+<li>view与model进行了解耦，view包含较少的逻辑，只关注与对外提供接口更新界面。</li>
+<li>由于view的功能单一并且与model的解耦，view变得非常容易进行测试。</li>
+</ol>
+<h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2><p>2005年的时候微软首次提出[<strong>MVVM模式</strong>]，并且在WPF平台进行了实现(<a href="https://blogs.msdn.microsoft.com/johngossman/2005/10/08/introduction-to-modelviewviewmodel-pattern-for-building-wpf-apps/" target="_blank" rel="noopener">https://blogs.msdn.microsoft.com/johngossman/2005/10/08/introduction-to-modelviewviewmodel-pattern-for-building-wpf-apps/</a>)</p>
+<p>MVVM的描述：<br>MVVM (Model View ViewModel) is an architectural pattern based on MVC and MVP, which aempts to more clearly separate the development of user-interfaces (UI) from that of the business logic and behavior in an application. To this end, many implementations of this pattern make use of declarative data bindings to allow a separation of work on Views from other layers.<br>MVVM是基于MVC和MVP的变种，目的是让UI界面和业务逻辑进步一解耦。为了让View和其他层解耦，很多MVVM的实现都使用了 <strong>声明式数据绑定</strong> 这项技术。</p>
+<p>MVVM由三部分组成Model、view、ViewModel。</p>
+<ul>
+<li>Model任然代表应用的数据</li>
+<li>view依然代表视图展示</li>
+<li>ViewModel与Controller和Presenter都不同，ViewModel不再单纯的只负责执行业务逻辑和更新view，而是成为<strong>视图的一个抽象</strong>（这是之前的两种模式所没有涉及的）。视图本身是有状态和行为的，视图的状态通常来自于model的数据并且和model的数据保持同步，而视图的行为通常是执行业务逻辑。ViewModel作为视图的抽象，拥有自己的状态属性（代表当前视图状态）和行为方法（当前视图对用户的响应逻辑，通常会执行业务逻辑）。ViewModel需要维护<strong>自身状态与model的一致性</strong>、<strong>view层与自身的一致性</strong>、执行业务逻辑</li>
+</ul>
+<p>ViewModel与View之间的一致性：在mvvm中，通常使用 <strong>数据绑定</strong> 来维护view和 ViewModel 之间的一致性。数据绑定 通常由 声明式数据绑定（语法表现形式）和 隐藏的Binder层（实现声明式数据的具体实现）两部分实现。<br><img src="/img/post/post8/Binder-View-ViewModel.png" alt="双向数据绑定"></p>
+<p><img src="/img/post/post8/mvvm.png" alt="mvvm的关系模式"></p>
+<p>MVVM中view和ViewModel之间没有了MVP的界面接口，而是使用了数据绑定的形式，虽然提升了实现的难度，但却解决了 <strong>用一种统一的集中的方式实现频繁需要被实现的数据更新</strong> 问题。MVVM中最重要的不是如何同步view和ViewModel、ViewModel和model之间状态，而是mvvm创建了一个视图的抽象，让一个视图拥有了自己的状态和行为，这也更符合开发者对视图的思维逻辑。</p>
+<h2 id="本文参考"><a href="#本文参考" class="headerlink" title="本文参考"></a>本文参考</h2><ol>
+<li><a href="https://github.com/addyosmani/essential-js-design-patterns" target="_blank" rel="noopener">Learning Javascript Design Patterns</a></li>
+<li><a href="https://draveness.me/mvx" target="_blank" rel="noopener">浅谈 MVC、MVP 和 MVVM 架构模式</a></li>
+<li><a href="https://www.zhihu.com/question/20148405/answer/23813147" target="_blank" rel="noopener">你对MVC、MVP、MVVM 三种组合模式分别有什么样的理解？</a></li>
+</ol>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2019/02/12/js设计模式总结/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/random/material-13.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/touxiang.jpg" alt="aasailan's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        joeaasailan@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:joeaasailan@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/cordova系列/">cordova系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/css系列/">css系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/docker/">docker<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hexo/">hexo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/js/">js<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/翻译系列/">翻译系列<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                标签云
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/timeline" title="时间轴">
+                
+                时间轴
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">8</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/aasailan" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2018&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>aasailan的blog
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?wgjW/HuQG9JDgvPDPoRAng==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?d+XW6aNuIPgOn1iA7NnB4g==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+    
+        <script>lsloader.load("sm_js","/js/smoothscroll.js?tNQK2Tw2SUL8a1Scn/Mgew==", true)</script>
+    
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+    
+        <script>lsloader.load("hanabi","/js/hanabi-browser-bundle.js?5+2z7ZZmFuZK5IcimlZbxw==", true)</script>
+    
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+        
+        
+        HanabiBrowser.start('pre code',true);
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+            <script type="text/javascript" color="112,255,59" opacity='1' zIndex="0" count="99" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+        </body>
+    
+</html>
