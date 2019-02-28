@@ -43,6 +43,8 @@
     
     <title>
         
+            js-number | 
+        
         aasailan的blog
     </title>
 
@@ -52,7 +54,7 @@
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="aasailan的blog">
-    <meta name="keywords" content="">
+    <meta name="keywords" content=",javascript,javascript core,原生javascript">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -213,7 +215,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="aasailan的blog">
-    <meta name="msapplication-starturl" content="http://yoursite.com/">
+    <meta name="msapplication-starturl" content="http://yoursite.com/2019/02/28/js-number/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="aasailan的blog">
@@ -228,13 +230,16 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://yoursite.com/">
+    <meta property="og:url" content="http://yoursite.com/2019/02/28/js-number/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="aasailan的blog">
+    <meta property="og:title" content="js-number | aasailan的blog">
     <meta property="og:image" content="/img/favicon.png">
     <meta property="og:description" content="aasailan的blog">
-    
+    <meta property="og:article:tag" content="javascript"> <meta property="og:article:tag" content="javascript core"> <meta property="og:article:tag" content="原生javascript"> 
 
+    
+        <meta property="article:published_time" content="Thu Feb 28 2019 14:29:22 GMT+0800">
+        <meta property="article:modified_time" content="Thu Feb 28 2019 18:51:49 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -242,35 +247,43 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://yoursite.com" />
+        <link rel="canonical" href="http://yoursite.com/2019/02/28/js-number/index.html" />
     
 
     <!-- Structured-data for SEO -->
     
         
+
+
 <script type="application/ld+json">
 {
-    "@context": "http://schema.org",
-    "@type": "Website",
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yoursite.com/2019/02/28/js-number/index.html",
+    "headline": "js-number",
+    "datePublished": "Thu Feb 28 2019 14:29:22 GMT+0800",
+    "dateModified": "Thu Feb 28 2019 18:51:49 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "aasailan",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/touxiang.jpg"
+        },
+        "description": "程序员是一个值得自豪的职业"
+    },
     "publisher": {
         "@type": "Organization",
         "name": "aasailan的blog",
-        "logo": "/img/favicon.png"
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
     },
-    "url": "http://yoursite.com",
-    "image": {
-        "@type": "ImageObject",
-        "url": "/img/favicon.png"
-    },
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "http://yoursite.com"
-    },
-    "description": "aasailan的blog"
+    "keywords": ",javascript,javascript core,原生javascript",
+    "description": "aasailan的blog",
 }
 </script>
-
-
 
 
     
@@ -304,709 +317,296 @@
                         </button>
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
+                    <!-- Post TOC -->
+
     
-        <!-- Paradox Header -->
-        <!-- Daily pic -->
-<div class="mdl-card mdl-shadow--2dp daily-pic mdl-cell mdl-cell--8-col index-top-block">
-
-    <!-- Pic & Slogan -->
-    <div class="mdl-card__media mdl-color-text--grey-50" style="background-image:url(/img/daily_pic.png)">
-        <p class="index-top-block-slogan"><a href="#">
-        
-            
-                程序员是一个值得自豪的职业
-            
-        
-        </a></p>
-    </div>
-
-    <!-- Avatar & Name -->
-    <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-        <!-- Author Avatar -->
-        <div id="author-avatar">
-            <img src="/img/touxiang.jpg" width="32px" height="32px" alt="avatar">
-        </div>
-        <div>
-            <strong>aasailan</strong>
-        </div>
-    </div>
-</div>
-
-        <!-- Blog info -->
-<div class="mdl-card mdl-shadow--2dp something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop index-top-block">
-
-    <!-- Search -->
-    
-    <!-- Google -->
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable" method="post" action="">
-        <label id="search-label" class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent mdl-shadow--4dp" for="search">
-            <i class="material-icons mdl-color-text--white" role="presentation">search</i>
-        </label>
-
-        <form autocomplete="off" id="search-form" method="get" action="//google.com/search" accept-charset="UTF-8" class="mdl-textfield__expandable-holder" target="_blank">
-            <input class="mdl-textfield__input search-input" type="search" name="q" id="search" placeholder="">
-            <label id="search-form-label" class="mdl-textfield__label" for="search"></label>
-
-            <input type="hidden" name="sitesearch" value="http://yoursite.com">
-        </form>
-    </div>
-
-
-
-
-
-
-
-    <!-- LOGO -->
-    <div class="something-else-logo mdl-color--white mdl-color-text--grey-600">
-        <a href="#" target="_blank">
-            <img src="/img/logo.png" alt="logo" />
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
         </a>
     </div>
+    -->
 
-    <!-- Infomation -->
-    <div class="mdl-card__supporting-text meta meta--fill mdl-color-text--grey-600">
-        <!-- Blog Title -->
-        <div>
-            <strong>aasailan的blog</strong>
-        </div>
-        <div class="section-spacer"></div>
 
-        <!-- Pages -->
-        <button id="show-pages-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-            <i class="material-icons" role="presentation">view_carousel</i>
-            <span class="visuallyhidden">Pages</span>
-        </button>
-        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="show-pages-button">
-            
-                <a class="index_share-link" href="/tags" title="标签云">
-                    <li class="mdl-menu__item mdl-js-ripple-effect">
-                        标签云
-                    </li>
-                </a>
-            
-                <a class="index_share-link" href="/timeline" title="时间轴">
-                    <li class="mdl-menu__item mdl-js-ripple-effect">
-                        时间轴
-                    </li>
-                </a>
-            
-        </ul>
-
-        <!-- Menu -->
-        <button id="menubtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-            <i class="material-icons" role="presentation">more_vert</i>
-            <span class="visuallyhidden">show menu</span>
-        </button>
-        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="menubtn">
-            
-
-            
-
-            
-
-            
-
-            
-
-            
-
-            
-
-            
-
-            
-        </ul>
-    </div>
-</div>
-
+    <!-- Left aligned menu below button -->
     
-    <div class="locate-thumbnail-symbol"></div>
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
 
-    <!-- Pin on top -->
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Number对象"><span class="post-toc-number">1.</span> <span class="post-toc-text">Number对象</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Number类型的MDN文档"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Number类型的MDN文档</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Number-value-与-new-Number-value"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">Number([value]) 与 new Number([value])</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#静态属性"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">静态属性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#静态方法"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">静态方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#类方法"><span class="post-toc-number">1.1.4.</span> <span class="post-toc-text">类方法</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#js数字的内部存储方式，以及安全整数的概念"><span class="post-toc-number">2.</span> <span class="post-toc-text">js数字的内部存储方式，以及安全整数的概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#IEEE-754-64位双精度浮点数"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">IEEE 754 64位双精度浮点数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#带来的问题"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">带来的问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何解决"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">如何解决</span></a></li></ol></li></ol>
+    </ul>
     
 
-    <!-- Normal Post -->
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
 
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2019/02/28/js-number/">js-number</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2019/02/28/js-number/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/touxiang.jpg" width="44px" height="44px" alt="aasailan's avatar">
-            </div>
-            <div>
-                <strong>aasailan</strong>
-                <span>2月 28, 2019</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/js/">js</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2019/02/14/mvc-mvp-mvvm模式总结/">mvc mvp mvvm模式总结</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2019/02/14/mvc-mvp-mvvm模式总结/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/touxiang.jpg" width="44px" height="44px" alt="aasailan's avatar">
-            </div>
-            <div>
-                <strong>aasailan</strong>
-                <span>2月 14, 2019</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/js/">js</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2019/02/12/js设计模式总结/">js设计模式总结</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2019/02/12/js设计模式总结/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/touxiang.jpg" width="44px" height="44px" alt="aasailan's avatar">
-            </div>
-            <div>
-                <strong>aasailan</strong>
-                <span>2月 12, 2019</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/js/">js</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2019/02/11/js构造函数与继承/">js构造函数与继承</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2019/02/11/js构造函数与继承/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/touxiang.jpg" width="44px" height="44px" alt="aasailan's avatar">
-            </div>
-            <div>
-                <strong>aasailan</strong>
-                <span>2月 11, 2019</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/js/">js</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2018/07/19/cordova-app-网页代码热更新/">cordova app 网页代码热更新</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-cordova app由h5提供界面功能，在实现网页代码热更新后，开发者就可以随时发布新版app页面，而用户无需重新安...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2018/07/19/cordova-app-网页代码热更新/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/touxiang.jpg" width="44px" height="44px" alt="aasailan's avatar">
-            </div>
-            <div>
-                <strong>aasailan</strong>
-                <span>7月 19, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/cordova系列/">cordova系列</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2018/07/19/关于h5页面在移动端的适配/">关于h5页面在移动端的适配</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            最近为了学习egg，就用egg框架在重构一个微信小程序商城的后台的。这个项目几乎占用了我所有的业余时间，不过也算收获颇丰，有兴趣的话可以到
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2018/07/19/关于h5页面在移动端的适配/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/touxiang.jpg" width="44px" height="44px" alt="aasailan's avatar">
-            </div>
-            <div>
-                <strong>aasailan</strong>
-                <span>7月 19, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/css系列/">css系列</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2018/06/26/centos7下docker安装指南/">centos7下docker安装指南</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            今天在百度云vps上面安装了docker和docker compose，操作系统是centos7，觉着应该把安装过程大致记录下，防止以后忘记。整个安...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2018/06/26/centos7下docker安装指南/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/touxiang.jpg" width="44px" height="44px" alt="aasailan's avatar">
-            </div>
-            <div>
-                <strong>aasailan</strong>
-                <span>6月 26, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/docker/">docker</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2018/06/20/vscode-debugging-译文/">vscode debugging</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-今天看到vscode调试相关的教程，发现vscode的调试功能比我想象的要强大的多。觉得有必要好好阅读一下vscode的d...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2018/06/20/vscode-debugging-译文/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/touxiang.jpg" width="44px" height="44px" alt="aasailan's avatar">
-            </div>
-            <div>
-                <strong>aasailan</strong>
-                <span>6月 20, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/翻译系列/">翻译系列</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2018/06/19/使用hexo加gitpage搭建一个个人blog/">使用hexo加gitpage搭建一个个人blog</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-前几天端午放假，舍友旅游的旅游，回家的回家，省下自己一人呆在深圳。闲来无聊，发现了 
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2018/06/19/使用hexo加gitpage搭建一个个人blog/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/touxiang.jpg" width="44px" height="44px" alt="aasailan's avatar">
-            </div>
-            <div>
-                <strong>aasailan</strong>
-                <span>6月 19, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/hexo/">hexo</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-
-    
-
-    
-        <script type="text/ls-javascript" id="thumbnail-script">
-    var randomNum;
-
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
-        randomNum = Math.floor(Math.random() * 19 + 1);
-
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
     $('.post_thumbnail-random').addClass('lazy');
-
-        locatePost = locatePost.next();
-    }
 </script>
 
+        
+    
+            <p class="article-headline-p">
+                js-number
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/touxiang.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>aasailan</strong>
+        <span>2月 28, 2019</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/javascript/">javascript</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/javascript-core/">javascript core</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/原生javascript/">原生javascript</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
     
 </div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <!-- post9 -->
+<h1 id="Number对象"><a href="#Number对象" class="headerlink" title="Number对象"></a>Number对象</h1><p>js中number是基础数据类型，此外还存在Number对象类型（js提供的number的包装类）。js引擎会在<strong>通过”.”符号来引用数字变量的属性</strong>时，为其自动创建一个<strong>临时的Number实例</strong>对value进行包装以便使用Number类型的方法。需要注意的是 <strong>不能通过 数字直接量+”.” 的形式来创建临时的包装对象</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过变量引入数字，js引擎自动创建Number实例</span></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">2</span>; <span class="comment">// 此时变量n存储者原始值2 </span></span><br><span class="line"><span class="built_in">console</span>.log(n.toString()); <span class="comment">// "2"  通过n.尝试引用属性时，js引擎自动创建一个Number类型的包装对象，提供toString()方法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过数字直接量引用Number对象方法，会报错</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">2.</span>toString()); </span><br><span class="line"><span class="comment">// Uncaught SyntaxError: Invalid or unexpected token</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过为number的包装对象赋值来确认这个包装对象是临时的</span></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">2</span>;</span><br><span class="line">n.test = <span class="string">'添加测试属性'</span> <span class="comment">// 创建出一个临时的包装对象，并且为这个对象添加test属性</span></span><br><span class="line"><span class="built_in">console</span>.log(n.test); <span class="comment">// undefined  上一句的临时包装对象已经被“销毁”，n.test是在尝试引用一个新的包装对象的test，于是输出 undefined</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// boolean 与 string也存在着上述临时包装对象的现象。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 可以通过new Number的方式，显式创建Number包装对象</span></span><br><span class="line"><span class="keyword">var</span> n = <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">var</span> m = <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">2</span>);</span><br><span class="line">n === m; <span class="comment">// false n与m分别指向不同的包装对象</span></span><br><span class="line">n === <span class="number">2</span>; <span class="comment">// fasle n 引用的是包装对象，不是原始值2</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Number类型的MDN文档"><a href="#Number类型的MDN文档" class="headerlink" title="Number类型的MDN文档"></a><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number" target="_blank" rel="noopener">Number类型的MDN文档</a></h2><h3 id="Number-value-与-new-Number-value"><a href="#Number-value-与-new-Number-value" class="headerlink" title="Number([value]) 与 new Number([value])"></a>Number([value]) 与 new Number([value])</h3><p>根据ecma5.1标准，<a href="https://www.ecma-international.org/ecma-262/5.1/#sec-15.7" target="_blank" rel="noopener">点此到达</a></p>
+<p>Number ( [ value ] )：返回一个number原始值<br>Returns a Number value (not a Number object) computed by ToNumber(value) if value was supplied, else returns +0.</p>
+<p>new Number ( [ value ] )：返回一个Number类型的包装对象<br>The [[Prototype]] internal property of the newly constructed object is set to the original Number prototype object, the one that is the initial value of Number.prototype (15.7.3.1).</p>
+<p>The [[Class]] internal property of the newly constructed object is set to “Number”.</p>
+<p>The [[PrimitiveValue]] internal property of the newly constructed object is set to ToNumber(value) if value was supplied, else to +0.</p>
+<p>The [[Extensible]] internal property of the newly constructed object is set to true.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>(<span class="number">3</span>) === <span class="number">3</span> <span class="comment">// true   Number(3)返回原始值3</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">3</span>) === <span class="number">3</span> <span class="comment">// false new Number 返回一个包装对象</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">3</span>).valueOf() === <span class="number">3</span> <span class="comment">// true valueOf 返回了包装对象内部的原始值3</span></span><br></pre></td></tr></table></figure>
+<h3 id="静态属性"><a href="#静态属性" class="headerlink" title="静态属性"></a>静态属性</h3><ul>
+<li>Number.EPSILON：两个可表示(representable)数之间的最小间隔。   </li>
+<li><strong>Number.MAX_SAFE_INTEGER：JavaScript 中最大的安全整数 (2^53 - 1)</strong></li>
+<li>Number.MAX_VALUE：能表示的最大正数。最小的负数是 -Number.MAX_VALUE。   </li>
+<li><strong>Number.MIN_SAFE_INTEGER：JavaScript 中最小的安全整数 (-(2^53 - 1))</strong></li>
+<li>Number.MIN_VALUE：能表示的最小正数即最接近 0 的正数 (实际上不会变成 0)。最大的负数是 -Number.MIN_VALUE（最接近0的负数）</li>
+<li>Number.NaN：特殊的“非数字”值。</li>
+<li>Number.NEGATIVE_INFINITY：特殊的负无穷大值，在溢出时返回该值。</li>
+<li>Number.POSITIVE_INFINITY：特殊的正无穷大值，在溢出时返回改值。</li>
+</ul>
+<p>需要注意的点：</p>
+<ol>
+<li>Number.MAX_SAFE_INTEGER 与 Number.MAX_VALUE 不一样。前者是最大安全整数，后者是js能表示的最大数字。Number.MIN_SAFE_INTEGER 与 Number.MIN_VALUE 同理</li>
+</ol>
+<h3 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h3><p>Number.isNaN(): 确定传递的值是否是 NaN。<br>Number.isFinite()：确定传递的值类型及本身是否是有限数。<br>Number.isInteger()：确定传递的值类型是“number”，且是整数。<br>Number.isSafeInteger()：确定传递的值是否为安全整数 ( -(2^53 - 1) 至 2^53 - 1之间)。<br>Number.toInteger()：计算传递的值并将其转换为整数 (或无穷大)。<br>Number.parseFloat()：和全局对象 parseFloat() 一样。<br>Number.parseInt()：和全局对象 parseInt() 一样。</p>
+<h3 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h3><p>Number.prototype.toExponential(n: number) 返回一个科学计数法表示的字符串<br>Number.prototype.toFixed(n: number) 对参数进行四舍五入，返回整数<br>Number.prototype.toLocaleString(n: number)：默认调用toString()方法，用来被开发者自定义toString方法<br>Number.prototype.toPrecision(n: number)：指定保留n位数字，四舍五入后返回一个字符串。<br>Number.prototype.toString(n: number = 10)：转换成n进制的数字，用字符串形式返回。默认是10进制<br>Number.prototype.valueOf()：返回Number对象内部的值</p>
+<h1 id="js数字的内部存储方式，以及安全整数的概念"><a href="#js数字的内部存储方式，以及安全整数的概念" class="headerlink" title="js数字的内部存储方式，以及安全整数的概念"></a>js数字的内部存储方式，以及安全整数的概念</h1><h2 id="IEEE-754-64位双精度浮点数"><a href="#IEEE-754-64位双精度浮点数" class="headerlink" title="IEEE 754 64位双精度浮点数"></a>IEEE 754 64位双精度浮点数</h2><p>js中所有的数字都使用IEEE 754标准定义的64位双精度浮点格式来实现，java中double类型也采用这个标准进行实现。<br>IEEE 754标准定义的64位双精度浮点格式的相关资料如下，这里不再赘述。</p>
+<ul>
+<li><a href="https://baike.baidu.com/item/IEEE%20754/3869922?fr=aladdin" target="_blank" rel="noopener">IEEE 754百度百科</a></li>
+<li><a href="https://www.jianshu.com/p/e5d72d764f2f" target="_blank" rel="noopener">IEEE 754表示浮点数</a></li>
+</ul>
+<p>这里需要记住几个概念和弄明白IEEE 754如何表示浮点数</p>
+<p>计算机内浮点数表示示意图：<br><img src="/img/post/post9/float.webp" alt="计算机内浮点数表示示意图"><br>上面图中， bbbb…表示尾数，p表示指数。</p>
+<p>IEEE754 64位双精度浮点数采用1位记录正负符号，11位记录指数，52位记录尾数<br>下面是2^53 2^53-1 2^53-2 三个数字的表示</p>
+<table>
+<thead>
+<tr>
+<th>表示数字</th>
+<th>符号位（1位）</th>
+<th>指数位（11位）</th>
+<th>尾数位（52位）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2^53</td>
+<td>0（0代表正号）</td>
+<td>53</td>
+<td>1.0000…000（小数点后一共52个0）</td>
+</tr>
+<tr>
+<td>2^53 -1</td>
+<td>0</td>
+<td>52</td>
+<td>1.111…111（小数点后一共52个1）</td>
+</tr>
+<tr>
+<td>2^53-2</td>
+<td>0</td>
+<td>52</td>
+<td>1.111…110 （小数点后一共51个1,1个0）</td>
+</tr>
+<tr>
+<td>2^0</td>
+<td>0</td>
+<td>0</td>
+<td>1.000…00 （小数点后52个0）</td>
+</tr>
+</tbody>
+</table>
+<p>0的表示需要特殊处理，这里不再赘述。</p>
+<p>依此类推，可以看到这个过程中，每向下减一，通过修改尾数和指数（有时指数 不变），每一个整数都可以由一个浮点数‘模拟’。</p>
+<h2 id="带来的问题"><a href="#带来的问题" class="headerlink" title="带来的问题"></a>带来的问题</h2><p>由于IEEE754 64位浮点数的表示方式，会导致以下一些问题。注意这些问题是由标准导致的，所以只要实现了这个标准就会出现这样的问题，而并不是js自己的问题。</p>
+<p>1、精度问题：十进制的数字在转换为浮点数表示时，可能出现尾数多于52位的现象，此时必然会把尾数多于52位的部分省略。此时会造成精度问题。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 0.1转换为双精度浮点数无法精确表示。</span></span><br><span class="line"><span class="comment">// 下面加法发生的三个过程</span></span><br><span class="line"><span class="comment">// 1、将0.1 转换为双精度浮点数 （无法精确表示，发生精度丢失）（0.1转换成二进制是 0.0 0011 0011 0011 ...无限循环） </span></span><br><span class="line"><span class="comment">// 2、将0.2 转换为双精度浮点数 （无法精确表示，发生精度丢失）（0.2转成二进制是 0. 0011 0011 0011 ...无限循环）</span></span><br><span class="line"><span class="comment">// 3、两个双精度浮点数相加，然后再转换为十进制显示。因为相加的两个浮点数都只是十进制的近似值，所以相加后的浮点数不是严格的0.3，只是0.3的近似</span></span><br><span class="line"><span class="number">0.1</span> + <span class="number">0.2</span> <span class="comment">// 输出 0.30000000000000004</span></span><br><span class="line"></span><br><span class="line"><span class="number">0.1</span> + <span class="number">0.2</span> === <span class="number">0.3</span> <span class="comment">// 输出false</span></span><br><span class="line"></span><br><span class="line"><span class="number">0.3</span> - <span class="number">0.2</span> <span class="comment">// 输出 0.09999999999999998。因为0.2无法精确表示，发生进度丢失导致。</span></span><br></pre></td></tr></table></figure></p>
+<p>2、安全整数：由于所有整数实际上都由双精度浮点数表示，会导致当<strong>超过一定范围后，出现多个整数的二进制存储位数一致的现象</strong>，即整数和二进制存储不再是一对一的情况了，此时四则运算无法正常进行。这个范围内的整数称之为“安全整数”。出现这种现象，本质上其实还是浮点数精度缺失引发的问题。<br>64位双精度浮点数的安全整数范围是-(2^53-1) ~ 2^53-1，包含边界。</p>
+<p>下面解析为什么从2^53开始，不是安全整数。将2^53 和 2^53 +1 两个数字都用二进制指数化表示，<strong>不考虑尾数位的限制</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>表示数字</th>
+<th>符号位（1位）</th>
+<th>指数位（11位）</th>
+<th>尾数位（52位）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2^53</td>
+<td>0（0代表正号）</td>
+<td>53</td>
+<td>1.0000…0000（小数点后一共53个0）</td>
+</tr>
+<tr>
+<td>2^53 + 1</td>
+<td>0</td>
+<td>53</td>
+<td>1.000…0001（小数点后52个0,1个1）</td>
+</tr>
+</tbody>
+</table>
+<p>可以发现，上面两个数字在转换为二进制指数表示时，唯一的差别是尾数部分小数点后53位。但是64位双精度浮点数的尾数只有52位，所以实际上53位的差异被舍弃了。所以 2^53 和 2^53 + 1两个数字的二进制存储位数是一样的，所以它们不是安全整数。</p>
+<p>js中通过 Number.MAX_SAFE_INTEGER 和 Number.MIN_SAFE_INTEGER 可以获取最大和最小安全整数。</p>
+<h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><p>确定自己需要的精度，放大相应的倍数。比如货币单位运算，使用分进行计算。</p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2019/02/14/mvc-mvp-mvvm模式总结/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     
@@ -1325,12 +925,6 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
 
-
-    <!-- Swiftye -->
-    
-
-    <!-- Local Search-->
-    
 
 
 <!-- UC Browser Compatible -->
