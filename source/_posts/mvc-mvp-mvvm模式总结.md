@@ -234,7 +234,7 @@ MVP模式关系图如下：
 <img src="/img/post/post8/mvp.png" alt="mvc模式关系图">
 ① view层将用户操作委托给 presenter处理
 ② presenter处理业务逻辑，修改model
-④ model notify presenter数据更新
+③ model notify presenter数据更新
 ④ presenter根据view提供的接口进行调用来更新view
 
 
