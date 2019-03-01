@@ -40,11 +40,11 @@ n === 2; // fasle n 引用的是包装对象，不是原始值2
 ### Number([value]) 与 new Number([value])
 根据ecma5.1标准，[点此到达](https://www.ecma-international.org/ecma-262/5.1/#sec-15.7)
 
-Number ( [ value ] )：返回一个number原始值
+Number ( [ value ] )：将传入的value转换为number，返回一个number原始值
 Returns a Number value (not a Number object) computed by ToNumber(value) if value was supplied, else returns +0.
 
 
-new Number ( [ value ] )：返回一个Number类型的包装对象
+new Number ( [ value ] )：将传入的value转换为number，然后返回一个Number类型的包装对象
 The [[Prototype]] internal property of the newly constructed object is set to the original Number prototype object, the one that is the initial value of Number.prototype (15.7.3.1).
 
 The [[Class]] internal property of the newly constructed object is set to "Number".
