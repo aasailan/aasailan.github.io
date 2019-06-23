@@ -32,12 +32,12 @@ console.log(n.test); // undefined  上一句的临时包装对象已经被“销
 var n = new Number(2);
 var m = new Number(2);
 n === m; // false n与m分别指向不同的包装对象
-n === 2; // fasle n 引用的是包装对象，不是原始值2
+n === 2; // false n 引用的是包装对象，不是原始值2
 ```
 
 ## [Number类型的MDN文档](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
-### Number([value]) 与 new Number([value])
+### Number([value]) 与 new Number([value]) 的区别
 根据ecma5.1标准，[点此到达](https://www.ecma-international.org/ecma-262/5.1/#sec-15.7)
 
 Number ( [ value ] )：将传入的value转换为number，返回一个number原始值
