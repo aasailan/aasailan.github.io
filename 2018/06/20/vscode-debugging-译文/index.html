@@ -510,8 +510,15 @@
 <ul>
 <li>${workspaceFolder} 代表当前工作文件夹</li>
 <li>${file}代表当前编辑器正打开激活的文件</li>
-<li>${env:Name}代表环境变量名<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;type&quot;: &quot;node&quot;,</span><br><span class="line">    &quot;request&quot;: &quot;launch&quot;,</span><br><span class="line">    &quot;name&quot;: &quot;Launch Program&quot;,</span><br><span class="line">    &quot;program&quot;: &quot;$&#123;workspaceFolder&#125;/app.js&quot;,</span><br><span class="line">    &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;&quot;,</span><br><span class="line">    &quot;args&quot;: [ &quot;$&#123;env:USERNAME&#125;&quot; ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>${env:Name}代表环境变量名<pre><code>{
+  &quot;type&quot;: &quot;node&quot;,
+  &quot;request&quot;: &quot;launch&quot;,
+  &quot;name&quot;: &quot;Launch Program&quot;,
+  &quot;program&quot;: &quot;${workspaceFolder}/app.js&quot;,
+  &quot;cwd&quot;: &quot;${workspaceFolder}&quot;,
+  &quot;args&quot;: [ &quot;${env:USERNAME}&quot; ]
+}
+</code></pre></li>
 </ul>
 </blockquote>
 <h2 id="debug-in-nodejs"><a href="#debug-in-nodejs" class="headerlink" title="debug in nodejs"></a>debug in nodejs</h2><p>以下文档专门介绍关于<a href="https://code.visualstudio.com/docs/nodejs/nodejs-debugging" target="_blank" rel="noopener"><strong>nodejs的调试</strong></a></p>
@@ -684,7 +691,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/archives/2019/06/">六月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         
@@ -702,7 +709,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/cordova系列/">cordova系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/css系列/">css系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/docker/">docker<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hexo/">hexo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/js/">js<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/翻译系列/">翻译系列<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/cordova系列/">cordova系列<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css系列/">css系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/docker/">docker<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hexo/">hexo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/js/">js<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/翻译系列/">翻译系列<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -732,7 +739,7 @@
         <li>
             <a href="/archives">
                 文章总数
-                <span class="sidebar-badge">9</span>
+                <span class="sidebar-badge">11</span>
             </a>
         </li>
         

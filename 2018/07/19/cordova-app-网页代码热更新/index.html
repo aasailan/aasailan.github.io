@@ -346,7 +346,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最后附上我的工程目录截图："><span class="post-toc-number">1.</span> <span class="post-toc-text">最后附上我的工程目录截图：</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#运行后按照提示输入一些项目关键信息，比如app-update的时机，项目名称等，其中有关于Amazon服务器配置，如果不是使用Amazon服务器部署的话，可以跳过不填。输入关键信息后，会生成一个cordova-hcp-json文件"><span class="post-toc-number">1.</span> <span class="post-toc-text">运行后按照提示输入一些项目关键信息，比如app update的时机，项目名称等，其中有关于Amazon服务器配置，如果不是使用Amazon服务器部署的话，可以跳过不填。输入关键信息后，会生成一个cordova-hcp.json文件</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#可携带一个文件夹的路径参数，用来指定哪个是需要部署的网页文件夹，默认是当前目录下的www目录。该命令扫描指定的网页文件夹内的网页文件，产生chcp-manifest清单文件。也根据cordova-hcp-json文件生成chcp-json文件。"><span class="post-toc-number">2.</span> <span class="post-toc-text">可携带一个文件夹的路径参数，用来指定哪个是需要部署的网页文件夹，默认是当前目录下的www目录。该命令扫描指定的网页文件夹内的网页文件，产生chcp.manifest清单文件。也根据cordova-hcp.json文件生成chcp.json文件。</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#启动本地部署服务器，在做本地部署测试时可以使用到。"><span class="post-toc-number">3.</span> <span class="post-toc-text">启动本地部署服务器，在做本地部署测试时可以使用到。</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用Amazon服务器部署的时候，使用这个命令生成登录凭证。不使用Amazon服务器部署，可以不使用这个命令"><span class="post-toc-number">4.</span> <span class="post-toc-text">使用Amazon服务器部署的时候，使用这个命令生成登录凭证。不使用Amazon服务器部署，可以不使用这个命令</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用Amazon服务器部署的时候，可以使用这个命令将网页文件部署到Amazon服务器。不使用Amazon服务器部署，可以不使用这个命令"><span class="post-toc-number">5.</span> <span class="post-toc-text">使用Amazon服务器部署的时候，可以使用这个命令将网页文件部署到Amazon服务器。不使用Amazon服务器部署，可以不使用这个命令</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最后附上我的工程目录截图："><span class="post-toc-number">5.1.</span> <span class="post-toc-text">最后附上我的工程目录截图：</span></a></li></ol></li></ol>
     </ul>
     
 
@@ -504,55 +504,34 @@
 </blockquote>
 <p>在整个流程中，可见chcp.json与chcp.manifest文件的重要性。这两个文件的生成，特别是chcp.manifest文件中还需要每个文件的hash码，当然不可能人工手写。而是要借助cordova-hot-code-push-cli命令行工具。其安装和几个关键的命令如下，<a href="https://github.com/nordnet/cordova-hot-code-push-cli" target="_blank" rel="noopener"><strong>官方文档点此</strong></a>：</p>
 <ul>
-<li><p>安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cordova-hot-code-push-cli</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>命令行简介：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">cordova-hcp init </span><br><span class="line"><span class="comment"># 运行后按照提示输入一些项目关键信息，比如app update的时机，项目名称等，其中有关于Amazon服务器配置，如果不是使用Amazon服务器部署的话，可以跳过不填。输入关键信息后，会生成一个cordova-hcp.json文件</span></span><br><span class="line"></span><br><span class="line">cordova-hcp build [www]</span><br><span class="line"><span class="comment"># 可携带一个文件夹的路径参数，用来指定哪个是需要部署的网页文件夹，默认是当前目录下的www目录。该命令扫描指定的网页文件夹内的网页文件，产生chcp.manifest清单文件。也根据cordova-hcp.json文件生成chcp.json文件。</span></span><br><span class="line"></span><br><span class="line">cordova-hcp server</span><br><span class="line"><span class="comment"># 启动本地部署服务器，在做本地部署测试时可以使用到。</span></span><br><span class="line"></span><br><span class="line">cordova-hcp login</span><br><span class="line"><span class="comment"># 使用Amazon服务器部署的时候，使用这个命令生成登录凭证。不使用Amazon服务器部署，可以不使用这个命令</span></span><br><span class="line"></span><br><span class="line">cordova-hcp deploy</span><br><span class="line"><span class="comment"># 使用Amazon服务器部署的时候，可以使用这个命令将网页文件部署到Amazon服务器。不使用Amazon服务器部署，可以不使用这个命令</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>安装<pre><code>npm install -g cordova-hot-code-push-cli
+</code></pre></li>
+<li>命令行简介：<br><code>`</code>bash<br>cordova-hcp init <h1 id="运行后按照提示输入一些项目关键信息，比如app-update的时机，项目名称等，其中有关于Amazon服务器配置，如果不是使用Amazon服务器部署的话，可以跳过不填。输入关键信息后，会生成一个cordova-hcp-json文件"><a href="#运行后按照提示输入一些项目关键信息，比如app-update的时机，项目名称等，其中有关于Amazon服务器配置，如果不是使用Amazon服务器部署的话，可以跳过不填。输入关键信息后，会生成一个cordova-hcp-json文件" class="headerlink" title="运行后按照提示输入一些项目关键信息，比如app update的时机，项目名称等，其中有关于Amazon服务器配置，如果不是使用Amazon服务器部署的话，可以跳过不填。输入关键信息后，会生成一个cordova-hcp.json文件"></a>运行后按照提示输入一些项目关键信息，比如app update的时机，项目名称等，其中有关于Amazon服务器配置，如果不是使用Amazon服务器部署的话，可以跳过不填。输入关键信息后，会生成一个cordova-hcp.json文件</h1></li>
 </ul>
-<p>知道大概的原理后，下面是官方提供的本地部署网页代码热更新体验流程，<a href="https://github.com/nordnet/cordova-hot-code-push#quick-start-guide" target="_blank" rel="noopener"><strong>官方文档点此</strong></a>：</p>
-<blockquote>
-<ol>
-<li>创建一个新的cordova project，添加ios or android 平台，之后在cordova项目的根目录里面运行以下流程<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cordova create TestProject com.example.testproject TestProject</span><br><span class="line">cd ./TestProject</span><br><span class="line">cordova platform add android</span><br><span class="line">cordova platform add ios</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="2">
-<li>安装cordova-hot-code-push插件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cordova plugin add cordova-hot-code-push-plugin</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="3">
-<li>添加cordova-hot-code-push-local-dev-addon插件，本地部署测试需要使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cordova plugin add cordova-hot-code-push-local-dev-addon</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="4">
-<li>安装cordova-hot-code-push-cli 命令行工具：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cordova-hot-code-push-cli</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="5">
-<li>打开本地服务器。实际上就是开了一个本地服务器，然后使用ngrok反向代理在公网暴露本地服务器，充当网页热更新的部署服务器。对外暴露的网页文件夹是cordova项目根目录的www文件夹。此时已经自动产生chcp.manifest和chcp.json文件放在www文件夹中。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cordova-hcp server</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</blockquote>
-<p>运行完这一步后，可以看到命令行内输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Running server</span><br><span class="line">Checking:  /Cordova/TestProject/www</span><br><span class="line">local_url http://localhost:31284</span><br><span class="line">Warning: .chcpignore does not exist.</span><br><span class="line">Build 2015.09.02-10.17.48 created in /Cordova/TestProject/www</span><br><span class="line">cordova-hcp local server available at: http://localhost:31284</span><br><span class="line">cordova-hcp public server available at: https://5027caf9.ngrok.com</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<ol start="6">
-<li>保持cordova-hcp server运行，新开一个命令行运行cordova run，启动一个app。这里android平台需要注意以下细节：<br>目前的cordova-hot-code-push-plugin与cordova-hot-code-push-local-dev-addon插件，在执行cordova run命令时，会自动尝试向android平台内的config.xml添加chcp标签配置。但是这两个插件在cordova run hook中按照cordova-android-6.0+的项目模板结构来搜索config.xml文件。如果cordova的android项目模板用的是cordova-android-7.0+，cordova run过程中会报错，无法找到config.xml文件。有以下两个方法解决这个问题:</li>
-</ol>
-<ul>
-<li>在添加android平台的时候，指定使用6.0+的模板，放弃使用最新的7.0+模板</li>
-<li>坚持使用7.0+模板，但是不适用cordova run命令。手动在android平台的config.xml文件中添加chcp标签配置，具体的config-file url参考第五步运行 cordova-hcp server 对外暴露的url。手动添加配置后，使用android studio手动打包apk运行。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cordova run</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</blockquote>
+<p>cordova-hcp build [www]</p>
+<h1 id="可携带一个文件夹的路径参数，用来指定哪个是需要部署的网页文件夹，默认是当前目录下的www目录。该命令扫描指定的网页文件夹内的网页文件，产生chcp-manifest清单文件。也根据cordova-hcp-json文件生成chcp-json文件。"><a href="#可携带一个文件夹的路径参数，用来指定哪个是需要部署的网页文件夹，默认是当前目录下的www目录。该命令扫描指定的网页文件夹内的网页文件，产生chcp-manifest清单文件。也根据cordova-hcp-json文件生成chcp-json文件。" class="headerlink" title="可携带一个文件夹的路径参数，用来指定哪个是需要部署的网页文件夹，默认是当前目录下的www目录。该命令扫描指定的网页文件夹内的网页文件，产生chcp.manifest清单文件。也根据cordova-hcp.json文件生成chcp.json文件。"></a>可携带一个文件夹的路径参数，用来指定哪个是需要部署的网页文件夹，默认是当前目录下的www目录。该命令扫描指定的网页文件夹内的网页文件，产生chcp.manifest清单文件。也根据cordova-hcp.json文件生成chcp.json文件。</h1><p>cordova-hcp server</p>
+<h1 id="启动本地部署服务器，在做本地部署测试时可以使用到。"><a href="#启动本地部署服务器，在做本地部署测试时可以使用到。" class="headerlink" title="启动本地部署服务器，在做本地部署测试时可以使用到。"></a>启动本地部署服务器，在做本地部署测试时可以使用到。</h1><p>cordova-hcp login</p>
+<h1 id="使用Amazon服务器部署的时候，使用这个命令生成登录凭证。不使用Amazon服务器部署，可以不使用这个命令"><a href="#使用Amazon服务器部署的时候，使用这个命令生成登录凭证。不使用Amazon服务器部署，可以不使用这个命令" class="headerlink" title="使用Amazon服务器部署的时候，使用这个命令生成登录凭证。不使用Amazon服务器部署，可以不使用这个命令"></a>使用Amazon服务器部署的时候，使用这个命令生成登录凭证。不使用Amazon服务器部署，可以不使用这个命令</h1><p>cordova-hcp deploy</p>
+<h1 id="使用Amazon服务器部署的时候，可以使用这个命令将网页文件部署到Amazon服务器。不使用Amazon服务器部署，可以不使用这个命令"><a href="#使用Amazon服务器部署的时候，可以使用这个命令将网页文件部署到Amazon服务器。不使用Amazon服务器部署，可以不使用这个命令" class="headerlink" title="使用Amazon服务器部署的时候，可以使用这个命令将网页文件部署到Amazon服务器。不使用Amazon服务器部署，可以不使用这个命令"></a>使用Amazon服务器部署的时候，可以使用这个命令将网页文件部署到Amazon服务器。不使用Amazon服务器部署，可以不使用这个命令</h1><pre><code>
+
+知道大概的原理后，下面是官方提供的本地部署网页代码热更新体验流程，[**官方文档点此**](https://github.com/nordnet/cordova-hot-code-push#quick-start-guide)：
+&gt;1. 创建一个新的cordova project，添加ios or android 平台，之后在cordova项目的根目录里面运行以下流程
+</code></pre><p>cordova create TestProject com.example.testproject TestProject<br>cd ./TestProject<br>cordova platform add android<br>cordova platform add ios</p>
+<pre><code>&gt;2. 安装cordova-hot-code-push插件
+</code></pre><p>cordova plugin add cordova-hot-code-push-plugin</p>
+<pre><code>&gt;3. 添加cordova-hot-code-push-local-dev-addon插件，本地部署测试需要使用
+</code></pre><p>cordova plugin add cordova-hot-code-push-local-dev-addon</p>
+<pre><code>&gt;4. 安装cordova-hot-code-push-cli 命令行工具：
+</code></pre><p>npm install -g cordova-hot-code-push-cli</p>
+<pre><code>&gt;5. 打开本地服务器。实际上就是开了一个本地服务器，然后使用ngrok反向代理在公网暴露本地服务器，充当网页热更新的部署服务器。对外暴露的网页文件夹是cordova项目根目录的www文件夹。此时已经自动产生chcp.manifest和chcp.json文件放在www文件夹中。
+</code></pre><p>cordova-hcp server</p>
+<pre><code>运行完这一步后，可以看到命令行内输出：
+</code></pre><p>Running server<br>Checking:  /Cordova/TestProject/www<br>local_url <a href="http://localhost:31284" target="_blank" rel="noopener">http://localhost:31284</a><br>Warning: .chcpignore does not exist.<br>Build 2015.09.02-10.17.48 created in /Cordova/TestProject/www<br>cordova-hcp local server available at: <a href="http://localhost:31284" target="_blank" rel="noopener">http://localhost:31284</a><br>cordova-hcp public server available at: <a href="https://5027caf9.ngrok.com" target="_blank" rel="noopener">https://5027caf9.ngrok.com</a></p>
+<pre><code>&gt;6. 保持cordova-hcp server运行，新开一个命令行运行cordova run，启动一个app。这里android平台需要注意以下细节：  
+目前的cordova-hot-code-push-plugin与cordova-hot-code-push-local-dev-addon插件，在执行cordova run命令时，会自动尝试向android平台内的config.xml添加chcp标签配置。但是这两个插件在cordova run hook中按照cordova-android-6.0+的项目模板结构来搜索config.xml文件。如果cordova的android项目模板用的是cordova-android-7.0+，cordova run过程中会报错，无法找到config.xml文件。有以下两个方法解决这个问题:
+&gt; * 在添加android平台的时候，指定使用6.0+的模板，放弃使用最新的7.0+模板
+&gt; * 坚持使用7.0+模板，但是不适用cordova run命令。手动在android平台的config.xml文件中添加chcp标签配置，具体的config-file url参考第五步运行 cordova-hcp server 对外暴露的url。手动添加配置后，使用android studio手动打包apk运行。
+</code></pre><p>cordova run<br><code>`</code></p>
 <blockquote>
 <ol start="7">
 <li>最后一步，体验网页热更新。修改cordova项目根路径的www文件夹下的html网页文件，观察app中的实时更新。</li>
@@ -703,7 +682,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/archives/2019/06/">六月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         
@@ -721,7 +700,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/cordova系列/">cordova系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/css系列/">css系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/docker/">docker<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hexo/">hexo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/js/">js<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/翻译系列/">翻译系列<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/cordova系列/">cordova系列<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css系列/">css系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/docker/">docker<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hexo/">hexo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/js/">js<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/翻译系列/">翻译系列<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -751,7 +730,7 @@
         <li>
             <a href="/archives">
                 文章总数
-                <span class="sidebar-badge">9</span>
+                <span class="sidebar-badge">11</span>
             </a>
         </li>
         

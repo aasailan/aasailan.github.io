@@ -1,0 +1,2056 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            Cordova源码剖析一（Cordova android启动流程） | 
+        
+        aasailan的blog
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" href="/img/favicon.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="aasailan的blog">
+    <meta name="keywords" content=",前端,cordova,源码剖析">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #3F3F3F;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?ezyEvm8ST5CGfpA+kFFi1g==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="aasailan的blog">
+    <meta name="msapplication-starturl" content="http://yoursite.com/2019/06/23/Cordova源码剖析一（Cordova-android启动流程）/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="aasailan的blog">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yoursite.com/2019/06/23/Cordova源码剖析一（Cordova-android启动流程）/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Cordova源码剖析一（Cordova android启动流程） | aasailan的blog">
+    <meta property="og:image" content="/img/favicon.png">
+    <meta property="og:description" content="aasailan的blog">
+    <meta property="og:article:tag" content="前端"> <meta property="og:article:tag" content="cordova"> <meta property="og:article:tag" content="源码剖析"> 
+
+    
+        <meta property="article:published_time" content="Sun Jun 23 2019 14:28:04 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jun 23 2019 15:32:01 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yoursite.com/2019/06/23/Cordova源码剖析一（Cordova-android启动流程）/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yoursite.com/2019/06/23/Cordova源码剖析一（Cordova-android启动流程）/index.html",
+    "headline": "Cordova源码剖析一（Cordova android启动流程）",
+    "datePublished": "Sun Jun 23 2019 14:28:04 GMT+0800",
+    "dateModified": "Sun Jun 23 2019 15:32:01 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "aasailan",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/touxiang.jpg"
+        },
+        "description": "程序员是一个值得自豪的职业"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "aasailan的blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",前端,cordova,源码剖析",
+    "description": "aasailan的blog",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span id="MD-burger-id" class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#cordova-android-native的启动流程"><span class="post-toc-number">1.</span> <span class="post-toc-text">cordova android native的启动流程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#阶段一：loadConfig"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">阶段一：loadConfig</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ConfigXmlParser类：通过内部的parse方法对-res-xml-config-xml文件进行解析。"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">ConfigXmlParser类：通过内部的parse方法对/res/xml/config.xml文件进行解析。</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#阶段二：loadUrl"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">阶段二：loadUrl</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Cordova中低版本android的JSToNative通讯手段"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Cordova中低版本android的JSToNative通讯手段</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Cordova-Android中一些重要的类"><span class="post-toc-number">2.</span> <span class="post-toc-text">Cordova Android中一些重要的类</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                Cordova源码剖析一（Cordova android启动流程）
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/touxiang.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>aasailan</strong>
+        <span>6月 23, 2019</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/cordova/">cordova</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/前端/">前端</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/源码剖析/">源码剖析</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>这个系列的文章主要用来研究Cordova Android中的jsbridge的原理。系列文章主要分为四部分：</p>
+<ol>
+<li>android native的启动流程（插件初始化，以及_cordovaNative对象初始化）</li>
+<li>android cordova.js的启动流程</li>
+<li>js调用native的过程</li>
+<li>native调用js的过程</li>
+</ol>
+<p>这篇文章主要包括Cordova Android native的启动流程和一些Cordova Android中重要类的说明两大部分。</p>
+<h2 id="cordova-android-native的启动流程"><a href="#cordova-android-native的启动流程" class="headerlink" title="cordova android native的启动流程"></a>cordova android native的启动流程</h2><p>首先运行CordovaActivity的onCreate方法，其中调用loadConfig()方法，用来从config.xml文件中加载cordova插件</p>
+<pre><code class="java">// current stack：CordovaActivity.onCreate
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    loadConfig();
+    ...
+  }
+</code></pre>
+<h3 id="阶段一：loadConfig"><a href="#阶段一：loadConfig" class="headerlink" title="阶段一：loadConfig"></a>阶段一：loadConfig</h3><p>loadConfig方法主要作用是从config.xml文件中加载cordova插件信息，并将这些信息放置到CordovaActivity中的pluginEntries属性中保存</p>
+<pre><code class="java">// current stack: CordovaActivity.onCreate -&gt; CordovaActivity.loadConfig
+protected void loadConfig() {
+  ConfigXmlParser parser = new ConfigXmlParser();
+  parser.parse(this);
+  preferences = parser.getPreferences();
+  preferences.setPreferencesBundle(getIntent().getExtras());
+  launchUrl = parser.getLaunchUrl(); // 从config.xml中获取html的加载路径
+  pluginEntries = parser.getPluginEntries(); // 从config.xml中加载好的插件信息保存在CordovaActivity.pluginEntries
+  Config.parser = parser;
+}
+</code></pre>
+<h4 id="ConfigXmlParser类：通过内部的parse方法对-res-xml-config-xml文件进行解析。"><a href="#ConfigXmlParser类：通过内部的parse方法对-res-xml-config-xml文件进行解析。" class="headerlink" title="ConfigXmlParser类：通过内部的parse方法对/res/xml/config.xml文件进行解析。"></a>ConfigXmlParser类：通过内部的parse方法对/res/xml/config.xml文件进行解析。</h4><p>在ConfigXmlParser类的handleStartTag方法中，可以看到解析config.xml文件的过程：</p>
+<ol>
+<li>解析每一个feature标签并将其中的name属性值当做插件的名称</li>
+<li>解析name属性为’android-package’或者’package’的param标签内的value属性值作为插件的class名称</li>
+<li>解析param标签内的onload属性是否为true等等</li>
+</ol>
+<p>解析完后在handleEndTag方法中，将解析出来的service(插件名)、pluginClass(插件类)、onload(是否立即初始化插件)等信息封装成PluginEntry实例，添加到CordovaActivity.pluginEntries中保存。<br><strong>pluginEntries</strong>是一个ArrayList<pluginentry>。用来保存插件信息</pluginentry></p>
+<pre><code class="java">// current stack: CordovaActivity.onCreate -&gt; CordovaActivity.loadConfig -&gt; ConfigXmlParser.parse -&gt; ConfigXmlParser.handleEndTag
+public void handleEndTag(XmlPullParser xml) {
+  String strNode = xml.getName();
+  if (strNode.equals(&quot;feature&quot;)) {
+    pluginEntries.add(new PluginEntry(service, pluginClass, onload));
+
+    service = &quot;&quot;;
+    pluginClass = &quot;&quot;;
+    insideFeature = false;
+    onload = false;
+  }
+}
+</code></pre>
+<p>至此，loadConfig函数的重要作用已经结束。</p>
+<h3 id="阶段二：loadUrl"><a href="#阶段二：loadUrl" class="headerlink" title="阶段二：loadUrl"></a>阶段二：loadUrl</h3><p>执行完loadConfig之后，会执行CordovaActivity.loadUrl方法，进入初始化的第二个阶段。该阶段会完成webview的初始化和javaScriptInterface的注册。<br>loadUrl中，先判断webview是否为null，若是null，则调用init方法开始初始化</p>
+<pre><code class="java">// current stack: CordovaActivity.loadUrl
+public void loadUrl(String url) {
+    if (appView == null) {
+        init(); // 初始化webview，在这里完成jsbridge的初始化
+    }
+
+    // If keepRunning
+    this.keepRunning = preferences.getBoolean(&quot;KeepRunning&quot;, true);
+
+    appView.loadUrlIntoView(url, true); // 加载html文档
+}
+</code></pre>
+<p>init方法中完成了webview和jsbridge的初始化，深入init方法进行查看</p>
+<pre><code class="java">// current stack: CordovaActivity.loadUrl -&gt; CordovaActivity.init
+protected void init() {
+    appView = makeWebView(); // 创建webview实例
+    createViews();
+    if (!appView.isInitialized()) {
+        appView.init(cordovaInterface, pluginEntries, preferences); // NOTE: 关键方法，初始化webview
+    }
+    cordovaInterface.onCordovaInit(appView.getPluginManager());
+
+    // Wire the hardware volume controls to control media if desired.
+    String volumePref = preferences.getString(&quot;DefaultVolumeStream&quot;, &quot;&quot;);
+    if (&quot;media&quot;.equals(volumePref.toLowerCase(Locale.ENGLISH))) {
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+    }
+}
+</code></pre>
+<p>appView声明类型是CordovaWebView，CordovaWebView是一个接口。appView对象实际上是CordovaWebView的实现类CordovaWebViewImpl。<br>appView.init方法完成了三件非常重要的事情：</p>
+<ol>
+<li>传入了cordovaInterface, pluginEntries, preferences三个参数，完成<strong>PluginManager</strong>的初始化（PluginManager是一个非常重要的对象，待会详细介绍）</li>
+<li>生成了nativeToJsMessageQueue对象，该对象负责Native到JS的通讯，完成Native调用JS方法的实现。（NativeToJsMessageQueue类非常重要，后面会详细介绍）</li>
+<li><p>调用engine.init方法，完成javaScriptInterface在webview的注册，生成window._cordovaNative对象</p>
+<pre><code class="java">// current stack: CordovaActivity.loadUrl -&gt; CordovaActivity.init -&gt; CordovaWebViewImpl.init
+@SuppressLint(&quot;Assert&quot;)
+@Override
+public void init(CordovaInterface cordova, List&lt;PluginEntry&gt; pluginEntries, CordovaPreferences preferences) {
+ if (this.cordova != null) {
+     throw new IllegalStateException();
+ }
+ this.cordova = cordova;
+ this.preferences = preferences;
+ pluginManager = new PluginManager(this, this.cordova, pluginEntries); // NOTE: 关键方法，根据pluginEntries实例化pluginManager
+ resourceApi = new CordovaResourceApi(engine.getView().getContext(), pluginManager);
+
+ // 初始化NativeToJsMessageQueue实例，并且注册两种nativeTojs的调用方式对象
+ nativeToJsMessageQueue = new NativeToJsMessageQueue(); // NOTE: 关键方法
+ nativeToJsMessageQueue.addBridgeMode(new NativeToJsMessageQueue.NoOpBridgeMode()); // 使用js轮询的方式调用JS
+ nativeToJsMessageQueue.addBridgeMode(new NativeToJsMessageQueue.LoadUrlBridgeMode(engine, cordova)); // 使用webview.loadUrl的方式调用JS
+
+ if (preferences.getBoolean(&quot;DisallowOverscroll&quot;, false)) {
+     engine.getView().setOverScrollMode(View.OVER_SCROLL_NEVER);
+ }
+ // NOTE: 初始化CordovaWebViewEngine类，CordovaWebview中所有关于Native和JS的通讯由这个类负责
+ engine.init(this, cordova, engineClient, resourceApi, pluginManager, nativeToJsMessageQueue); // NOTE: 关键方法，注册JSInterface
+ // This isn&#39;t enforced by the compiler, so assert here.
+ assert engine.getView() instanceof CordovaWebViewEngine.EngineView;
+
+ pluginManager.addService(CoreAndroid.PLUGIN_NAME, &quot;org.apache.cordova.CoreAndroid&quot;);
+ pluginManager.init();
+}
+</code></pre>
+<p><strong>PluginManager</strong>类内部维护了一个LinkedHashMap&lt;String, PluginEntry&gt;，其中key是插件名，value是插件实例或插件信息，在后续js调用cordova插件的过程，PluginManager会根据js端传过来的插件名，从内部的map中获取到相应的插件实例，然后执行插件的execute方法。所以<strong>PluginManager是插件的管理器，负责查找、调用、维护插件实例</strong>。关于PluginManager类的详细讲解稍后会有。<br><strong>NativeToJsMessageQueue</strong>类负责Native端到JS的通信，其内部又定义了BridgeMode抽象类以及实现了四个子类。它们分别代表了四种Native调用JS的方式。关于NativeToJsMessageQueue的讲解稍后再看<br>先深入engine.init方法中查看。<br>engine的声明类型是<strong>CordovaWebViewEngine</strong>接口，实现类是<strong>SystemWebViewEngine</strong>。<strong>CordovaWebview所有有关JS的通讯都委托给这个类进行处理</strong><br>engine.init方法完成了三个关键步骤：</p>
+</li>
+<li>在nativeToJsMessageQueue中注册其他两种BridgeMode。至此注册了四种BridgeMode：NoOpBridgeMode， LoadUrlBridgeMode，OnlineEventsBridgeMode，EvalBridgeMode。后续cordova.js会在启动时调用原生方法，指定nativeToJsMessageQueue使用EvalBridgeMode。</li>
+<li>创建了CordovaBridge对象，SystemWebViewEngine会将Native跟JS的通讯都委托给这个类实现</li>
+<li><p>调用exposeJsInterface方法注册window._cordovaNative对象</p>
+<pre><code class="java">// current stack: CordovaActivity.loadUrl -&gt; CordovaActivity.init -&gt; CordovaWebViewImpl.init -&gt; SystemWebViewEngine.init
+@Override
+public void init(CordovaWebView parentWebView, CordovaInterface cordova, CordovaWebViewEngine.Client client,
+       CordovaResourceApi resourceApi, PluginManager pluginManager,
+       NativeToJsMessageQueue nativeToJsMessageQueue) {
+ ...
+ this.pluginManager = pluginManager;
+ this.nativeToJsMessageQueue = nativeToJsMessageQueue;
+ // NOTE: 调用SystemWebView的init方法，其内部完成了SystemWebChromeClient类的初始化
+ // SystemWebChromeClient类实现了onJsPrompt方法用于拦截js Prompt弹窗。使得JS通过可以通过Prompt来调用Native的方式
+ webView.init(this, cordova);
+
+ initWebViewSettings();
+
+ // 继续在nativeToJsMessageQueue中注册两种NativeTojs的方式
+ nativeToJsMessageQueue.addBridgeMode(new NativeToJsMessageQueue.OnlineEventsBridgeMode(new NativeToJsMessageQueue.OnlineEventsBridgeMode.OnlineEventsBridgeModeDelegate() {
+     @Override
+     public void setNetworkAvailable(boolean value) {
+         //sometimes this can be called after calling webview.destroy() on destroy()
+         //thus resulting in a NullPointerException
+         if(webView!=null) {
+             webView.setNetworkAvailable(value); 
+         }
+     }
+     @Override
+     public void runOnUiThread(Runnable r) {
+         SystemWebViewEngine.this.cordova.getActivity().runOnUiThread(r);
+     }
+ }));
+ // EvalBridgeMode类非常关键，Native调用js最终是通过这里类实例来完成。
+ nativeToJsMessageQueue.addBridgeMode(new NativeToJsMessageQueue.EvalBridgeMode(this, cordova));
+ // NOTE: 关键步骤,创建CordovaBridge实例，CordovaWebViewEngine类中关于Native和JS的通讯委托给这个类负责
+ bridge = new CordovaBridge(pluginManager, nativeToJsMessageQueue);
+ // NOTE: 关键步骤，在JS中暴露原生对象
+ exposeJsInterface(webView, bridge);
+}
+</code></pre>
+<p>继续深入exposeJsInterface方法，exposeJsInterface方法内传入CordovaBridge对象，然后新建SystemExposedJsApi对象，最后把这个对象注册到JS侧的window._cordovaNative上，后续cordova.js中会使用这个原生对象来调用原生方法</p>
+<pre><code class="java">// current stack: CordovaActivity.loadUrl -&gt; CordovaActivity.init -&gt; CordovaWebViewImpl.init -&gt; SystemWebViewEngine.init -&gt; SystemWebViewEngine.exposeJsInterface
+@SuppressLint(&quot;AddJavascriptInterface&quot;)
+private static void exposeJsInterface(WebView webView, CordovaBridge bridge) {
+ SystemExposedJsApi exposedJsApi = new SystemExposedJsApi(bridge);
+ // 调用addJavascriptInterface方法在webview内注册原生对象
+ webView.addJavascriptInterface(exposedJsApi, &quot;_cordovaNative&quot;);
+}
+</code></pre>
+<p>SystemExposedJsApi类中一共向JS注册了三个方法</p>
+<pre><code class="java">class SystemExposedJsApi implements ExposedJsApi {
+ private final CordovaBridge bridge;
+
+ SystemExposedJsApi(CordovaBridge bridge) {
+     this.bridge = bridge;
+ }
+
+ // JS调用原生插件时使用
+ @JavascriptInterface
+ public String exec(int bridgeSecret, String service, String action, String callbackId, String arguments) throws JSONException, IllegalAccessException {
+     return bridge.jsExec(bridgeSecret, service, action, callbackId, arguments);
+ }
+
+ // JS中设置NativeToJS的通讯方式
+ @JavascriptInterface
+ public void setNativeToJsBridgeMode(int bridgeSecret, int value) throws IllegalAccessException {
+     bridge.jsSetNativeToJsBridgeMode(bridgeSecret, value);
+ }
+
+ @JavascriptInterface
+ public String retrieveJsMessages(int bridgeSecret, boolean fromOnlineEvent) throws IllegalAccessException {
+     return bridge.jsRetrieveJsMessages(bridgeSecret, fromOnlineEvent);
+ }
+}
+</code></pre>
+</li>
+</ol>
+<p>运行完loadUrl，Native代码完成了_cordovaNative原生对象的注册、完成了SystemWebViewEngine、CordovaBridge、NativeToJsMessageQueue等对象的初始化。为后续JS调用Native做好了准备。</p>
+<h3 id="Cordova中低版本android的JSToNative通讯手段"><a href="#Cordova中低版本android的JSToNative通讯手段" class="headerlink" title="Cordova中低版本android的JSToNative通讯手段"></a>Cordova中低版本android的JSToNative通讯手段</h3><p>@JavascriptInterface的方式只有在android4.2及其以上的android版本才支持，也就是说当android4.2及其以上时，才会通过注册window._cordovaNative的方式来实现JS到Native的调用。当版本小于4.2时或者window._cordovaNative原生对象注册失败时，js会通过prompt的方式来实现JS对Native的调用。具体的实现方式如下：</p>
+<ol>
+<li>js调用window.prompt方法来尝试进行弹窗，并传入特定前缀的value</li>
+<li>Native端在SystemWebChromeClient类中实现onJsPrompt方法来拦截js弹窗，然后通过解析value是否携带特定前缀来判断是否要调用Native方法做出响应。</li>
+</ol>
+<p>SystemWebChromeClient类初始化的入口在上面提到的 engine.init 方法内</p>
+<pre><code class="java">// current stack: CordovaActivity.loadUrl -&gt; CordovaActivity.init -&gt; CordovaWebViewImpl.init -&gt; SystemWebViewEngine.init
+public void init(CordovaWebView parentWebView, CordovaInterface cordova, CordovaWebViewEngine.Client client,
+    CordovaResourceApi resourceApi, PluginManager pluginManager,
+    NativeToJsMessageQueue nativeToJsMessageQueue) {
+    ...
+    // 调用SystemWebView的init方法，其内部完成了SystemWebChromeClient类的初始化
+    // SystemWebChromeClient类实现了onJsPrompt用于拦截
+    webView.init(this, cordova);
+    ...
+}
+</code></pre>
+<p>深入到webView.init内部继续查看</p>
+<pre><code class="java">// current stack: CordovaActivity.loadUrl -&gt; CordovaActivity.init -&gt; CordovaWebViewImpl.init -&gt; SystemWebViewEngine.init -&gt; SystemWebView.init
+void init(SystemWebViewEngine parentEngine, CordovaInterface cordova) {
+    this.cordova = cordova;
+    this.parentEngine = parentEngine;
+    if (this.viewClient == null) {
+        setWebViewClient(new SystemWebViewClient(parentEngine));
+    }
+
+    if (this.chromeClient == null) {
+        // 新建一个SystemWebChromeClient实例，传入的是SystemWebViewEngine对象。cordovaWebview中所有Native和js的通讯都委托给SystemWebViewEngine来实现。
+        setWebChromeClient(new SystemWebChromeClient(parentEngine));
+    }
+}
+</code></pre>
+<p>SystemWebChromeClient中onJsPrompt方法实现如下：</p>
+<pre><code class="java">// 在SystemWebChromeClient类内部
+@Override
+public boolean onJsPrompt(WebView view, String origin, String message, String defaultValue, final JsPromptResult result) {
+    // Unlike the @JavascriptInterface bridge, this method is always called on the UI thread.
+    // 当@JavascriptInterfacew无法使用时的备用通讯手段，将js prompt传过来的value委托给engine内部的bridge实例（CordovaBridge）进行处理
+    String handledRet = parentEngine.bridge.promptOnJsPrompt(origin, message, defaultValue);
+    if (handledRet != null) {
+        // 调用result.confirm后对应js侧的window.prompt方法返回
+        result.confirm(handledRet);
+    } else {
+        dialogsHelper.showPrompt(message, defaultValue, new CordovaDialogsHelper.Result() {
+            @Override
+            public void gotResult(boolean success, String value) {
+                if (success) {
+                    result.confirm(value);
+                } else {
+                    result.cancel();
+                }
+            }
+        });
+    }
+    return true;
+}
+</code></pre>
+<p>promptOnJsPrompt方法对js传过来的value有一套事先协商好的通讯协议，当value以特定字符开头时，promptOnJsPrompt会执行相应的逻辑。<br>promptOnJsPrompt的方法定义如下：</p>
+<pre><code class="java">// 在CordovaBridge类内部
+public String promptOnJsPrompt(String origin, String message, String defaultValue) {
+    if (defaultValue != null &amp;&amp; defaultValue.length() &gt; 3 &amp;&amp; defaultValue.startsWith(&quot;gap:&quot;)) {
+        // 以gap:开头则尝试调用Cordova 插件
+        JSONArray array;
+        try {
+            array = new JSONArray(defaultValue.substring(4));
+            int bridgeSecret = array.getInt(0);
+            String service = array.getString(1);
+            String action = array.getString(2);
+            String callbackId = array.getString(3);
+            // NOTE: 调用插件
+            String r = jsExec(bridgeSecret, service, action, callbackId, message);
+            return r == null ? &quot;&quot; : r;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return &quot;&quot;;
+    }
+    // Sets the native-&gt;JS bridge mode.
+    else if (defaultValue != null &amp;&amp; defaultValue.startsWith(&quot;gap_bridge_mode:&quot;)) {
+        // 以gap_bridge_mode:开头则尝试设置NativeToJs的BridgeMode
+        try {
+            int bridgeSecret = Integer.parseInt(defaultValue.substring(16));
+            jsSetNativeToJsBridgeMode(bridgeSecret, Integer.parseInt(message));
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return &quot;&quot;;
+    }
+    // Polling for JavaScript messages
+    else if (defaultValue != null &amp;&amp; defaultValue.startsWith(&quot;gap_poll:&quot;)) {
+      ...
+    }
+    else if (defaultValue != null &amp;&amp; defaultValue.startsWith(&quot;gap_init:&quot;)) {
+      // NOTE: 以gap_init:开头，初始化NativeToJsMessageQueue类实例中的NativeToJs mode
+      if (pluginManager.shouldAllowBridgeAccess(origin)) {
+          // Enable the bridge
+          int bridgeMode = Integer.parseInt(defaultValue.substring(9));
+          // 设置NativeToJsMessageQueue类实例中的NativeToJs mode
+          jsMessageQueue.setBridgeMode(bridgeMode);
+          // Tell JS the bridge secret.
+          int secret = generateBridgeSecret();
+          return &quot;&quot;+secret;
+      } else {
+          LOG.e(LOG_TAG, &quot;gap_init called from restricted origin: &quot; + origin);
+      }
+      return &quot;&quot;;
+    }
+    return null;
+}
+</code></pre>
+<h2 id="Cordova-Android中一些重要的类"><a href="#Cordova-Android中一些重要的类" class="headerlink" title="Cordova Android中一些重要的类"></a>Cordova Android中一些重要的类</h2><p>cordova android中有一些类扮演了比较重要的角色，下面是这些类的剖析</p>
+<p>CordovaActivity类：<br>功能：在onCreate生命周期中实现了cordova插件和cordovaWebView的初始化逻辑，是cordova应用启动的入口。<br>以下是一些重要属性和重要方法：</p>
+<pre><code class="java">public class CordovaActivity extends Activity {
+  // 加载html页面的webview实例
+  protected CordovaWebView appView;
+  // If true, then the JavaScript and native code continue to run in the background（default = true）
+  protected boolean keepRunning = true;
+  // 存储从config.xml中加载到的preference信息
+  protected CordovaPreferences preferences;
+  // webview需要加载html url，从config.xml中获取
+  protected String launchUrl;
+  // 存储从config.xml中加载到的插件信息
+  protected ArrayList&lt;PluginEntry&gt; pluginEntries;
+
+ /**
+  * 调用loadConfig函数，实现从config.xml配置文件加载cordova插件、launchUrl、preference等重要信息
+  */
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    loadConfig();
+    ...
+  }
+
+ /**
+  * 通过ConfigXmlParser实现对config.xml文件的解析
+  */
+  protected void loadConfig() {
+    ....
+  }
+ /**
+  * 创建webview实例，调用webview的init方法初始化webview，并webview的init方法内完成cordova插件的
+  * 初始化和window._cordovaNative原生对象的注册
+  */
+  protected void init() {
+    ...
+  }
+}
+</code></pre>
+<p>CordovaActivity类里面的appView非常重要，这个实例属于CordovaWebViewImpl类，CordovaActivity将关于JS和Native的交互，以及html页面的管理都委托给这个实例进行。</p>
+<pre><code class="java">public class CordovaWebViewImpl implements CordovaWebView {
+  // 插件管理器，其内部有一个以插件名为key，插件实例为value的map实例，用来获取、维护、初始化插件实例
+  private PluginManager pluginManager;
+
+  // 一个内置的cordova插件实例，实现了对返回键、菜单键、音量键、以及提供了一个稳定的js callback通道来向js传递各种事件
+  private CoreAndroid appPlugin;
+  // Native向js发送消息的队列
+  private NativeToJsMessageQueue nativeToJsMessageQueue;
+  // SystemWebViewEngine的实例，webview会将Native与JS之间的通讯委托给这个实例进行
+  protected final CordovaWebViewEngine engine;
+  /**
+    * 在这个方法中完成了pluginManager的初始化并且注册了内置插件CoreAndroid、
+    * 完成了engine实例的初始化，通过engine.init方法，完成了cordova native一侧的jsbridge初始化
+    * 完成了NativeToJsMessageQueue的初始化
+    */ 
+  public void init() {
+    ...
+  }
+
+  // 该方法由CallbackContent（后续会讲到）实例调用，传入一个插件运行结果，和callbackId
+  @Override
+  public void sendPluginResult(PluginResult cr, String callbackId) {
+    nativeToJsMessageQueue.addPluginResult(cr, callbackId);
+  }
+}
+</code></pre>
+<p>PluginManager类内部有一个以插件名为key，插件实例为value的map实例，该类用来获取、维护、初始化插件实例。<br>PluginManager类有几个非常重要的方法：</p>
+<ol>
+<li><strong>exec</strong>方法，作为外部调用指定插件的指定action的接口方法</li>
+<li><p>addService方法，外部向PluginManager注册插件</p>
+<pre><code class="java">public class PluginManager {
+// 插件实例map
+private final LinkedHashMap&lt;String, CordovaPlugin&gt; pluginMap = new LinkedHashMap&lt;String, CordovaPlugin&gt;();
+// 插件信息map
+private final LinkedHashMap&lt;String, PluginEntry&gt; entryMap = new LinkedHashMap&lt;String, PluginEntry&gt;();
+// 构造函数，传入CordovaActivity内的pluginEntries，用以初始化PluginManager
+public PluginManager(CordovaWebView cordovaWebView, CordovaInterface cordova, Collection&lt;PluginEntry&gt; pluginEntries) {
+ this.ctx = cordova;
+ this.app = cordovaWebView;
+ setPluginEntries(pluginEntries);
+}
+
+public void setPluginEntries(Collection&lt;PluginEntry&gt; pluginEntries) {
+ if (isInitialized) {
+     this.onPause(false);
+     this.onDestroy();
+     pluginMap.clear();
+     entryMap.clear();
+ }
+ // 初始化时isInitialized为false，只运行for循环
+ for (PluginEntry entry : pluginEntries) {
+     // 遍历pluginEntries，一个一个添加
+     addService(entry);
+ }
+ if (isInitialized) {
+     startupPlugins();
+ }
+}
+
+// 将插件添加到两个相应的map内
+public void addService(PluginEntry entry) {
+ // 添加到entryMap
+ this.entryMap.put(entry.service, entry);
+ if (entry.plugin != null) {
+     entry.plugin.privateInitialize(entry.service, ctx, app, app.getPreferences());
+     // 将插件实例添加到pluginMap
+     pluginMap.put(entry.service, entry.plugin);
+ }
+}
+
+// 供外部实例根据插件名来获取插件实例
+public CordovaPlugin getPlugin(String service) {
+ CordovaPlugin ret = pluginMap.get(service);
+ if (ret == null) {
+   // 如果插件实例还没有初始化，
+   PluginEntry pe = entryMap.get(service);
+   if (pe == null) {
+       return null;
+   }
+   if (pe.plugin != null) {
+       ret = pe.plugin;
+   } else {
+       // 通过反射初始化插件实例
+       ret = instantiatePlugin(pe.pluginClass);
+   }
+   ret.privateInitialize(service, ctx, app, app.getPreferences());
+   // 保存插件实例
+   pluginMap.put(service, ret);
+ }
+ return ret;
+}
+
+// NOTE: 根据传入的插件名，action，callbackId，json字符串参数来执行相关插件。该方法是执行插件的直接方法，由CordovaBridge实例调用
+public void exec(final String service, final String action, final String callbackId, final String rawArgs) {
+ // 按照插件名获取插件实例
+ CordovaPlugin plugin = getPlugin(service);
+ if (plugin == null) {
+   LOG.d(TAG, &quot;exec() call to unknown plugin: &quot; + service);
+   PluginResult cr = new PluginResult(PluginResult.Status.CLASS_NOT_FOUND_EXCEPTION);
+   app.sendPluginResult(cr, callbackId);
+   return;
+ }
+ // NOTE: 初始化一个CallbackContext 实例，CallbackContext类负责处理NativeToJS的方法调用。
+ CallbackContext callbackContext = new CallbackContext(callbackId, app);
+ try {
+   long pluginStartTime = System.currentTimeMillis();
+   // 执行插件的execute方法，wasValidAction为false说明是一个非法action调用
+   // rawArgs此时任然是一个json格式字符串，CordovaPlugin类的execute方法内对其进行了反序列化
+   boolean wasValidAction = plugin.execute(action, rawArgs, callbackContext);
+   long duration = System.currentTimeMillis() - pluginStartTime;
+
+   if (duration &gt; SLOW_EXEC_WARNING_THRESHOLD) {
+       LOG.w(TAG, &quot;THREAD WARNING: exec() call to &quot; + service + &quot;.&quot; + action + &quot; blocked the main thread for &quot; + duration + &quot;ms. Plugin should use CordovaInterface.getThreadPool().&quot;);
+   }
+   if (!wasValidAction) {
+       // 如果是一个非法action调用，则需要设置回调结果
+       PluginResult cr = new PluginResult(PluginResult.Status.INVALID_ACTION);
+       callbackContext.sendPluginResult(cr);
+   }
+ } catch (JSONException e) {
+   PluginResult cr = new PluginResult(PluginResult.Status.JSON_EXCEPTION);
+   callbackContext.sendPluginResult(cr);
+ } catch (Exception e) {
+   LOG.e(TAG, &quot;Uncaught exception from plugin&quot;, e);
+   callbackContext.error(e.getMessage());
+ }
+}
+}
+</code></pre>
+</li>
+</ol>
+<p>SystemWebViewEngine类：cordovawebview将所有Native和js的通讯都委托这个类进行。该类完成了cordova native一侧的jsbridge的初始化（无论是基于js Prompt的jsToNative方式还是基于javascriptinterface的原生对象注册，都是在该类的init方法中完成）。该类还初始化了CordovaBridge实例，这个实例非常重要，SystemWebViewEngine类会将Native和js通讯都委托给CordovaBridge来实现。</p>
+<pre><code class="java">public class SystemWebViewEngine implements CordovaWebViewEngine {
+  // 加载html的webview实例，其内部的chromeClient实例实现了对js Prompt弹窗的拦截，使得JS可以通过Prompt弹窗的方式对Native进行调用
+  protected final SystemWebView webView;
+  // js调用native方式时，总是经由CordovaBridge进行处理
+  protected CordovaBridge bridge;
+ /**
+  * 完成了Prompt base的js to native交互方式
+  * 初始化CordovaBridge实例，通过javascriptInterface向window注册_cordovaNative对象
+  */
+  @Override
+  public void init(CordovaWebView parentWebView, CordovaInterface cordova, CordovaWebViewEngine.Client client,
+            CordovaResourceApi resourceApi, PluginManager pluginManager,
+            NativeToJsMessageQueue nativeToJsMessageQueue) {
+    if (this.cordova != null) {
+        throw new IllegalStateException();
+    }
+    // Needed when prefs are not passed by the constructor
+    if (preferences == null) {
+        preferences = parentWebView.getPreferences();
+    }
+    this.parentWebView = parentWebView;
+    this.cordova = cordova;
+    this.client = client;
+    this.resourceApi = resourceApi;
+    this.pluginManager = pluginManager;
+    this.nativeToJsMessageQueue = nativeToJsMessageQueue;
+    // 调用SystemWebView的init方法，其内部完成了SystemWebChromeClient类的初始化
+    // SystemWebChromeClient类实现了onJsPrompt用于拦截js Prompt弹窗，实现JS通过Prompt来调用Native的方式
+    webView.init(this, cordova);
+
+    initWebViewSettings();
+
+    // 继续注册两种调用js的方式
+    nativeToJsMessageQueue.addBridgeMode(new NativeToJsMessageQueue.OnlineEventsBridgeMode(new NativeToJsMessageQueue.OnlineEventsBridgeMode.OnlineEventsBridgeModeDelegate() {
+        @Override
+        public void setNetworkAvailable(boolean value) {
+            //sometimes this can be called after calling webview.destroy() on destroy()
+            //thus resulting in a NullPointerException
+            if(webView!=null) {
+                webView.setNetworkAvailable(value); 
+            }
+        }
+        @Override
+        public void runOnUiThread(Runnable r) {
+            SystemWebViewEngine.this.cordova.getActivity().runOnUiThread(r);
+        }
+    }));
+    nativeToJsMessageQueue.addBridgeMode(new NativeToJsMessageQueue.EvalBridgeMode(this, cordova));
+    // NOTE: 关键步骤,创建CordovaBridge实例，CordovaWebViewEngine类中关于Native和JS的通讯委托给这个类负责
+    bridge = new CordovaBridge(pluginManager, nativeToJsMessageQueue);
+    // NOTE: 关键步骤，在JS中暴露原生对象
+    exposeJsInterface(webView, bridge);
+  }
+
+ /**
+  * 初始化SystemExposedJsApi实例，注册window._cordovaNative原生对象
+  */
+  @SuppressLint(&quot;AddJavascriptInterface&quot;)
+  private static void exposeJsInterface(WebView webView, CordovaBridge bridge) {
+    SystemExposedJsApi exposedJsApi = new SystemExposedJsApi(bridge);
+    webView.addJavascriptInterface(exposedJsApi, &quot;_cordovaNative&quot;);
+  }
+}
+</code></pre>
+<p>SystemExposedJsApi类，SystemExposedJsApi内部通过@javascriptInterface注解的方式，向webview暴露了三个原生方法exec、setNativeToJsBridgeMode、retrieveJsMessages</p>
+<pre><code class="java">class SystemExposedJsApi implements ExposedJsApi {
+  // 将jsToNative的方法调用委托给bridge实例
+  private final CordovaBridge bridge;
+
+  SystemExposedJsApi(CordovaBridge bridge) {
+      this.bridge = bridge;
+  }
+
+  // JS调用原生插件时使用
+  @JavascriptInterface
+  public String exec(int bridgeSecret, String service, String action, String callbackId, String arguments) throws JSONException, IllegalAccessException {
+    // 委托给bridge实例进行处理
+    return bridge.jsExec(bridgeSecret, service, action, callbackId, arguments);
+  }
+
+  // JS中设置NativeToJS的通讯方式
+  @JavascriptInterface
+  public void setNativeToJsBridgeMode(int bridgeSecret, int value) throws IllegalAccessException {
+    bridge.jsSetNativeToJsBridgeMode(bridgeSecret, value);
+  }
+
+  // ？？
+  @JavascriptInterface
+  public String retrieveJsMessages(int bridgeSecret, boolean fromOnlineEvent) throws IllegalAccessException {
+    return bridge.jsRetrieveJsMessages(bridgeSecret, fromOnlineEvent);
+  }
+}
+</code></pre>
+<p>CordovaBridge类，js对Native的调用，不论是基于window._cordovaNative还是基于prompt的调用，都会经由CordovaBridge实例处理。其中的jsExec方法非常重要，就是在这个方法中实现了对cordova插件的调用，该方法内涉及到的pluginManager.exec()方法，已经在pluginManager类中说明</p>
+<pre><code class="java">public class CordovaBridge {
+    private static final String LOG_TAG = &quot;CordovaBridge&quot;;
+    // 插件管理器
+    private PluginManager pluginManager;
+    // 消息队列
+    private NativeToJsMessageQueue jsMessageQueue;
+    // 通讯凭证，由UI线程产生，js线程读取
+    // 在prompt base的交互过程中，会产生一个随机数作为Secret，但是jsinterface base的交互中貌似这个值始终是-1
+    private volatile int expectedBridgeSecret = -1; // written by UI thread, read by JS thread.
+
+    public CordovaBridge(PluginManager pluginManager, NativeToJsMessageQueue jsMessageQueue) {
+        this.pluginManager = pluginManager;
+        this.jsMessageQueue = jsMessageQueue;
+    }
+    // 执行window._nativeCordova.exec方法后，进入到该方法
+    // 执行window.prompt后，也进入到该方法
+    // 该方法是执行Cordova插件的统一入口
+    public String jsExec(int bridgeSecret, String service, String action, String callbackId, String arguments) throws JSONException, IllegalAccessException {
+        if (!verifySecret(&quot;exec()&quot;, bridgeSecret)) {
+            return null;
+        }
+        // If the arguments weren&#39;t received, send a message back to JS.  It will switch bridge modes and try again.  See CB-2666.
+        // We send a message meant specifically for this case.  It starts with &quot;@&quot; so no other message can be encoded into the same string.
+        if (arguments == null) {
+            return &quot;@Null arguments.&quot;;
+        }
+        // 调用native插件期间暂停nativeToJS的消息传递
+        jsMessageQueue.setPaused(true);
+        try {
+            // Tell the resourceApi what thread the JS is running on.
+            CordovaResourceApi.jsThread = Thread.currentThread();
+            // 利用pluginManager获取指定插件名插件，然后执行
+            pluginManager.exec(service, action, callbackId, arguments);
+            String ret = null;
+            if (!NativeToJsMessageQueue.DISABLE_EXEC_CHAINING) {
+                ret = jsMessageQueue.popAndEncode(false);
+            }
+            return ret;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return &quot;&quot;;
+        } finally {
+            jsMessageQueue.setPaused(false);
+        }
+    }
+
+    // js调用设置nativeTojs的mode
+    public void jsSetNativeToJsBridgeMode(int bridgeSecret, int value) throws IllegalAccessException {
+        if (!verifySecret(&quot;setNativeToJsBridgeMode()&quot;, bridgeSecret)) {
+            return;
+        }
+        jsMessageQueue.setBridgeMode(value);
+    }
+
+    public String jsRetrieveJsMessages(int bridgeSecret, boolean fromOnlineEvent) throws IllegalAccessException {
+        if (!verifySecret(&quot;retrieveJsMessages()&quot;, bridgeSecret)) {
+            return null;
+        }
+        return jsMessageQueue.popAndEncode(fromOnlineEvent);
+    }
+
+    private boolean verifySecret(String action, int bridgeSecret) throws IllegalAccessException {
+        if (!jsMessageQueue.isBridgeEnabled()) {
+            if (bridgeSecret == -1) {
+                LOG.d(LOG_TAG, action + &quot; call made before bridge was enabled.&quot;);
+            } else {
+                LOG.d(LOG_TAG, &quot;Ignoring &quot; + action + &quot; from previous page load.&quot;);
+            }
+            return false;
+        }
+        // Bridge secret wrong and bridge not due to it being from the previous page.
+        if (expectedBridgeSecret &lt; 0 || bridgeSecret != expectedBridgeSecret) {
+            LOG.e(LOG_TAG, &quot;Bridge access attempt with wrong secret token, possibly from malicious code. Disabling exec() bridge!&quot;);
+            clearBridgeSecret();
+            throw new IllegalAccessException();
+        }
+        return true;
+    }
+
+    /** Called on page transitions */
+    void clearBridgeSecret() {
+        expectedBridgeSecret = -1;
+    }
+
+    public boolean isSecretEstablished() {
+        return expectedBridgeSecret != -1;
+    }
+
+    /** Called by cordova.js to initialize the bridge. */
+    //On old Androids SecureRandom isn&#39;t really secure, this is the least of your problems if
+    //you&#39;re running Android 4.3 and below in 2017
+    @SuppressLint(&quot;TrulyRandom&quot;)
+    int generateBridgeSecret() {
+        SecureRandom randGen = new SecureRandom();
+        expectedBridgeSecret = randGen.nextInt(Integer.MAX_VALUE);
+        return expectedBridgeSecret;
+    }
+
+    public void reset() {
+        jsMessageQueue.reset();
+        clearBridgeSecret();
+    }
+
+    // 处理prompt base的交互，当js 使用prompt调用native时，由这个方法来解析js传来的value前缀，进而执行相应的动作
+    public String promptOnJsPrompt(String origin, String message, String defaultValue) {
+        if (defaultValue != null &amp;&amp; defaultValue.length() &gt; 3 &amp;&amp; defaultValue.startsWith(&quot;gap:&quot;)) {
+            // 以gap:开头则尝试调用Cordova 插件
+            JSONArray array;
+            try {
+                array = new JSONArray(defaultValue.substring(4));
+                int bridgeSecret = array.getInt(0);
+                String service = array.getString(1);
+                String action = array.getString(2);
+                String callbackId = array.getString(3);
+                // 调用插件
+                String r = jsExec(bridgeSecret, service, action, callbackId, message);
+                return r == null ? &quot;&quot; : r;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return &quot;&quot;;
+        }
+        // Sets the native-&gt;JS bridge mode.
+        else if (defaultValue != null &amp;&amp; defaultValue.startsWith(&quot;gap_bridge_mode:&quot;)) {
+            // gap_bridge_mode:开头则尝试设置NativeToJs的BridgeMode
+            try {
+                int bridgeSecret = Integer.parseInt(defaultValue.substring(16));
+                // 设置NativeToJs mode
+                jsSetNativeToJsBridgeMode(bridgeSecret, Integer.parseInt(message));
+            } catch (NumberFormatException e){
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return &quot;&quot;;
+        }
+        // Polling for JavaScript messages
+        else if (defaultValue != null &amp;&amp; defaultValue.startsWith(&quot;gap_poll:&quot;)) {
+            int bridgeSecret = Integer.parseInt(defaultValue.substring(9));
+            try {
+                String r = jsRetrieveJsMessages(bridgeSecret, &quot;1&quot;.equals(message));
+                return r == null ? &quot;&quot; : r;
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return &quot;&quot;;
+        }
+        else if (defaultValue != null &amp;&amp; defaultValue.startsWith(&quot;gap_init:&quot;)) {
+            // Protect against random iframes being able to talk through the bridge.
+            // Trust only pages which the app would have been allowed to navigate to anyway.
+            // cordova.js在启动时使用window.prompt方法，传入gap_init:3 来设置jsMessageQueue的mode为EvalBridgeMode
+            if (pluginManager.shouldAllowBridgeAccess(origin)) {
+                // Enable the bridge
+                int bridgeMode = Integer.parseInt(defaultValue.substring(9));
+                jsMessageQueue.setBridgeMode(bridgeMode);
+                // Tell JS the bridge secret.
+                int secret = generateBridgeSecret();
+                return &quot;&quot;+secret;
+            } else {
+                LOG.e(LOG_TAG, &quot;gap_init called from restricted origin: &quot; + origin);
+            }
+            return &quot;&quot;;
+        }
+        return null;
+    }
+}
+</code></pre>
+<p>PluginResult类：每一个PluginResult实例都代表一个插件运行结果，插件执行业务完毕后需要构建PluginResult类实例来存储运行结果和状态。<br>其内部有三个非常重要的属性：</p>
+<ol>
+<li>status：代表插件运行结果的状态码，cordova.js中根据这个状态码判断插件是否调用成功</li>
+<li>keepCallback：是否需要保持当前callbackID，如果为false，cordova.js中回调完函数会将该callbackID删除</li>
+<li><p>encodedMessage：需要传递给js的插件运行结果，最常见是json格式字符串</p>
+<pre><code class="java">// 代表插件运行结果
+public class PluginResult {
+// 插件结果状态码
+private final int status;
+// 回传给js的结果的类型
+private final int messageType;
+// 是否保持callbackID，如果为false，则js中回调完这次callbackID就会删掉
+private boolean keepCallback = false;
+// 需要回传给js的结果
+private String encodedMessage;
+
+// 创建实例的时候传入结果状态和json格式结果
+public PluginResult(Status status, JSONObject message) {
+ this.status = status.ordinal();
+ this.messageType = MESSAGE_TYPE_JSON;
+ encodedMessage = message.toString();
+}
+
+// 插件结果状态枚举类，其中NO_RESULT和OK两种状态在js中会被认为是调用插件成功
+// cordova.js中有对应的状态定义
+public enum Status {
+   NO_RESULT, // NOTE: 结果为NO_RESULT时，cordova.js中会直接删除callbackid对应的回调函数
+   OK,
+   CLASS_NOT_FOUND_EXCEPTION,
+   ILLEGAL_ACCESS_EXCEPTION,
+   INSTANTIATION_EXCEPTION,
+   MALFORMED_URL_EXCEPTION,
+   IO_EXCEPTION,
+   INVALID_ACTION,
+   JSON_EXCEPTION,
+   ERROR
+}
+}
+</code></pre>
+<p>CallbackContext类的每一个实例代表着一个Native对Js的callback的引用。该类主要有三个作用：</p>
+</li>
+<li>负责将PluginResult实例传递给webView，每发送一次会在js一侧引发一次对应callbackId的回调</li>
+<li>提供快捷方法来快速创建指定状态的PluginResult实例，并将实例发送给webView。</li>
+<li>在内部保存callbackId</li>
+</ol>
+<pre><code class="java">// 该类负责将PluginResult实例传递给webView
+public class CallbackContext {
+  private static final String LOG_TAG = &quot;CordovaPlugin&quot;;
+
+  // 回调id
+  private String callbackId;
+  private CordovaWebView webView;
+  // 该回调id是否已经finish
+  protected boolean finished;
+
+  // 构建实例的时候传入callbackId和webview
+  public CallbackContext(String callbackId, CordovaWebView webView) {
+    this.callbackId = callbackId;
+    this.webView = webView;
+  }
+
+   // 插件运行完毕，设置结果，同时将结果实例传入webview
+  public void sendPluginResult(PluginResult pluginResult) {
+    synchronized (this) {
+      if (finished) {
+        // 如果该callbackContent已经finished，则不会在js侧触发回调
+        LOG.w(LOG_TAG, &quot;Attempted to send a second callback for ID: &quot; + callbackId + &quot;\nResult was: &quot; + pluginResult.getMessage());
+        return;
+      } else {
+        // 如果keepCallback为true，则finished为false。finished是对pluginResult实例内部的keepcallback取反
+        finished = !pluginResult.getKeepCallback();
+      }
+    }
+    // 调用webview的方法，传入插件结果实例，webView会直接将pluginResult和callbackId交给nativeToJsMessageQueue实例进行处理
+    webView.sendPluginResult(pluginResult, callbackId);
+  }
+
+  // 快速创建一个OK状态的结果，然后发送结果
+  public void success(JSONObject message) {
+    sendPluginResult(new PluginResult(PluginResult.Status.OK, message));
+  }
+}
+</code></pre>
+<p>NativeToJsMessageQueue类维护着NativeToJs的消息队列，并且负责执行这些消息。它承担了三个重要作用：</p>
+<ol>
+<li>内部维护了一个Native发向js的消息队列LinkedList<jsmessage></jsmessage></li>
+<li>内部定义了抽象类BridgeMode和四个实现子类。BridgeMode代表着Native调用js的模式，其四个实现类分别实现了四种不同的方式来进行NativeToJs的调用</li>
+<li>内部提供了一些拼接<strong>js方法调用字符串</strong>的辅助方法，如：popAndEncodeAsJs</li>
+</ol>
+<pre><code class="java">/**
+ * Holds the list of messages to be sent to the WebView.
+ * 存储Native到js的消息队列，并且提供一系列方法来对传递给JS的消息进行加工
+ * 其内部定义了BridgeMode的抽象类及其子类和JsMessage类
+ */
+public class NativeToJsMessageQueue {
+  // 当前队列是否暂停运行
+  private boolean paused;
+  // Native to js消息队列
+  private final LinkedList&lt;JsMessage&gt; queue = new LinkedList&lt;JsMessage&gt;();
+  // nativeTojs的模式的数组。启动后注册的顺序为NoOpBridgeMode， LoadUrlBridgeMode，OnlineEventsBridgeMode，EvalBridgeMode
+  private ArrayList&lt;BridgeMode&gt; bridgeModes = new ArrayList&lt;BridgeMode&gt;();
+  // 当前使用的nativeToJs模式
+  private BridgeMode activeBridgeMode;
+  // 添加一个NativeToJs模式
+  public void addBridgeMode(BridgeMode bridgeMode) {
+    bridgeModes.add(bridgeMode);
+  }
+  // 设置当前使用mode，该方法只被CordovaBridge类调用，因此只能由js侧来调用，所以js侧决定了mode应该选哪个
+  // cordova.js运行后，会使用prompt的方式通知Native，调用该方法，将bridgeMode设置为EvalBridgeMode
+  public void setBridgeMode(int value) {
+      if (value &lt; -1 || value &gt;= bridgeModes.size()) {
+          LOG.d(LOG_TAG, &quot;Invalid NativeToJsBridgeMode: &quot; + value);
+      } else {
+          BridgeMode newMode = value &lt; 0 ? null : bridgeModes.get(value);
+          if (newMode != activeBridgeMode) {
+              LOG.d(LOG_TAG, &quot;Set native-&gt;JS mode to &quot; + (newMode == null ? &quot;null&quot; : newMode.getClass().getSimpleName()));
+              synchronized (this) {
+                  activeBridgeMode = newMode;
+                  if (newMode != null) {
+                      newMode.reset();
+                      if (!paused &amp;&amp; !queue.isEmpty()) {
+                          // 如果当前队列不为空，则马上进行处理
+                          newMode.onNativeToJsMessageAvailable(this);
+                      }
+                  }
+              }
+          }
+      }
+  }
+  /**
+    * Same as popAndEncode(), except encodes in a form that can be executed as JS.
+    * 根据队列内的jsMessage实例拼接并返回出相关的js方法调用字符串
+    * 拼接JS方法调用字符串的时候又借助了JsMessage类的encodeAsJsMessage方法
+    */
+  public String popAndEncodeAsJs() {
+      synchronized (this) {
+          int length = queue.size();
+          if (length == 0) {
+              return null;
+          }
+          // 总的回传js的消息长度
+          int totalPayloadLen = 0;
+          // 需要回传给js的消息个数
+          int numMessagesToSend = 0;
+          // 遍历队列内的jsMessage
+          for (JsMessage message : queue) {
+              // 计算消息长度
+              int messageSize = message.calculateEncodedLength() + 50; // overestimate.
+              // 查看回传js的消息长度是否超过限制
+              if (numMessagesToSend &gt; 0 &amp;&amp; totalPayloadLen + messageSize &gt; MAX_PAYLOAD_SIZE &amp;&amp; MAX_PAYLOAD_SIZE &gt; 0) {
+                  break;
+              }
+              totalPayloadLen += messageSize;
+              numMessagesToSend += 1;
+          }
+          // 是否一次性发送队列内所有的消息，如果为false，则说明队列内还有剩余消息需要发送到js
+          boolean willSendAllMessages = numMessagesToSend == queue.size();
+          StringBuilder sb = new StringBuilder(totalPayloadLen + (willSendAllMessages ? 0 : 100));
+          // Wrap each statement in a try/finally so that if one throws it does
+          // not affect the next.
+          for (int i = 0; i &lt; numMessagesToSend; ++i) {
+              JsMessage message = queue.removeFirst();
+              if (willSendAllMessages &amp;&amp; (i + 1 == numMessagesToSend)) {
+                  message.encodeAsJsMessage(sb);
+              } else {
+                  sb.append(&quot;try{&quot;);
+                  // 拼接出来的js调用：cordova.callbackFromNative(callbackId, isSuccess, status, [ encodeData ], keepCallback); 根据插件结果的类型不同，有些差异，详见encodeAsJsMessage方法内解析
+                  message.encodeAsJsMessage(sb);
+                  sb.append(&quot;}finally{&quot;);
+              }
+          }
+          // 以上如果有三个jsMessage，则拼接出的js如下
+          /**
+            * try {
+            *   cordova.callbackFromNative(callbackId, isSuccess, status, [ encodeData ], keepCallback);
+            *  } finally {
+            *   try {
+            *      cordova.callbackFromNative(callbackId, isSuccess, status, [ encodeData ], keepCallback);
+            *    } finally {
+            *      cordova.callbackFromNative(callbackId, isSuccess, status, [ encodeData ], keepCallback);
+            */
+          if (!willSendAllMessages) {
+              // 如果不是一次发送全部消息，则添加以下语句，让js在下一个event loop对队列中剩余的消息进行查询
+              // NOTE: cordova/plugin/android/polling这个模块在cordova.js中并没有定义，非常奇怪，如果运行了这一句，js侧会报错
+              sb.append(&quot;window.setTimeout(function(){cordova.require(&#39;cordova/plugin/android/polling&#39;).pollOnce();},0);&quot;);
+          }
+          // 补齐之前缺失的 }
+          for (int i = willSendAllMessages ? 1 : 0; i &lt; numMessagesToSend; ++i) {
+              sb.append(&#39;}&#39;);
+          }
+          String ret = sb.toString();
+          return ret;
+      }
+  }
+   /**
+     * Add a JavaScript statement to the list.
+     * 添加一个插件运行结果，在CordovaWebViewImpl类中被调用
+     */
+    public void addPluginResult(PluginResult result, String callbackId) {
+        if (callbackId == null) {
+            LOG.e(LOG_TAG, &quot;Got plugin result with no callbackId&quot;, new Throwable());
+            return;
+        }
+        // Don&#39;t send anything if there is no result and there is no need to
+        // clear the callbacks.
+        boolean noResult = result.getStatus() == PluginResult.Status.NO_RESULT.ordinal();
+        boolean keepCallback = result.getKeepCallback();
+        // 如果结果状态是noResult，同时keepCallback，则没有必要回调js
+        if (noResult &amp;&amp; keepCallback) {
+            return;
+        }
+        // 将插件结果封装成jsMessage对象
+        JsMessage message = new JsMessage(result, callbackId);
+        // 通常为false
+        if (FORCE_ENCODE_USING_EVAL) {
+            StringBuilder sb = new StringBuilder(message.calculateEncodedLength() + 50);
+            message.encodeAsJsMessage(sb);
+            message = new JsMessage(sb.toString());
+        }
+        // 将消息入队列
+        enqueueMessage(message);
+    }
+
+    // 添加消息进入队列并且使用mode实例进行处理
+    private void enqueueMessage(JsMessage message) {
+        synchronized (this) {
+            if (activeBridgeMode == null) {
+                LOG.d(LOG_TAG, &quot;Dropping Native-&gt;JS message due to disabled bridge&quot;);
+                return;
+            }
+            queue.add(message);
+            if (!paused) {
+                // 如果当前没有暂停,则调用当前激活的mode实例来处理
+                activeBridgeMode.onNativeToJsMessageAvailable(this);
+            }
+        }
+    }
+}
+</code></pre>
+<p>遗留问题：NativeToJsMessageQueue类的popAndEncodeAsJs方法拼接出来的js字符串中，有可能会出现 ‘cordova.require(‘cordova/plugin/android/polling’).pollOnce()’ 这句js代码的调用，但是cordova.js中并没有注册这个module，一旦执行这句话就会报错。</p>
+<p>BridgeMode类是一个抽象类，代表Native调用Js的方式。它定义了一个抽象方法onNativeToJsMessageAvailable，这个方法代表Native实际上如何调用Js，不同的子类会有不同的实现机制。</p>
+<pre><code class="java">// BridgeMode抽象类，代表native如何调用js
+public static abstract class BridgeMode {
+    // Native调用js的抽象方法
+    public abstract void onNativeToJsMessageAvailable(NativeToJsMessageQueue queue);
+    public void notifyOfFlush(NativeToJsMessageQueue queue, boolean fromOnlineEvent) {}
+    public void reset() {}
+}
+</code></pre>
+<p>BridgeMode类有四个实现类，它们使用了不同的机制来进行NativeToJs的调用，这些差异都被onNativeToJsMessageAvailable方法统一了对外接口。</p>
+<ol>
+<li>NoOpBridgeMode类：Native端不做操作，依靠JS侧使用定时器进行轮询获取消息</li>
+<li>LoadUrlBridgeMode类：先根据JsMessage实例拼接出JS代码字符串，大概类似于’<strong>cordova.callbackFromNative(callbackId, isSuccess, status, [ encodeData ], keepCallback)</strong>‘。然后使用webView.loadUrl(‘javascript:’)来调用js方法</li>
+<li>OnlineEventsBridgeMode类：通过online/offline事件来告诉JS什么时候去查询信息</li>
+<li>EvalBridgeMode类：先根据JsMessage实例拼接出JS代码字符串（跟LoadUrlBridgeMode一样），然后使用webView.evaluateJavascript方法来最终执行js</li>
+</ol>
+<p>其中LoadUrlBridgeMode类和EvalBridgeMode类都是借助NativeToJsMessageQueue类的popAndEncodeAsJs方法来进行js代码字符串拼接的</p>
+<pre><code class="java">/** Uses JS polls for messages on a timer..  */
+// 在js一侧使用定时器轮询来获取消息，Native端不做操作
+public static class NoOpBridgeMode extends BridgeMode {
+    @Override public void onNativeToJsMessageAvailable(NativeToJsMessageQueue queue) {
+    }
+}
+// 使用webView.loadUrl方法来调用JS
+/** Uses webView.loadUrl(&quot;javascript:&quot;) to execute messages. */
+public static class LoadUrlBridgeMode extends BridgeMode {
+    private final CordovaWebViewEngine engine;
+    private final CordovaInterface cordova;
+
+    public LoadUrlBridgeMode(CordovaWebViewEngine engine, CordovaInterface cordova) {
+        this.engine = engine;
+        this.cordova = cordova;
+    }
+
+    // 该方法负责调用js方法
+    @Override
+    public void onNativeToJsMessageAvailable(final NativeToJsMessageQueue queue) {
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                // NOTE: 借助queue的popAndEncodeAsJs方法拼接出js代码字符串
+                String js = queue.popAndEncodeAsJs();
+                if (js != null) {
+                    // 通过engine实例来执行拼接出的js语句
+                    engine.loadUrl(&quot;javascript:&quot; + js, false);
+                }
+            }
+        });
+    }
+}
+/** Uses online/offline events to tell the JS when to poll for messages. */
+// 通过online/offline事件来告诉JS什么时候去查询信息
+public static class OnlineEventsBridgeMode extends BridgeMode {
+    private final OnlineEventsBridgeModeDelegate delegate;
+    private boolean online;
+    private boolean ignoreNextFlush;
+
+    public interface OnlineEventsBridgeModeDelegate {
+        void setNetworkAvailable(boolean value);
+        void runOnUiThread(Runnable r);
+    }
+
+    public OnlineEventsBridgeMode(OnlineEventsBridgeModeDelegate delegate) {
+        this.delegate = delegate;
+    }
+
+    @Override
+    public void reset() {
+        delegate.runOnUiThread(new Runnable() {
+            public void run() {
+                online = false;
+                // If the following call triggers a notifyOfFlush, then ignore it.
+                ignoreNextFlush = true;
+                delegate.setNetworkAvailable(true);
+            }
+        });
+    }
+
+    @Override
+    public void onNativeToJsMessageAvailable(final NativeToJsMessageQueue queue) {
+        delegate.runOnUiThread(new Runnable() {
+            public void run() {
+                if (!queue.isEmpty()) {
+                    ignoreNextFlush = false;
+                    delegate.setNetworkAvailable(online);
+                }
+            }
+        });
+    }
+    // Track when online/offline events are fired so that we don&#39;t fire excess events.
+    @Override
+    public void notifyOfFlush(final NativeToJsMessageQueue queue, boolean fromOnlineEvent) {
+        if (fromOnlineEvent &amp;&amp; !ignoreNextFlush) {
+            online = !online;
+        }
+    }
+}
+/** Uses webView.evaluateJavascript to execute messages. */
+// 通过webView.evaluateJavascript方法来最终执行js
+public static class EvalBridgeMode extends BridgeMode {
+    private final CordovaWebViewEngine engine;
+    private final CordovaInterface cordova;
+
+    public EvalBridgeMode(CordovaWebViewEngine engine, CordovaInterface cordova) {
+        this.engine = engine;
+        this.cordova = cordova;
+    }
+
+    @Override
+    public void onNativeToJsMessageAvailable(final NativeToJsMessageQueue queue) {
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                // NOTE: 借助queue的popAndEncodeAsJs方法拼接出js代码字符串
+                String js = queue.popAndEncodeAsJs();
+                if (js != null) {
+                    engine.evaluateJavascript(js, null);
+                }
+            }
+        });
+    }
+}
+</code></pre>
+<p>JsMessage类：这个类代表着Native发送给Js的消息，主要功能有两个：</p>
+<ol>
+<li>提供函数在EvalBridgeMode和LoadUrlBridgeMode下将PluginResult实例转换成js代码字符串</li>
+<li>提供一些辅助函数来获取js消息的相关信息</li>
+</ol>
+<pre><code class="java">private static class JsMessage {
+    // 回调id
+    final String jsPayloadOrCallbackId;
+    // 存储的插件运行结果
+    final PluginResult pluginResult;
+
+    JsMessage(PluginResult pluginResult, String callbackId) {
+        if (callbackId == null || pluginResult == null) {
+            throw new NullPointerException();
+        }
+        jsPayloadOrCallbackId = callbackId;
+        this.pluginResult = pluginResult;
+    }
+
+    // 拼接js方法调用字符串，后续会通过webview.loadUrl(&#39;javascript:&#39; ...)或者webview.evelJavaScript的方式来调用js方法
+    void encodeAsJsMessage(StringBuilder sb) {
+        if (pluginResult == null) {
+            sb.append(jsPayloadOrCallbackId);
+        } else {
+            int status = pluginResult.getStatus();
+            boolean success = (status == PluginResult.Status.OK.ordinal()) || (status == PluginResult.Status.NO_RESULT.ordinal());
+            // 注意，调用的是js方法是cordova.callbackFromNative(callbackId, isSuccess, status, [ params ], keepCallback);
+            sb.append(&quot;cordova.callbackFromNative(&#39;&quot;)
+                    .append(jsPayloadOrCallbackId)
+                    .append(&quot;&#39;,&quot;)
+                    .append(success)
+                    .append(&quot;,&quot;)
+                    .append(status)
+                    .append(&quot;,[&quot;);
+            buildJsMessage(sb);
+            sb.append(&quot;],&quot;)
+                    .append(pluginResult.getKeepCallback())
+                    .append(&quot;);&quot;);
+        }
+    }
+}
+</code></pre>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2019/06/23/Cordova源码剖析二（cordova-js启动流程）/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2019/02/28/js-number/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/random/material-13.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/touxiang.jpg" alt="aasailan's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        joeaasailan@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:joeaasailan@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2019/06/">六月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/cordova系列/">cordova系列<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css系列/">css系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/docker/">docker<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hexo/">hexo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/js/">js<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/翻译系列/">翻译系列<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                标签云
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/timeline" title="时间轴">
+                
+                时间轴
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">11</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/aasailan" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2018&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>aasailan的blog
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?wgjW/HuQG9JDgvPDPoRAng==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?d+XW6aNuIPgOn1iA7NnB4g==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+    
+        <script>lsloader.load("sm_js","/js/smoothscroll.js?tNQK2Tw2SUL8a1Scn/Mgew==", true)</script>
+    
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+    
+        <script>lsloader.load("hanabi","/js/hanabi-browser-bundle.js?5+2z7ZZmFuZK5IcimlZbxw==", true)</script>
+    
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+        
+        
+        HanabiBrowser.start('pre code',true);
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+            <script type="text/javascript" color="112,255,59" opacity='1' zIndex="0" count="99" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+        </body>
+    
+</html>

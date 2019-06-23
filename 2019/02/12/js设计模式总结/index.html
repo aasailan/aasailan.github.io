@@ -54,7 +54,7 @@
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="aasailan的blog">
-    <meta name="keywords" content=",javascript,前端,设计模式">
+    <meta name="keywords" content=",前端,javascript,设计模式">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -235,7 +235,7 @@
     <meta property="og:title" content="js设计模式总结 | aasailan的blog">
     <meta property="og:image" content="/img/favicon.png">
     <meta property="og:description" content="aasailan的blog">
-    <meta property="og:article:tag" content="javascript"> <meta property="og:article:tag" content="前端"> <meta property="og:article:tag" content="设计模式"> 
+    <meta property="og:article:tag" content="前端"> <meta property="og:article:tag" content="javascript"> <meta property="og:article:tag" content="设计模式"> 
 
     
         <meta property="article:published_time" content="Tue Feb 12 2019 10:06:52 GMT+0800">
@@ -280,7 +280,7 @@
             "url": "/img/favicon.png"
         }
     },
-    "keywords": ",javascript,前端,设计模式",
+    "keywords": ",前端,javascript,设计模式",
     "description": "aasailan的blog",
 }
 </script>
@@ -524,21 +524,224 @@
 <li>目的是为了生成对象</li>
 <li>控制生成过程，按需生成</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"> options </span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.doors = options.doors || <span class="number">4</span>;</span><br><span class="line">  <span class="keyword">this</span>.state = options.state || <span class="string">"brand new"</span>;</span><br><span class="line">  <span class="keyword">this</span>.color = options.color || <span class="string">"silver"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Truck</span>(<span class="params"> options</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.state = options.state || <span class="string">"used"</span>;</span><br><span class="line">  <span class="keyword">this</span>.wheelSize = options.wheelSize || <span class="string">"large"</span>;</span><br><span class="line">  <span class="keyword">this</span>.color = options.color || <span class="string">"blue"</span>;</span><br><span class="line">&#125;</span><br><span class="line">   </span><br><span class="line"><span class="comment">// 工厂类</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">VehicleFactory</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="comment">// Our default vehicleClass is Car</span></span><br><span class="line">VehicleFactory.prototype.vehicleClass = Car;</span><br><span class="line"><span class="comment">// 工厂类工厂方法</span></span><br><span class="line">VehicleFactory.prototype.createVehicle = <span class="function"><span class="keyword">function</span> (<span class="params"> options </span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span>(options.vehicleType)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"car"</span>:</span><br><span class="line">      <span class="keyword">this</span>.vehicleClass = Car;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"truck"</span>:</span><br><span class="line">      <span class="keyword">this</span>.vehicleClass = Truck;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">this</span>.vehicleClass( options ); </span><br><span class="line">&#125;;</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> carFactory = <span class="keyword">new</span> VehicleFactory();</span><br><span class="line"><span class="keyword">var</span> car = carFactory.createVehicle(&#123;</span><br><span class="line">  vehicleType: <span class="string">"car"</span>,</span><br><span class="line">  color: <span class="string">"yellow"</span>,</span><br><span class="line">  doors: <span class="number">6</span> </span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log( car <span class="keyword">instanceof</span> Car ); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log( car );</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">function Car( options ) {
+  this.doors = options.doors || 4;
+  this.state = options.state || &quot;brand new&quot;;
+  this.color = options.color || &quot;silver&quot;;
+}
+
+function Truck( options){
+  this.state = options.state || &quot;used&quot;;
+  this.wheelSize = options.wheelSize || &quot;large&quot;;
+  this.color = options.color || &quot;blue&quot;;
+}
+
+// 工厂类
+function VehicleFactory() {}
+// Our default vehicleClass is Car
+VehicleFactory.prototype.vehicleClass = Car;
+// 工厂类工厂方法
+VehicleFactory.prototype.createVehicle = function ( options ) {
+  switch(options.vehicleType){
+    case &quot;car&quot;:
+      this.vehicleClass = Car;
+      break;
+    case &quot;truck&quot;:
+      this.vehicleClass = Truck;
+      break;
+  }
+  return new this.vehicleClass( options ); 
+};
+
+
+var carFactory = new VehicleFactory();
+var car = carFactory.createVehicle({
+  vehicleType: &quot;car&quot;,
+  color: &quot;yellow&quot;,
+  doors: 6 
+});
+
+console.log( car instanceof Car ); // true
+console.log( car );
+</code></pre>
 <h3 id="抽象工厂（Abstract-Factory）"><a href="#抽象工厂（Abstract-Factory）" class="headerlink" title="抽象工厂（Abstract Factory）"></a>抽象工厂（Abstract Factory）</h3><p>抽象工厂：抽象工厂依然是工厂模式的样子，只是它与它所创建的对象更加<strong>解耦</strong>。当一个系统与它所创建对象的创建方式是隔离的，或者这个系统需要创建许多不同类型的对象，这个时候可以考虑抽象工厂。抽象工厂在生成时并不清楚它能产生哪些对象，只是用一组规则描述它能产生哪些类型的对象。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 生成抽象工厂函数，此时抽象工厂不清楚自己能生成哪些对象</span></span><br><span class="line"><span class="keyword">var</span> abstractVehicleFactory = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> types = &#123;&#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    getVehicle: <span class="function"><span class="keyword">function</span> (<span class="params"> type, customizations </span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> Vehicle = types[type];</span><br><span class="line">      <span class="keyword">return</span> (Vehicle ? <span class="keyword">new</span> Vehicle(customizations) : <span class="literal">null</span>);</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 动态注册生成对象</span></span><br><span class="line">    registerVehicle: <span class="function"><span class="keyword">function</span> (<span class="params"> type, Vehicle </span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> proto = Vehicle.prototype;</span><br><span class="line">      <span class="comment">// 用一组规则描述它能产生哪些类型的对象</span></span><br><span class="line">      <span class="keyword">if</span> ( proto.drive &amp;&amp; proto.breakDown ) &#123;</span><br><span class="line">          types[type] = Vehicle;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> abstractVehicleFactory;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 动态注册，Car， Truck类的定义省略不写...</span></span><br><span class="line">abstractVehicleFactory.registerVehicle( <span class="string">"car"</span>, Car );</span><br><span class="line">abstractVehicleFactory.registerVehicle( <span class="string">"truck"</span>, Truck );</span><br><span class="line">   </span><br><span class="line"><span class="comment">// 生成对象</span></span><br><span class="line"><span class="keyword">var</span> car = abstractVehicleFactory.getVehicle( <span class="string">"car"</span>, &#123;</span><br><span class="line">  color: <span class="string">"lime green"</span>,</span><br><span class="line">  state: <span class="string">"like new"</span> </span><br><span class="line">&#125;);</span><br><span class="line">   </span><br><span class="line"><span class="comment">// 生成对象</span></span><br><span class="line"><span class="keyword">var</span> truck = abstractVehicleFactory.getVehicle( <span class="string">"truck"</span>, &#123;</span><br><span class="line">  wheelSize: <span class="string">"medium"</span>,</span><br><span class="line">  color: <span class="string">"neon yellow"</span> </span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(car <span class="keyword">instanceof</span> Car); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(truck <span class="keyword">instanceof</span> Truck) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">// 生成抽象工厂函数，此时抽象工厂不清楚自己能生成哪些对象
+var abstractVehicleFactory = (function () {
+
+  var types = {};
+
+  return {
+    getVehicle: function ( type, customizations ) {
+      var Vehicle = types[type];
+      return (Vehicle ? new Vehicle(customizations) : null);
+    },
+
+    // 动态注册生成对象
+    registerVehicle: function ( type, Vehicle ) {
+      var proto = Vehicle.prototype;
+      // 用一组规则描述它能产生哪些类型的对象
+      if ( proto.drive &amp;&amp; proto.breakDown ) {
+          types[type] = Vehicle;
+      }
+      return abstractVehicleFactory;
+    }
+  };
+})();
+
+// 动态注册，Car， Truck类的定义省略不写...
+abstractVehicleFactory.registerVehicle( &quot;car&quot;, Car );
+abstractVehicleFactory.registerVehicle( &quot;truck&quot;, Truck );
+
+// 生成对象
+var car = abstractVehicleFactory.getVehicle( &quot;car&quot;, {
+  color: &quot;lime green&quot;,
+  state: &quot;like new&quot; 
+});
+
+// 生成对象
+var truck = abstractVehicleFactory.getVehicle( &quot;truck&quot;, {
+  wheelSize: &quot;medium&quot;,
+  color: &quot;neon yellow&quot; 
+});
+
+console.log(car instanceof Car); // true
+console.log(truck instanceof Truck) // true
+</code></pre>
 <h3 id="原型模式（prototype）"><a href="#原型模式（prototype）" class="headerlink" title="原型模式（prototype）"></a>原型模式（prototype）</h3><p>GoF 提出的原型模式本是指将一个已经存在的object作为模板，通过clone的手段来生成一个新的对象。参照java的实现会更加清晰（<a href="http://www.runoob.com/design-pattern/prototype-pattern.html" target="_blank" rel="noopener">http://www.runoob.com/design-pattern/prototype-pattern.html</a><br>）。在js中，原型模式发生了转变，泛指通过修改对象的__proto__ 属性或者修改构造函数的prototype属性，来达成clone属性与方法的目的，这与js原型继承或者mixin的概念本质是差不多的。</p>
-<p>示例1：通过修改对象的<strong>proto</strong> 属性来clone属性与方法<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义 模板对象</span></span><br><span class="line"><span class="keyword">var</span> myCar = &#123;</span><br><span class="line">  name: <span class="string">"Ford Escort"</span>,</span><br><span class="line"> </span><br><span class="line">  drive: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="string">"Weeee. I'm driving!"</span> );</span><br><span class="line">  &#125;,</span><br><span class="line"> </span><br><span class="line">  panic: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="string">"Wait. How do you stop this thing?"</span> );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 创建target对象，通过修改target对象的__proto__ 属性来clone模板对象的属性与方法</span></span><br><span class="line"><span class="keyword">var</span> yourCar = <span class="built_in">Object</span>.create( myCar );</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log( yourCar.name ); <span class="comment">// Ford Escort</span></span><br></pre></td></tr></table></figure></p>
-<p>示例2：通过修改构造函数的prototype属性来clone属性与方法<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义模板对象</span></span><br><span class="line"><span class="keyword">var</span> vehiclePrototype = &#123;</span><br><span class="line">  init: <span class="function"><span class="keyword">function</span> (<span class="params"> carModel </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.model = carModel;</span><br><span class="line">  &#125;,</span><br><span class="line">  getModel: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="string">"The model of this vehicle is.."</span> + <span class="keyword">this</span>.model);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 定义对象生成方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">vehicle</span>(<span class="params"> model </span>) </span>&#123;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">  <span class="comment">// 修改构造函数prototype属性，实现对模板对象的方法的clone（与继承本质一样）</span></span><br><span class="line">  F.prototype = vehiclePrototype;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> f = <span class="keyword">new</span> F();</span><br><span class="line">  f.init( model );</span><br><span class="line">  <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> car = vehicle( <span class="string">"Ford Escort"</span> );</span><br><span class="line">car.getModel(); <span class="comment">// The model of this vehicle is..Ford Escort</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="单例模式（singleton）"><a href="#单例模式（singleton）" class="headerlink" title="单例模式（singleton）"></a>单例模式（singleton）</h3><p>单例模式是指严格约束一个类只有一个实例对象。一个典型的单例模式可以这样实现，通过一个方法来生成单例对象，当该对象不存在时，生成对象并返回，当对象存在时，直接返回对象。<br>js中，单例模式通常与namespace的实现联系在一起，利用namespace来为单例对象提供一个全局统一的获取入口，而单例对象作为一个闭包对象存储在namespace中。<br>js中的单例模式通常还伴随着lazy generate的概念，即只在首次获取时产生单例对象，否则不产生。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义 mySingleton namespace (namespace在js中通常由一个对象实现)</span></span><br><span class="line"><span class="keyword">var</span> mySingleton = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">var</span> instance;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 单例对象生成方法</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 私有属性</span></span><br><span class="line">    <span class="keyword">var</span> privateRandomNumber = <span class="built_in">Math</span>.random();</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="comment">// Public methods and variables</span></span><br><span class="line">      publicMethod: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log( <span class="string">"The public can see me!"</span> );</span><br><span class="line">      &#125;,</span><br><span class="line">  </span><br><span class="line">      publicProperty: <span class="string">"I am also public"</span>,</span><br><span class="line">  </span><br><span class="line">      getRandomNumber: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> privateRandomNumber;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  </span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    getInstance: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="comment">// lazy generate</span></span><br><span class="line">      <span class="keyword">if</span> ( !instance ) &#123;</span><br><span class="line">        instance = init();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> singleA = mySingleton.getInstance();</span><br><span class="line"><span class="keyword">var</span> singleB = mySingleton.getInstance();</span><br><span class="line"><span class="built_in">console</span>.log( singleA.getRandomNumber() === singleB.getRandomNumber() ); <span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<p>示例1：通过修改对象的<strong>proto</strong> 属性来clone属性与方法</p>
+<pre><code class="javascript">// 定义 模板对象
+var myCar = {
+  name: &quot;Ford Escort&quot;,
+
+  drive: function () {
+    console.log( &quot;Weeee. I&#39;m driving!&quot; );
+  },
+
+  panic: function () {
+    console.log( &quot;Wait. How do you stop this thing?&quot; );
+  }
+};
+// 创建target对象，通过修改target对象的__proto__ 属性来clone模板对象的属性与方法
+var yourCar = Object.create( myCar );
+
+console.log( yourCar.name ); // Ford Escort
+</code></pre>
+<p>示例2：通过修改构造函数的prototype属性来clone属性与方法</p>
+<pre><code class="javascript">// 定义模板对象
+var vehiclePrototype = {
+  init: function ( carModel ) {
+    this.model = carModel;
+  },
+  getModel: function () {
+    console.log( &quot;The model of this vehicle is..&quot; + this.model);
+  }
+};
+
+// 定义对象生成方法
+function vehicle( model ) {
+
+  function F() {};
+  // 修改构造函数prototype属性，实现对模板对象的方法的clone（与继承本质一样）
+  F.prototype = vehiclePrototype;
+
+  var f = new F();
+  f.init( model );
+  return f;
+}
+
+var car = vehicle( &quot;Ford Escort&quot; );
+car.getModel(); // The model of this vehicle is..Ford Escort 
+</code></pre>
+<h3 id="单例模式（singleton）"><a href="#单例模式（singleton）" class="headerlink" title="单例模式（singleton）"></a>单例模式（singleton）</h3><p>单例模式是指严格约束一个类只有一个实例对象。一个典型的单例模式可以这样实现，通过一个方法来生成单例对象，当该对象不存在时，生成对象并返回，当对象存在时，直接返回对象。<br>js中，单例模式通常与namespace的实现联系在一起，利用namespace来为单例对象提供一个全局统一的获取入口，而单例对象作为一个闭包对象存储在namespace中。<br>js中的单例模式通常还伴随着lazy generate的概念，即只在首次获取时产生单例对象，否则不产生。</p>
+<pre><code class="javascript">// 定义 mySingleton namespace (namespace在js中通常由一个对象实现)
+var mySingleton = (function () {
+
+  var instance;
+
+  // 单例对象生成方法
+  function init() {
+    // 私有属性
+    var privateRandomNumber = Math.random();
+
+    return {
+      // Public methods and variables
+      publicMethod: function () {
+        console.log( &quot;The public can see me!&quot; );
+      },
+
+      publicProperty: &quot;I am also public&quot;,
+
+      getRandomNumber: function() {
+        return privateRandomNumber;
+      }
+    };
+
+  };
+
+  return {
+    getInstance: function () {
+      // lazy generate
+      if ( !instance ) {
+        instance = init();
+      }
+      return instance;
+    }
+  };
+})();
+
+var singleA = mySingleton.getInstance();
+var singleB = mySingleton.getInstance();
+console.log( singleA.getRandomNumber() === singleB.getRandomNumber() ); // true
+</code></pre>
 <h2 id="结构型设计模式（Structural）"><a href="#结构型设计模式（Structural）" class="headerlink" title="结构型设计模式（Structural）"></a>结构型设计模式（Structural）</h2><p>Structural pattern are concerned with object composition and typically identify simple ways to realize relationships between different objects. They help ensure that when one part of a system changes, the entire structure of the system doesn’t need to do the same. They also assist in recasting parts of the system which don’t fit a particular purpose into those that do.<br>结构型设计模式主要关注对象之间的组合结构。结构型设计模式使得当系统中的一部分发生改变时，整个系统不需要有大的改动。</p>
-<h3 id="外观模式（facade）"><a href="#外观模式（facade）" class="headerlink" title="外观模式（facade）"></a>外观模式（facade）</h3><p>外观模式是将底层方法封装，向上提供简单明了的接口，隐藏自身内部的复杂性。比较典型的例子是JQuery封装的一系列dom操作api，内部隐藏了不同浏览器适配的逻辑，只向用户提供统一的简单的api操作。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用外观模式封装注册监听函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addMyEvent</span>(<span class="params">el, ev, fn</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>( el.addEventListener )&#123;</span><br><span class="line">    el.addEventListener( ev,fn, <span class="literal">false</span> );</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(el.attachEvent)&#123;</span><br><span class="line">    el.attachEvent( <span class="string">"on"</span> + ev, fn );</span><br><span class="line">  &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">    el[<span class="string">"on"</span> + ev] = fn;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// JQuery的方法 $(el)、 $(el).css()等等</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="外观模式（facade）"><a href="#外观模式（facade）" class="headerlink" title="外观模式（facade）"></a>外观模式（facade）</h3><p>外观模式是将底层方法封装，向上提供简单明了的接口，隐藏自身内部的复杂性。比较典型的例子是JQuery封装的一系列dom操作api，内部隐藏了不同浏览器适配的逻辑，只向用户提供统一的简单的api操作。</p>
+<pre><code class="javascript">// 使用外观模式封装注册监听函数
+function addMyEvent(el, ev, fn){
+  if( el.addEventListener ){
+    el.addEventListener( ev,fn, false );
+  }else if(el.attachEvent){
+    el.attachEvent( &quot;on&quot; + ev, fn );
+  } else{
+    el[&quot;on&quot; + ev] = fn;
+  }
+};
+
+// JQuery的方法 $(el)、 $(el).css()等等
+</code></pre>
 <h3 id="享元模式（Flyweight）"><a href="#享元模式（Flyweight）" class="headerlink" title="享元模式（Flyweight）"></a>享元模式（Flyweight）</h3><p>享元模式是通过共享复用的数据结构或对象，来达到节省应用内存，提升应用效率的目的。<br>享元模式在js中主要有两个方面的应用：</p>
 <ol>
 <li>数据层面：通过共享数据对象来节约内存</li>
 <li>dom层面：复用dom元素或者使用事件委托模型（在容器上注册监听事件，然后分发给子元素，避免所有子元素都注册监听事件）</li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">"container"</span>&gt;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"toggle"</span> href=<span class="string">"#"</span>&gt;More Info (Address)</span><br><span class="line">    &lt;span <span class="class"><span class="keyword">class</span></span>=<span class="string">"info"</span>&gt;</span><br><span class="line">      This is more information</span><br><span class="line">    &lt;<span class="regexp">/span&gt;&lt;/</span>div&gt;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"toggle"</span> href=<span class="string">"#"</span>&gt;Even More Info (<span class="built_in">Map</span>)</span><br><span class="line">    &lt;span <span class="class"><span class="keyword">class</span></span>=<span class="string">"info"</span>&gt;</span><br><span class="line">      &lt;iframe src=<span class="string">"..."</span>&gt;&lt;/iframe&gt;</span><br><span class="line">    &lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>div&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">/</span><span class="comment">/********************** Snippet 2 **********************/</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp">var stateManager = &#123;</span></span><br><span class="line"><span class="regexp">  fly: function () &#123;</span></span><br><span class="line"><span class="regexp">    var self = this;</span></span><br><span class="line"><span class="regexp">    /</span><span class="regexp">/ 事件委托，在容器上进行监听，避免多个相同的监听浪费内存</span></span><br><span class="line"><span class="regexp">    $( "#container" )</span></span><br><span class="line"><span class="regexp">    .unbind()</span></span><br><span class="line"><span class="regexp">    .on( "click", "div.toggle", function ( e ) &#123;</span></span><br><span class="line"><span class="regexp">      self.handleClick( e.target );</span></span><br><span class="line"><span class="regexp">    &#125;);</span></span><br><span class="line"><span class="regexp">  &#125;,</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  handleClick: function (elem) &#123;</span></span><br><span class="line"><span class="regexp">    /</span><span class="regexp">/ 复用dom元素，避免重新创建DOM对象</span></span><br><span class="line"><span class="regexp">    $(elem).find( "span" ).toggle( "slow" );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">&lt;div id=&quot;container&quot;&gt;
+  &lt;div class=&quot;toggle&quot; href=&quot;#&quot;&gt;More Info (Address)
+    &lt;span class=&quot;info&quot;&gt;
+      This is more information
+    &lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;toggle&quot; href=&quot;#&quot;&gt;Even More Info (Map)
+    &lt;span class=&quot;info&quot;&gt;
+      &lt;iframe src=&quot;...&quot;&gt;&lt;/iframe&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+//********************** Snippet 2 **********************//
+var stateManager = {
+  fly: function () {
+    var self = this;
+    // 事件委托，在容器上进行监听，避免多个相同的监听浪费内存
+    $( &quot;#container&quot; )
+    .unbind()
+    .on( &quot;click&quot;, &quot;div.toggle&quot;, function ( e ) {
+      self.handleClick( e.target );
+    });
+  },
+
+  handleClick: function (elem) {
+    // 复用dom元素，避免重新创建DOM对象
+    $(elem).find( &quot;span&quot; ).toggle( &quot;slow&quot; );
+  }
+};
+</code></pre>
 <h3 id="装饰器模式（decorator）"><a href="#装饰器模式（decorator）" class="headerlink" title="装饰器模式（decorator）"></a>装饰器模式（decorator）</h3><p>传统定义中，装饰器模式是指能在一个系统中动态地为已存在的class添加新的行为。利用这种方式可以在不需要大量改造旧代码的情况下，为系统添加新的功能。这里有两个关键点：</p>
 <ol>
 <li>不改变原有对象（类）的结构的前提下</li>
@@ -549,8 +752,90 @@
 <li>类似于静态语言，创建一个装饰器对象或者装饰器函数作为代理，去调用<strong>被装饰对象</strong>的方法，然后在代理中添加额外的新功能。</li>
 <li>直接把新功能函数赋值给被装饰对象的同名属性，把旧函数替换掉，而新函数中包含了旧函数的调用以及添加的新功能逻辑</li>
 </ol>
-<p>实现方式一：通过调用装饰器函数作为代理，来调用被装饰对象的方法，这种方式与代理模式非常类似<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MacBook</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.cost = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="number">997</span>; &#125;;</span><br><span class="line">  <span class="keyword">this</span>.screenSize = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="number">11.6</span>; &#125;;</span><br><span class="line">&#125;</span><br><span class="line">   </span><br><span class="line"><span class="comment">// Decorator 1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">memory</span>(<span class="params"> macbook </span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 装饰器函数内保留被装饰对象方法的功能</span></span><br><span class="line">  <span class="keyword">var</span> v = macbook.cost();</span><br><span class="line">  <span class="comment">// 新增功能</span></span><br><span class="line">  macbook.cost = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> v + <span class="number">75</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="comment">// Decorator 2</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">engraving</span>(<span class="params"> macbook </span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> v = macbook.cost();</span><br><span class="line">  macbook.cost = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> v + <span class="number">200</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line">   </span><br><span class="line"><span class="comment">// Decorator 3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insurance</span>(<span class="params"> macbook </span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> v = macbook.cost();</span><br><span class="line">  macbook.cost = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> v + <span class="number">250</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line">   </span><br><span class="line"><span class="keyword">var</span> mb = <span class="keyword">new</span> MacBook();</span><br><span class="line"><span class="comment">// 调用装饰器函数，这样就不用修改MacBook类，来达到新增功能的目的</span></span><br><span class="line">memory( mb );</span><br><span class="line">engraving( mb );</span><br><span class="line">insurance( mb );</span><br></pre></td></tr></table></figure></p>
-<p>实现方式2：由于js可以动态修改对象，所以可以直接修改被装饰对象方法的方式来完成新功能<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MacBook</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">Macbook.prototype.cost = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="number">997</span>; &#125;;</span><br><span class="line">Macbook.prototype.screenSize = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="number">11.6</span>; &#125;;</span><br><span class="line">   </span><br><span class="line"><span class="comment">// 保存原方法引用，然后定义新的方法替换旧方法</span></span><br><span class="line">_cost = Macbook.prototype.cost;</span><br><span class="line">Macbook.prototype.cost = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> v = _cost.apply(<span class="keyword">this</span>);</span><br><span class="line">  <span class="keyword">return</span> v + <span class="number">75</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> mb = <span class="keyword">new</span> Macbook();</span><br><span class="line"><span class="built_in">console</span>.log(mb.cost());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 下面利用AOP的思想完成装饰器模式</span></span><br><span class="line"><span class="comment">// 装饰器函数1</span></span><br><span class="line"><span class="keyword">var</span> before = <span class="function"><span class="keyword">function</span>(<span class="params">fn, beforefn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    beforefn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 装饰器函数2</span></span><br><span class="line"><span class="keyword">var</span> after = <span class="function"><span class="keyword">function</span>(<span class="params">fn, afterfn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> afterfn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 定义原函数</span></span><br><span class="line"><span class="keyword">var</span> count = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第一次装饰后，修改原函数变量引用</span></span><br><span class="line"><span class="keyword">var</span> count = before(count, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 第二次装饰后，修改原函数变量引用</span></span><br><span class="line"><span class="keyword">var</span> count = after(count, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">count(); <span class="comment">// 1 \n 2 \n 3</span></span><br></pre></td></tr></table></figure></p>
+<p>实现方式一：通过调用装饰器函数作为代理，来调用被装饰对象的方法，这种方式与代理模式非常类似</p>
+<pre><code class="javascript">function MacBook() {
+  this.cost = function () { return 997; };
+  this.screenSize = function () { return 11.6; };
+}
+
+// Decorator 1
+function memory( macbook ) {
+  // 装饰器函数内保留被装饰对象方法的功能
+  var v = macbook.cost();
+  // 新增功能
+  macbook.cost = function() {
+    return v + 75;
+  };
+}
+
+// Decorator 2
+function engraving( macbook ){
+  var v = macbook.cost();
+  macbook.cost = function(){
+    return v + 200;
+  };
+}
+
+// Decorator 3
+function insurance( macbook ){
+  var v = macbook.cost();
+  macbook.cost = function(){
+      return v + 250;
+  };
+}
+
+var mb = new MacBook();
+// 调用装饰器函数，这样就不用修改MacBook类，来达到新增功能的目的
+memory( mb );
+engraving( mb );
+insurance( mb );
+</code></pre>
+<p>实现方式2：由于js可以动态修改对象，所以可以直接修改被装饰对象方法的方式来完成新功能</p>
+<pre><code class="javascript">function MacBook() {
+}
+Macbook.prototype.cost = function () { return 997; };
+Macbook.prototype.screenSize = function () { return 11.6; };
+
+// 保存原方法引用，然后定义新的方法替换旧方法
+_cost = Macbook.prototype.cost;
+Macbook.prototype.cost = function() {
+  var v = _cost.apply(this);
+  return v + 75;
+}
+
+var mb = new Macbook();
+console.log(mb.cost());
+
+// 下面利用AOP的思想完成装饰器模式
+// 装饰器函数1
+var before = function(fn, beforefn) {
+  return function() {
+    beforefn.apply(this, arguments);
+    return fn.apply(this, arguments);
+  }
+}
+// 装饰器函数2
+var after = function(fn, afterfn) {
+  return function() {
+    fn.apply(this, arguments);
+    return afterfn.apply(this, arguments);
+  }
+}
+// 定义原函数
+var count = function () {
+  console.log(2);
+}
+// 第一次装饰后，修改原函数变量引用
+var count = before(count, function() {
+  console.log(1);
+});
+// 第二次装饰后，修改原函数变量引用
+var count = after(count, function() {
+  console.log(3);
+});
+
+count(); // 1 \n 2 \n 3
+</code></pre>
 <h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><p>代理模式是为一个对象提供一个代用品或者占位符，以便控制对它的访问。用户实际上访问的是代理对象，代理对象对请求做出一些处理后，再把请求转交给本地对象。</p>
 <p>代理分类：</p>
 <ol>
@@ -562,13 +847,95 @@
 <li>用户不需要了解代理对象与本体对象的区别，代理对用户来说是透明的</li>
 <li>在任何使用本体对象的地方都可以替换成使用代理对象</li>
 </ol>
-<p>使用代理模式实现图片预加载<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyImage</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> imageNode = <span class="built_in">document</span>.createElement(<span class="string">'img'</span>);</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(imageNode);</span><br><span class="line">  <span class="keyword">this</span>.image = imageNode;</span><br><span class="line">&#125; </span><br><span class="line">MyImage.prototype.setSrc = <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.image.src = src;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ImageProxy</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.myImage = <span class="keyword">new</span> MyImage();</span><br><span class="line">&#125;</span><br><span class="line">ImageProxy.prototype.setSrc = <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.myImage.setSrc(<span class="string">'loading.png'</span>); <span class="comment">// 设置loading图片</span></span><br><span class="line">  <span class="keyword">var</span> loadImage = <span class="built_in">document</span>.createElement(<span class="string">'img'</span>);</span><br><span class="line">  loadImage.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.myImage.setSrc(src);</span><br><span class="line">  &#125;</span><br><span class="line">  loadImage.src = src;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 直接使用</span></span><br><span class="line"><span class="keyword">var</span> image = <span class="keyword">new</span> MyImage();</span><br><span class="line">image.setSrc(src);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用代理</span></span><br><span class="line"><span class="keyword">var</span> imageProxy = <span class="keyword">new</span> ImageProxy();</span><br><span class="line">imageProxy.setSrc(src);</span><br></pre></td></tr></table></figure></p>
+<p>使用代理模式实现图片预加载</p>
+<pre><code class="javascript">function MyImage() {
+  var imageNode = document.createElement(&#39;img&#39;);
+  document.body.appendChild(imageNode);
+  this.image = imageNode;
+} 
+MyImage.prototype.setSrc = function(src) {
+  this.image.src = src;
+}
+
+function ImageProxy() {
+  this.myImage = new MyImage();
+}
+ImageProxy.prototype.setSrc = function(src) {
+  this.myImage.setSrc(&#39;loading.png&#39;); // 设置loading图片
+  var loadImage = document.createElement(&#39;img&#39;);
+  loadImage.onload = function() {
+    this.myImage.setSrc(src);
+  }
+  loadImage.src = src;
+}
+
+// 直接使用
+var image = new MyImage();
+image.setSrc(src);
+
+// 使用代理
+var imageProxy = new ImageProxy();
+imageProxy.setSrc(src);
+</code></pre>
 <p>上面的例子中，如果只是为了完成预加载的效果，可以把预加载的逻辑直接写在MyImage类中，使用代理是为了让类的职责更加单一和分明</p>
 <p><strong>使用代理的意义</strong>：类的单一职责原则。如果一个对象（类）承担了多项责任，就意味着这个对象（类）将变得非常巨大，引起它变化的原因会增多，这会导致这个对象（类）变得不稳定，可能经常需要修改。</p>
 <p>创建代理时需要注意代理对象与本地对象接口的一致性，像上述例子，代理与本体的接口都是setSrc，如此用户便无需了解代理与本体的区别。有需求变化的时候直接替换代理对象即可。</p>
 <p><strong>代理模式和装饰器模式的区别</strong>：装饰器模式中有一种实现方式也出现了代理对象，可认为是代理模式。但是从根本上，这两种模式的目的是不一致的，代理模式是为了控制对本体对象的访问，装饰器模式是为了向本体对象添加新功能。</p>
 <h3 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h3><p>组合模式将对象组合成树形结构，以表示“部分-整体”的层次结构，通过对象的多态性表现，使得用户对单个对象和组合对象的使用具有<strong>一致性</strong>。<br><img src="/img/post/post7/composite_pattern.png" alt="组合模式"><br>在组合模式中，一个组合对象接受到的请求会按照一定的规则向下传递，直到一个叶对象处理这个请求。</p>
-<p>使用组合模式模拟文件与文件夹系统<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">File</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line">File.prototype.add = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'文件下无法添加子文件'</span>);</span><br><span class="line">&#125;</span><br><span class="line">File.prototype.scan = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'扫描文件：'</span> + <span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Folder</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name;</span><br><span class="line">  <span class="keyword">this</span>.files = &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">Folder.prototype.add = <span class="function"><span class="keyword">function</span>(<span class="params">file</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.files[file.name] = file;</span><br><span class="line">&#125;</span><br><span class="line">Folder.prototype.scan = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'扫描文件夹：'</span> + <span class="keyword">this</span>.name);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> <span class="keyword">this</span>.files)&#123;</span><br><span class="line">    <span class="keyword">this</span>.files[key].scan();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">var</span> fileA = <span class="keyword">new</span> File(<span class="string">'疯狂的石头.mp4'</span>);</span><br><span class="line"><span class="keyword">var</span> fileB = <span class="keyword">new</span> File(<span class="string">'疯狂的外星人.mp4'</span>);</span><br><span class="line"><span class="keyword">var</span> folderA = <span class="keyword">new</span> Folder(<span class="string">'疯狂系列'</span>);</span><br><span class="line">folderA.add(fileA);</span><br><span class="line">folderA.add(fileB);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fileC = <span class="keyword">new</span> File(<span class="string">'护戒使者.mp4'</span>);</span><br><span class="line"><span class="keyword">var</span> fileD = <span class="keyword">new</span> File(<span class="string">'双塔奇兵.mp4'</span>);</span><br><span class="line"><span class="keyword">var</span> fileE = <span class="keyword">new</span> File(<span class="string">'王者归来.mp4'</span>);</span><br><span class="line"><span class="keyword">var</span> folderB = <span class="keyword">new</span> Folder(<span class="string">'指环王系列'</span>);</span><br><span class="line">folderB.add(fileC);</span><br><span class="line">folderB.add(fileD);</span><br><span class="line">folderB.add(fileE); </span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> folderC = <span class="keyword">new</span> Folder(<span class="string">'电影'</span>);</span><br><span class="line">folderC.add(folderA);</span><br><span class="line">folderC.add(folderB);</span><br><span class="line"></span><br><span class="line">folderC.scan();</span><br><span class="line"><span class="comment">// 扫描文件夹：电影</span></span><br><span class="line"><span class="comment">// 扫描文件夹：疯狂系列</span></span><br><span class="line"><span class="comment">// 扫描文件：疯狂的石头.mp4</span></span><br><span class="line"><span class="comment">// 扫描文件：疯狂的外星人.mp4</span></span><br><span class="line"><span class="comment">// 扫描文件夹：指环王系列</span></span><br><span class="line"><span class="comment">// 扫描文件：护戒使者.mp4</span></span><br><span class="line"><span class="comment">// 扫描文件：双塔奇兵.mp4</span></span><br><span class="line"><span class="comment">// 扫描文件：王者归来.mp4</span></span><br></pre></td></tr></table></figure></p>
+<p>使用组合模式模拟文件与文件夹系统</p>
+<pre><code class="javascript">function File(name) {
+  this.name = name;
+}
+File.prototype.add = function() {
+  throw new Error(&#39;文件下无法添加子文件&#39;);
+}
+File.prototype.scan = function() {
+  console.log(&#39;扫描文件：&#39; + this.name);
+}
+
+function Folder(name) {
+  this.name = name;
+  this.files = {};
+}
+Folder.prototype.add = function(file) {
+  this.files[file.name] = file;
+}
+Folder.prototype.scan = function() {
+  console.log(&#39;扫描文件夹：&#39; + this.name);
+  for (var key in this.files){
+    this.files[key].scan();
+  }
+}
+
+// 测试
+var fileA = new File(&#39;疯狂的石头.mp4&#39;);
+var fileB = new File(&#39;疯狂的外星人.mp4&#39;);
+var folderA = new Folder(&#39;疯狂系列&#39;);
+folderA.add(fileA);
+folderA.add(fileB);
+
+var fileC = new File(&#39;护戒使者.mp4&#39;);
+var fileD = new File(&#39;双塔奇兵.mp4&#39;);
+var fileE = new File(&#39;王者归来.mp4&#39;);
+var folderB = new Folder(&#39;指环王系列&#39;);
+folderB.add(fileC);
+folderB.add(fileD);
+folderB.add(fileE); 
+
+var folderC = new Folder(&#39;电影&#39;);
+folderC.add(folderA);
+folderC.add(folderB);
+
+folderC.scan();
+// 扫描文件夹：电影
+// 扫描文件夹：疯狂系列
+// 扫描文件：疯狂的石头.mp4
+// 扫描文件：疯狂的外星人.mp4
+// 扫描文件夹：指环王系列
+// 扫描文件：护戒使者.mp4
+// 扫描文件：双塔奇兵.mp4
+// 扫描文件：王者归来.mp4
+</code></pre>
 <p>组合模式中要求组合对象与叶对象，叶对象之间都拥有相同的接口，这使得它们面向用户时有一致性。上述示例中就是文件夹与文件都有scan这个接口，但是文件夹的scan把请求委托给文件继续进行。</p>
 <h2 id="行为型设计模式（Behavioral）"><a href="#行为型设计模式（Behavioral）" class="headerlink" title="行为型设计模式（Behavioral）"></a>行为型设计模式（Behavioral）</h2><p>Behavioral pattern focus on improving or streamlining the communication between disparate objects in a system.<br>行为型设计模式关注于提高系统内相互独立的对象之间的交流通讯</p>
 <h3 id="观察者模式（Observe）"><a href="#观察者模式（Observe）" class="headerlink" title="观察者模式（Observe）"></a>观察者模式（Observe）</h3><p>The Observer is a design paern where an object (known as a subject) maintains a list of objects depending on it (observers), automatically notifying them of any changes to state.<br>观察者模式中存在两种关键对象以及三种关键操作</p>
@@ -576,15 +943,195 @@
 <li>subject对象：维护一系列的观察者对象，提供三种基本操作方式：被订阅（注册监听方法 register），被取消订阅（移除监听方法 remove），触发事件（trigger）。</li>
 <li>observers对象：业务逻辑执行对象，监听subject对象触发的事件。</li>
 </ol>
-<p>观察者模式非常有利于对象之间的解耦<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Subject</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Subject)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Subject();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">this</span>.observerList = [];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Subject.prototype.register = <span class="function"><span class="keyword">function</span>(<span class="params">observer</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!observer || !observer.update) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">this</span>.observerList.push(observer);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Subject.prototype.remove = <span class="function"><span class="keyword">function</span>(<span class="params">observer</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> index = <span class="keyword">this</span>.observerList.indexOf(observer);</span><br><span class="line">  <span class="keyword">this</span>.observerList.splice(index, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Subject.prototype.notify = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.observerList.forEach(<span class="function"><span class="params">observer</span> =&gt;</span> &#123;</span><br><span class="line">    observer.update &amp;&amp; observer.update()</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Observer</span>(<span class="params">updatefn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.update = updatefn;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">var</span> ob1 = <span class="keyword">new</span> Observer(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'ob1 udpate'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ob2 = <span class="keyword">new</span> Observer(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'ob2 update'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> subject = <span class="keyword">new</span> Subject();</span><br><span class="line">subject.register(ob1);</span><br><span class="line">subject.register(ob2);</span><br><span class="line"></span><br><span class="line">subject.notify();</span><br></pre></td></tr></table></figure></p>
+<p>观察者模式非常有利于对象之间的解耦</p>
+<pre><code class="javascript">function Subject() {
+  if (!(this instanceof Subject)) {
+    return new Subject();
+  }
+  this.observerList = [];
+}
+
+Subject.prototype.register = function(observer) {
+  if (!observer || !observer.update) {
+    return;
+  }
+  this.observerList.push(observer);
+}
+
+Subject.prototype.remove = function(observer) {
+  var index = this.observerList.indexOf(observer);
+  this.observerList.splice(index, 1);
+}
+
+Subject.prototype.notify = function() {
+  this.observerList.forEach(observer =&gt; {
+    observer.update &amp;&amp; observer.update()
+  });
+}
+
+function Observer(updatefn) {
+  this.update = updatefn;
+}
+
+// 测试
+var ob1 = new Observer(function() {
+  console.log(&#39;ob1 udpate&#39;);
+});
+
+var ob2 = new Observer(function() {
+  console.log(&#39;ob2 update&#39;);
+});
+
+var subject = new Subject();
+subject.register(ob1);
+subject.register(ob2);
+
+subject.notify();
+</code></pre>
 <h4 id="发布订阅模式（Publish-Subscribe）"><a href="#发布订阅模式（Publish-Subscribe）" class="headerlink" title="发布订阅模式（Publish/Subscribe）"></a>发布订阅模式（Publish/Subscribe）</h4><p>比起观察者模式，js中更常见的是发布订阅模式，发布订阅模式是观察者模式的一个变种，它们之前的不同在于，观察者模式没有自定义事件，当subject对象发出更新通知，所有的observer都需要做出响应，而发布订阅模式实际上是一个自定义的事件系统，通过不同的事件订阅来区分不同的observer。<br>发布订阅者模式的两种对象和三个关键方法</p>
 <ol>
 <li>publisher：维护一系列的subscriber对象，提供三种基本操作方式：被订阅（注册监听方法 subscribe(event, handler)），被取消订阅（移除监听方法 unsubscribe(event, handler)），触发事件（publish(event)）。</li>
 <li>subscribers：相当于原来的observer对象，通过监听事件进行业务处理</li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Publisher</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.eventSet = &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">Publisher.prototype.subscribe = <span class="function"><span class="keyword">function</span>(<span class="params">event, subscriber</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!subscriber || !subscriber.update) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>.eventSet[event]) &#123;</span><br><span class="line">    <span class="keyword">this</span>.eventSet[event] = [];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">this</span>.eventSet[event].push(subscriber);</span><br><span class="line">&#125;</span><br><span class="line">Publisher.prototype.unsubscribe = <span class="function"><span class="keyword">function</span>(<span class="params">event, subscriber</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!event || !<span class="keyword">this</span>.eventSet[event]) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!subscriber) &#123;</span><br><span class="line">    <span class="keyword">this</span>.eventSet[event] = [];</span><br><span class="line">    <span class="keyword">delete</span> <span class="keyword">this</span>.eventSet[event];</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> subscribers = <span class="keyword">this</span>.eventSet[eventSet];</span><br><span class="line">    <span class="keyword">var</span> index = subscribers.indexOf(subscriber);</span><br><span class="line">    subscribers.splice(index, <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">Publisher.prototype.publish = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!event || !<span class="keyword">this</span>.eventSet[event]) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> subscribers = <span class="keyword">this</span>.eventSet[event];</span><br><span class="line">  subscribers.forEach(<span class="function"><span class="params">subscriber</span> =&gt;</span> &#123;</span><br><span class="line">    subscriber.update &amp;&amp; subscriber.update();</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Subscriber</span>(<span class="params">updatefn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.update = updatefn;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试用例</span></span><br><span class="line"><span class="keyword">var</span> sb1 = <span class="keyword">new</span> Subscriber(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'sb1 update'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> sb2 = <span class="keyword">new</span> Subscriber(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'sb2 update'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> publisher = <span class="keyword">new</span> Publisher();</span><br><span class="line">publisher.subscribe(<span class="string">'js'</span>, sb1);</span><br><span class="line">publisher.subscribe(<span class="string">'java'</span>, sb2);</span><br><span class="line"></span><br><span class="line">publisher.publish(<span class="string">'js'</span>);</span><br><span class="line">publisher.publish(<span class="string">'java'</span>);</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">function Publisher() {
+  this.eventSet = {};
+}
+Publisher.prototype.subscribe = function(event, subscriber) {
+  if (!subscriber || !subscriber.update) {
+    return;
+  }
+  if (!this.eventSet[event]) {
+    this.eventSet[event] = [];
+  }
+  this.eventSet[event].push(subscriber);
+}
+Publisher.prototype.unsubscribe = function(event, subscriber) {
+  if (!event || !this.eventSet[event]) {
+    return;
+  }
+  if (!subscriber) {
+    this.eventSet[event] = [];
+    delete this.eventSet[event];
+  } else {
+    var subscribers = this.eventSet[eventSet];
+    var index = subscribers.indexOf(subscriber);
+    subscribers.splice(index, 1);
+  }
+}
+Publisher.prototype.publish = function(event) {
+  if (!event || !this.eventSet[event]) {
+    return;
+  }
+  var subscribers = this.eventSet[event];
+  subscribers.forEach(subscriber =&gt; {
+    subscriber.update &amp;&amp; subscriber.update();
+  })
+}
+
+function Subscriber(updatefn) {
+  this.update = updatefn;
+}
+
+// 测试用例
+var sb1 = new Subscriber(function() {
+  console.log(&#39;sb1 update&#39;);
+});
+var sb2 = new Subscriber(function() {
+  console.log(&#39;sb2 update&#39;);
+});
+
+var publisher = new Publisher();
+publisher.subscribe(&#39;js&#39;, sb1);
+publisher.subscribe(&#39;java&#39;, sb2);
+
+publisher.publish(&#39;js&#39;);
+publisher.publish(&#39;java&#39;);
+</code></pre>
 <h3 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h3><p>If it appears a system has too many direct relationships between components, it may be time to have a central point of control that components communicate through instead. The Mediator promotes loose coupling by ensuring that instead of components referring to each other explicitly, their interaction is handled through this central point. This can help us decouple systems and improve the potential for component reusability.<br>如果一个系统内有大量的组件之间存在直接关联（通常表现为相互持有引用），此时应该设置一个中央节点来控制组件之间的联系。这个中央节点既能保持组件之间的联系（组件之间任然能通信），又能让组件之间充分解耦（让组件不再相互持有引用）。这就是中介者模式，中央节点就是中介者。<br>真实世界中 机场控制系统就是典型的中介者模式，机场控制系统接管了所有的通信和业务处理，而不是把通信留给飞机和飞机之间。集中化控制是这个系统的特点，机场控制系统就是其中中介者的角色</p>
-<p>使用中介者模式来模拟游戏<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用中介者模式完成游戏设计</span></span><br><span class="line"><span class="comment">// 游戏规则，玩家分成红蓝两队，某一队的所有玩家都死亡后，另一队所有玩家获胜</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义玩家</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Player</span>(<span class="params">name, team</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name;</span><br><span class="line">  <span class="keyword">this</span>.team = team;</span><br><span class="line">  <span class="keyword">this</span>.state = Player.STATE.alive;</span><br><span class="line">&#125;</span><br><span class="line">Player.prototype.win = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name + <span class="string">' win'</span>);</span><br><span class="line">&#125;</span><br><span class="line">Player.prototype.lose = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name + <span class="string">' lose'</span>);</span><br><span class="line">&#125;</span><br><span class="line">Player.prototype.die = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.state = Player.STATE.die;</span><br><span class="line">  <span class="keyword">this</span>.lose();</span><br><span class="line">  <span class="comment">// 每一位玩家只与中介者发生联系</span></span><br><span class="line">  GameCenter.publish(<span class="string">'playerDead'</span>, <span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line">Player.TEAM = &#123;</span><br><span class="line">  red: <span class="string">'red'</span>,</span><br><span class="line">  blue: <span class="string">'blue'</span></span><br><span class="line">&#125;</span><br><span class="line">Player.STATE = &#123;</span><br><span class="line">  alive: <span class="string">'alive'</span>,</span><br><span class="line">  die: <span class="string">'die'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义游戏中心，中介者</span></span><br><span class="line"><span class="keyword">var</span> GameCenter = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> teams = &#123;</span><br><span class="line">    [Player.TEAM.red]: [],</span><br><span class="line">    [Player.TEAM.blue]: [],</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">var</span> operations = &#123;</span><br><span class="line">    playerDead: <span class="function"><span class="keyword">function</span>(<span class="params">player</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (player &amp;&amp; player.team &amp;&amp; teams[player.team]) &#123;</span><br><span class="line">        <span class="keyword">var</span> players = teams[player.team];</span><br><span class="line">        <span class="keyword">if</span> (!players.some(<span class="function"><span class="params">player</span> =&gt;</span> player.state === Player.STATE.alive)) &#123;</span><br><span class="line">          <span class="keyword">var</span> winPlayers = player.team === Player.TEAM.red ? teams[Player.TEAM.blue] : teams[Player.TEAM.red];</span><br><span class="line">          winPlayers.forEach(<span class="function"><span class="params">player</span> =&gt;</span> player.win());</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    addPlayer: <span class="function"><span class="keyword">function</span>(<span class="params">player</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (player &amp;&amp; player.team &amp;&amp; teams[player.team]) &#123;</span><br><span class="line">        teams[player.team].push(player);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    publish: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">      params = <span class="built_in">Array</span>.prototype.splice.call(<span class="built_in">arguments</span>, <span class="number">1</span>);</span><br><span class="line">      <span class="comment">// 由中介者处理玩家之间的联系</span></span><br><span class="line">      operations[event] &amp;&amp; operations[event].apply(<span class="keyword">this</span>, params);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义玩家生成工厂</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">playerFactory</span>(<span class="params">name, team</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> player = <span class="keyword">new</span> Player(name, team);</span><br><span class="line">  GameCenter.publish(<span class="string">'addPlayer'</span>, player);</span><br><span class="line">  <span class="keyword">return</span> player;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试用例</span></span><br><span class="line"><span class="keyword">var</span> xiaoming = playerFactory(<span class="string">'xiaoming'</span>, Player.TEAM.red);</span><br><span class="line"><span class="keyword">var</span> xiaohong = playerFactory(<span class="string">'xiaohong'</span>, Player.TEAM.red);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> xiaoqiao = playerFactory(<span class="string">'xiaoqiao'</span>, Player.TEAM.blue);</span><br><span class="line"><span class="keyword">var</span> xiaobing = playerFactory(<span class="string">'xiaobing'</span>, Player.TEAM.blue);</span><br><span class="line"></span><br><span class="line">xiaoming.die(); <span class="comment">// xiaoming lose</span></span><br><span class="line">xiaohong.die(); <span class="comment">// xiaohong lose</span></span><br><span class="line"><span class="comment">// xiaoqiao win</span></span><br><span class="line"><span class="comment">// xiaobing win</span></span><br></pre></td></tr></table></figure></p>
+<p>使用中介者模式来模拟游戏</p>
+<pre><code class="javascript">// 使用中介者模式完成游戏设计
+// 游戏规则，玩家分成红蓝两队，某一队的所有玩家都死亡后，另一队所有玩家获胜
+
+// 定义玩家
+function Player(name, team) {
+  this.name = name;
+  this.team = team;
+  this.state = Player.STATE.alive;
+}
+Player.prototype.win = function() {
+  console.log(this.name + &#39; win&#39;);
+}
+Player.prototype.lose = function() {
+  console.log(this.name + &#39; lose&#39;);
+}
+Player.prototype.die = function() {
+  this.state = Player.STATE.die;
+  this.lose();
+  // 每一位玩家只与中介者发生联系
+  GameCenter.publish(&#39;playerDead&#39;, this);
+}
+Player.TEAM = {
+  red: &#39;red&#39;,
+  blue: &#39;blue&#39;
+}
+Player.STATE = {
+  alive: &#39;alive&#39;,
+  die: &#39;die&#39;
+}
+
+// 定义游戏中心，中介者
+var GameCenter = function(){
+
+  var teams = {
+    [Player.TEAM.red]: [],
+    [Player.TEAM.blue]: [],
+  };
+
+  var operations = {
+    playerDead: function(player) {
+      if (player &amp;&amp; player.team &amp;&amp; teams[player.team]) {
+        var players = teams[player.team];
+        if (!players.some(player =&gt; player.state === Player.STATE.alive)) {
+          var winPlayers = player.team === Player.TEAM.red ? teams[Player.TEAM.blue] : teams[Player.TEAM.red];
+          winPlayers.forEach(player =&gt; player.win());
+        }
+      }
+    },
+    addPlayer: function(player) {
+      if (player &amp;&amp; player.team &amp;&amp; teams[player.team]) {
+        teams[player.team].push(player);
+      }
+    }
+  };
+
+  return {
+    publish: function(event) {
+      params = Array.prototype.splice.call(arguments, 1);
+      // 由中介者处理玩家之间的联系
+      operations[event] &amp;&amp; operations[event].apply(this, params);
+    }
+  }
+}();
+
+// 定义玩家生成工厂
+function playerFactory(name, team) {
+  var player = new Player(name, team);
+  GameCenter.publish(&#39;addPlayer&#39;, player);
+  return player;
+};
+
+// 测试用例
+var xiaoming = playerFactory(&#39;xiaoming&#39;, Player.TEAM.red);
+var xiaohong = playerFactory(&#39;xiaohong&#39;, Player.TEAM.red);
+
+var xiaoqiao = playerFactory(&#39;xiaoqiao&#39;, Player.TEAM.blue);
+var xiaobing = playerFactory(&#39;xiaobing&#39;, Player.TEAM.blue);
+
+xiaoming.die(); // xiaoming lose
+xiaohong.die(); // xiaohong lose
+// xiaoqiao win
+// xiaobing win
+</code></pre>
 <p>通过以上例子可以发现，中介者模式通常伴随着观察者模式（发布订阅者模式），这两种模式的区别在于：</p>
 <ol>
 <li>观察者（事件）模式基于事件系统让不同的对象进行通信，目的在于让系统耦合松散。而中介者模式使用一个中介者对象进行业务逻辑处理，其余对象都与中介者通信，通信的手段通常使用事件系统，然而不一定就只用事件系统。所以可以说中介者模式通常使用了观察者模式作为通信手段。</li>
@@ -597,7 +1144,50 @@
 <li>状态类对象（State）：状态类对象代表某一种状态以及这种状态下需要处理的业务逻辑和状态切换。</li>
 </ol>
 <p>下面使用状态模式编写一个可以在强光 - 弱光 - 关灯 三个状态之间切换的台灯。状态切换逻辑如下图所示：<br><img src="/img/post/post7/state_pattern.png" alt="台灯状态切换"></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">StrongLightState</span>(<span class="params">lamp</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.lamp = lamp;</span><br><span class="line">&#125;</span><br><span class="line">StrongLightState.prototype.nextState = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'关闭台灯'</span>);</span><br><span class="line">  <span class="keyword">this</span>.lamp.setState(<span class="keyword">this</span>.lamp.offLightState);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">WeakLightState</span>(<span class="params">lamp</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.lamp = lamp;</span><br><span class="line">&#125;</span><br><span class="line">WeakLightState.prototype.nextState = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'打开强光'</span>);</span><br><span class="line">  <span class="keyword">this</span>.lamp.setState(<span class="keyword">this</span>.lamp.strongLightState);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">OffLightState</span>(<span class="params">lamp</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.lamp = lamp;</span><br><span class="line">&#125;</span><br><span class="line">OffLightState.prototype.nextState = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'打开弱光'</span>);</span><br><span class="line">  <span class="keyword">this</span>.lamp.setState(<span class="keyword">this</span>.lamp.weakLightState);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Lamp</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.strongLightState = <span class="keyword">new</span> StrongLightState(<span class="keyword">this</span>);</span><br><span class="line">  <span class="keyword">this</span>.weakLightState = <span class="keyword">new</span> WeakLightState(<span class="keyword">this</span>);</span><br><span class="line">  <span class="keyword">this</span>.offLightState = <span class="keyword">new</span> OffLightState(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.state = <span class="keyword">this</span>.offLightState;</span><br><span class="line">&#125;</span><br><span class="line">Lamp.prototype.pressButton = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.state.nextState();</span><br><span class="line">&#125;</span><br><span class="line">Lamp.prototype.setState = <span class="function"><span class="keyword">function</span>(<span class="params">state</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.state = state;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">var</span> lamp = <span class="keyword">new</span> Lamp();</span><br><span class="line">lamp.pressButton(); <span class="comment">// 打开弱光</span></span><br><span class="line">lamp.pressButton(); <span class="comment">// 打开强光</span></span><br><span class="line">lamp.pressButton(); <span class="comment">// 关闭台灯</span></span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">function StrongLightState(lamp) {
+  this.lamp = lamp;
+}
+StrongLightState.prototype.nextState = function() {
+  console.log(&#39;关闭台灯&#39;);
+  this.lamp.setState(this.lamp.offLightState);
+}
+
+function WeakLightState(lamp) {
+  this.lamp = lamp;
+}
+WeakLightState.prototype.nextState = function() {
+  console.log(&#39;打开强光&#39;);
+  this.lamp.setState(this.lamp.strongLightState);
+}
+
+function OffLightState(lamp) {
+  this.lamp = lamp;
+}
+OffLightState.prototype.nextState = function() {
+  console.log(&#39;打开弱光&#39;);
+  this.lamp.setState(this.lamp.weakLightState);
+}
+
+function Lamp() {
+  this.strongLightState = new StrongLightState(this);
+  this.weakLightState = new WeakLightState(this);
+  this.offLightState = new OffLightState(this);
+
+  this.state = this.offLightState;
+}
+Lamp.prototype.pressButton = function() {
+  this.state.nextState();
+}
+Lamp.prototype.setState = function(state) {
+  this.state = state;
+}
+
+// 测试
+var lamp = new Lamp();
+lamp.pressButton(); // 打开弱光
+lamp.pressButton(); // 打开强光
+lamp.pressButton(); // 关闭台灯
+</code></pre>
 <p>状态模式的优点：</p>
 <ol>
 <li>使用状态类将当前状态以及当前状态的行为封装起来，通过新增状态类，可以容易的在状态机中新加状态。</li>
@@ -613,7 +1203,62 @@
 <li>上下文（Context）：Context面向用户，接受用户请求，并将用户请求委托给策略类进行处理。</li>
 <li>策略类（strategy）：算法封装类，向Context提供不同类型的算法。</li>
 </ol>
-<p>下面使用策略模式实现表单校验功能<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// context对象，接受用户校验请求，然后委托给策略对象处理</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Validator</span>(<span class="params">strategy</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.strategy = strategy;</span><br><span class="line">  <span class="keyword">this</span>.rules = [];</span><br><span class="line">&#125;</span><br><span class="line">Validator.prototype.addRule = <span class="function"><span class="keyword">function</span>(<span class="params">value, strategyName, errorMsg</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.rules.push(&#123;</span><br><span class="line">    strategyName: strategyName,</span><br><span class="line">    value: value,</span><br><span class="line">    errorMsg: errorMsg,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line">Validator.prototype.start = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> errorMsg;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, rule; i &lt; <span class="keyword">this</span>.rules.length; i++ ) &#123;</span><br><span class="line">    rule = <span class="keyword">this</span>.rules[i];</span><br><span class="line">    errorMsg = <span class="keyword">this</span>.strategy[rule.strategyName] &amp;&amp; <span class="keyword">this</span>.strategy[rule.strategyName](rule.value, rule.errorMsg);</span><br><span class="line">    <span class="keyword">if</span> (errorMsg) &#123;</span><br><span class="line">      <span class="keyword">return</span> errorMsg;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试用例</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">formData, validator</span>) </span>&#123;</span><br><span class="line">  validator.addRule(formData.name, <span class="string">'notEmpty'</span>, <span class="string">'姓名不能为空'</span>);</span><br><span class="line">  validator.addRule(formData.phone, <span class="string">'notEmpty'</span>, <span class="string">'手机号不能为空'</span>);</span><br><span class="line">  validator.addRule(formData.phone, <span class="string">'phone'</span>, <span class="string">'需要填入正确的手机号'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> errorMsg = validator.start();</span><br><span class="line">  <span class="keyword">if</span> (errorMsg) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(errorMsg);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'校验通过'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test(&#123;</span><br><span class="line">  name: <span class="string">'xiaoming'</span>,</span><br><span class="line">  phone: <span class="string">'13525220867'</span></span><br><span class="line">&#125;, <span class="keyword">new</span> Validator(strategy));</span><br><span class="line"><span class="comment">// 检验通过</span></span><br><span class="line"></span><br><span class="line">test(&#123;</span><br><span class="line">  name: <span class="string">''</span>,</span><br><span class="line">  phone: <span class="string">'13525220867'</span></span><br><span class="line">&#125;, <span class="keyword">new</span> Validator(strategy));</span><br><span class="line"><span class="comment">// 姓名不能为空</span></span><br><span class="line"></span><br><span class="line">test(&#123;</span><br><span class="line">  name: <span class="string">'xiaoming'</span>,</span><br><span class="line">  phone: <span class="string">''</span></span><br><span class="line">&#125;, <span class="keyword">new</span> Validator(strategy));</span><br><span class="line"><span class="comment">// 手机号不能为空</span></span><br></pre></td></tr></table></figure></p>
+<p>下面使用策略模式实现表单校验功能</p>
+<pre><code class="javascript">// context对象，接受用户校验请求，然后委托给策略对象处理
+function Validator(strategy) {
+  this.strategy = strategy;
+  this.rules = [];
+}
+Validator.prototype.addRule = function(value, strategyName, errorMsg) {
+  this.rules.push({
+    strategyName: strategyName,
+    value: value,
+    errorMsg: errorMsg,
+  });
+}
+Validator.prototype.start = function() {
+  var errorMsg;
+  for (var i = 0, rule; i &lt; this.rules.length; i++ ) {
+    rule = this.rules[i];
+    errorMsg = this.strategy[rule.strategyName] &amp;&amp; this.strategy[rule.strategyName](rule.value, rule.errorMsg);
+    if (errorMsg) {
+      return errorMsg;
+    }
+  }
+}
+
+// 测试用例
+function test(formData, validator) {
+  validator.addRule(formData.name, &#39;notEmpty&#39;, &#39;姓名不能为空&#39;);
+  validator.addRule(formData.phone, &#39;notEmpty&#39;, &#39;手机号不能为空&#39;);
+  validator.addRule(formData.phone, &#39;phone&#39;, &#39;需要填入正确的手机号&#39;);
+
+  var errorMsg = validator.start();
+  if (errorMsg) {
+    console.log(errorMsg);
+  } else {
+    console.log(&#39;校验通过&#39;);
+  }
+}
+
+test({
+  name: &#39;xiaoming&#39;,
+  phone: &#39;13525220867&#39;
+}, new Validator(strategy));
+// 检验通过
+
+test({
+  name: &#39;&#39;,
+  phone: &#39;13525220867&#39;
+}, new Validator(strategy));
+// 姓名不能为空
+
+test({
+  name: &#39;xiaoming&#39;,
+  phone: &#39;&#39;
+}, new Validator(strategy));
+// 手机号不能为空
+</code></pre>
 <p>策略模式与状态模式的相同点：</p>
 <ol>
 <li>都有context对象来接受用户请求，并且context对象都把请求委托给状态类对象or策略类对象来处理。</li>
@@ -624,7 +1269,76 @@
 <li>策略模式中，各种策略之间是平等平行的，没有联系。状态模式中状态类一般会封装好状态和状态对应的行为这两样东西，不同状态之间往往存在切换，并且状态切换这个事情发生在状态模式内部。</li>
 </ol>
 <h3 id="职责链模式（Chain-of-Responsibility）"><a href="#职责链模式（Chain-of-Responsibility）" class="headerlink" title="职责链模式（Chain of  Responsibility）"></a>职责链模式（Chain of  Responsibility）</h3><p>职责链模式：多个对象组成一条链，让请求在这条链中传递，直到有一个对象处理它为止。<br><img src="/img/post/post7/responsibility_chain.png" alt="职责链模式"></p>
-<p>使用职责链模式模拟用户订单处理<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 订单类型</span></span><br><span class="line"><span class="keyword">var</span> ORDER_TYPE = &#123;</span><br><span class="line">  vip: <span class="number">1</span>, <span class="comment">// vip订单</span></span><br><span class="line">  priority: <span class="number">2</span>, <span class="comment">// 优先订单</span></span><br><span class="line">  normal: <span class="number">3</span>, <span class="comment">// 普通订单</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> stock = <span class="number">12</span>; <span class="comment">// 库存</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义订单处理函数，返回true表示处理成功，false表示处理失败。</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handlerVip</span>(<span class="params">orderType</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (orderType === ORDER_TYPE.vip &amp;&amp; stock &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'vip订单：出货'</span>);</span><br><span class="line">    stock--;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handlerPriority</span>(<span class="params">orderType</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (orderType === ORDER_TYPE.priority &amp;&amp; stock &gt; <span class="number">10</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'优先订单：出货'</span>);</span><br><span class="line">    stock--;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handlerNormal</span>(<span class="params">orderType</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (orderType === ORDER_TYPE.normal &amp;&amp; stock &gt; <span class="number">11</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'普通订单：出货'</span>);</span><br><span class="line">    stock--;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'库存不足，出货失败'</span>);</span><br><span class="line">    <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ChainNode</span>(<span class="params">handler</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.handler = handler;</span><br><span class="line">&#125;</span><br><span class="line">ChainNode.prototype.setNextHandler = <span class="function"><span class="keyword">function</span>(<span class="params">nextHandler</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.nextHandler = nextHandler;</span><br><span class="line">&#125;</span><br><span class="line">ChainNode.prototype.passRequest = <span class="function"><span class="keyword">function</span>(<span class="params">orderType</span>) </span>&#123;</span><br><span class="line">!<span class="keyword">this</span>.handler(orderType) &amp;&amp; <span class="keyword">this</span>.nextHandler &amp;&amp; <span class="keyword">this</span>.nextHandler.passRequest(orderType);  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试用例</span></span><br><span class="line"><span class="keyword">var</span> vipNode = <span class="keyword">new</span> ChainNode(handlerVip);</span><br><span class="line"><span class="keyword">var</span> priorityNode = <span class="keyword">new</span> ChainNode(handlerPriority);</span><br><span class="line"><span class="keyword">var</span> normalNode = <span class="keyword">new</span> ChainNode(handlerNormal);</span><br><span class="line"></span><br><span class="line">vipNode.setNextHandler(priorityNode);</span><br><span class="line">priorityNode.setNextHandler(normalNode);</span><br><span class="line"></span><br><span class="line">vipNode.passRequest(ORDER_TYPE.normal);</span><br><span class="line">vipNode.passRequest(ORDER_TYPE.priority);</span><br><span class="line">vipNode.passRequest(ORDER_TYPE.vip);</span><br><span class="line">vipNode.passRequest(ORDER_TYPE.normal);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 普通订单：出货</span></span><br><span class="line"><span class="comment">// 优先订单：出货</span></span><br><span class="line"><span class="comment">// vip订单：出货</span></span><br><span class="line"><span class="comment">// 库存不足，出货失败</span></span><br></pre></td></tr></table></figure></p>
+<p>使用职责链模式模拟用户订单处理</p>
+<pre><code class="javascript">// 订单类型
+var ORDER_TYPE = {
+  vip: 1, // vip订单
+  priority: 2, // 优先订单
+  normal: 3, // 普通订单
+};
+
+var stock = 12; // 库存
+
+// 定义订单处理函数，返回true表示处理成功，false表示处理失败。
+function handlerVip(orderType) {
+  if (orderType === ORDER_TYPE.vip &amp;&amp; stock &gt; 0) {
+    console.log(&#39;vip订单：出货&#39;);
+    stock--;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function handlerPriority(orderType) {
+  if (orderType === ORDER_TYPE.priority &amp;&amp; stock &gt; 10) {
+    console.log(&#39;优先订单：出货&#39;);
+    stock--;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function handlerNormal(orderType) {
+  if (orderType === ORDER_TYPE.normal &amp;&amp; stock &gt; 11) {
+    console.log(&#39;普通订单：出货&#39;);
+    stock--;
+    return true;
+  } else {
+    console.log(&#39;库存不足，出货失败&#39;);
+    false;
+  }
+}
+
+function ChainNode(handler) {
+  this.handler = handler;
+}
+ChainNode.prototype.setNextHandler = function(nextHandler) {
+  this.nextHandler = nextHandler;
+}
+ChainNode.prototype.passRequest = function(orderType) {
+!this.handler(orderType) &amp;&amp; this.nextHandler &amp;&amp; this.nextHandler.passRequest(orderType);  
+}
+
+// 测试用例
+var vipNode = new ChainNode(handlerVip);
+var priorityNode = new ChainNode(handlerPriority);
+var normalNode = new ChainNode(handlerNormal);
+
+vipNode.setNextHandler(priorityNode);
+priorityNode.setNextHandler(normalNode);
+
+vipNode.passRequest(ORDER_TYPE.normal);
+vipNode.passRequest(ORDER_TYPE.priority);
+vipNode.passRequest(ORDER_TYPE.vip);
+vipNode.passRequest(ORDER_TYPE.normal);
+
+// 普通订单：出货
+// 优先订单：出货
+// vip订单：出货
+// 库存不足，出货失败
+</code></pre>
 <p>职责链可以将对一个对象的多个不同处理很好的解耦开来，并且职责链节点可以重组方便修改可拓展逻辑。职责链的模式应用非常广，express等node后台框架的中间件设计就是应用了职责链模式。<br>如果职责链节点中包含了异步处理，那么处理函数中返回一个promise对象即可，职责链节点需要等待这个promise对象resolve或者reject之后，判断是否需要将请求传递给下一个节点。<br>职责链模式中有两个比较明显的缺点</p>
 <ol>
 <li>往往需要注意节点之间的顺序来形成正确的处理流程</li>
@@ -757,7 +1471,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/archives/2019/06/">六月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         
@@ -775,7 +1489,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/cordova系列/">cordova系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/css系列/">css系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/docker/">docker<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hexo/">hexo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/js/">js<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/翻译系列/">翻译系列<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/cordova系列/">cordova系列<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css系列/">css系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/docker/">docker<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hexo/">hexo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/js/">js<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/翻译系列/">翻译系列<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -805,7 +1519,7 @@
         <li>
             <a href="/archives">
                 文章总数
-                <span class="sidebar-badge">9</span>
+                <span class="sidebar-badge">11</span>
             </a>
         </li>
         

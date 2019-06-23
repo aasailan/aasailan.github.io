@@ -340,6 +340,15 @@
     <!-- Left aligned menu below button -->
     
     
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#修改后重启docker"><span class="post-toc-number">1.</span> <span class="post-toc-text">修改后重启docker</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#运行上面两句后，logout再重新login。再运行hello-world来检查非root用户是否可以运行docker"><span class="post-toc-number">2.</span> <span class="post-toc-text">运行上面两句后，logout再重新login。再运行hello world来检查非root用户是否可以运行docker</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#验证docker-compose-已安装完毕"><span class="post-toc-number">3.</span> <span class="post-toc-text">验证docker compose 已安装完毕</span></a></li></ol>
+    </ul>
+    
 
 
 
@@ -460,18 +469,38 @@
         <p>今天在百度云vps上面安装了docker和docker compose，操作系统是centos7，觉着应该把安装过程大致记录下，防止以后忘记。整个安装并不复杂，主要有以下几个步骤：  </p>
 <ul>
 <li><p>根据<a href="https://docs.docker.com/install/linux/docker-ce/centos/" target="_blank" rel="noopener"><strong>官网的安装文档</strong></a>安装docker。主要是安装一些必要软件以及docker的仓库源，最后安装docker，有以下命令需要运行:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 安装必要软件</span><br><span class="line">$sudo yum install -y yum-utils \</span><br><span class="line">device-mapper-persistent-data \</span><br><span class="line">lvm2</span><br><span class="line"></span><br><span class="line"># 安装docker仓库源</span><br><span class="line">$sudo yum-config-manager \</span><br><span class="line">   --add-repo \</span><br><span class="line">   https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line"></span><br><span class="line"># 安装docker</span><br><span class="line">sudo yum install docker-ce</span><br><span class="line"></span><br><span class="line"># 启动docker服务</span><br><span class="line">$sudo systemctl start docker</span><br><span class="line"></span><br><span class="line"># 将docker设置为开机启动</span><br><span class="line">sudo systemctl enable docker</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置<a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="noopener"><strong>Docker中国官方镜像加速</strong></a>。修改修改 /etc/docker/daemon.json 文件并添加上 registry-mirrors 键值，然后重启docker。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   &quot;registry-mirrors&quot;: [&quot;https://registry.docker-cn.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 修改后重启docker</span><br><span class="line">$sudo systemctl start docker</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><a href="https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user" target="_blank" rel="noopener"><strong>使用非root用户管理docker</strong></a>。主要是添加docker用户组，然后把当前用户加入docker用户组：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo groupadd docker</span><br><span class="line">$ sudo usermod -aG docker $USER</span><br><span class="line"># 运行上面两句后，logout再重新login。再运行hello world来检查非root用户是否可以运行docker</span><br><span class="line">$docker run hello-world</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装docker compose。安装之前，要先完成上一步（使用非root用户管理docker）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose</span><br><span class="line"></span><br><span class="line">$sudo chmod +x /usr/local/bin/docker-compose</span><br><span class="line"></span><br><span class="line"># 验证docker compose 已安装完毕</span><br><span class="line">$docker-compose --version</span><br></pre></td></tr></table></figure>
+<pre><code># 安装必要软件
+$sudo yum install -y yum-utils \
+device-mapper-persistent-data \
+lvm2
+
+# 安装docker仓库源
+$sudo yum-config-manager \
+  --add-repo \
+  https://download.docker.com/linux/centos/docker-ce.repo
+
+# 安装docker
+sudo yum install docker-ce
+
+# 启动docker服务
+$sudo systemctl start docker
+
+# 将docker设置为开机启动
+sudo systemctl enable docker
+</code></pre></li>
+<li><p>设置<a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="noopener"><strong>Docker中国官方镜像加速</strong></a>。修改修改 /etc/docker/daemon.json 文件并添加上 registry-mirrors 键值，然后重启docker。<br><code>`</code><br>{<br> “registry-mirrors”: [“<a href="https://registry.docker-cn.com&quot;]" target="_blank" rel="noopener">https://registry.docker-cn.com&quot;]</a><br>}</p>
 </li>
 </ul>
+<h1 id="修改后重启docker"><a href="#修改后重启docker" class="headerlink" title="修改后重启docker"></a>修改后重启docker</h1><p>$sudo systemctl start docker</p>
+<pre><code>
+* [**使用非root用户管理docker**](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user)。主要是添加docker用户组，然后把当前用户加入docker用户组：
+</code></pre><p>$ sudo groupadd docker<br>$ sudo usermod -aG docker $USER</p>
+<h1 id="运行上面两句后，logout再重新login。再运行hello-world来检查非root用户是否可以运行docker"><a href="#运行上面两句后，logout再重新login。再运行hello-world来检查非root用户是否可以运行docker" class="headerlink" title="运行上面两句后，logout再重新login。再运行hello world来检查非root用户是否可以运行docker"></a>运行上面两句后，logout再重新login。再运行hello world来检查非root用户是否可以运行docker</h1><p>$docker run hello-world</p>
+<pre><code>
+* 安装docker compose。安装之前，要先完成上一步（使用非root用户管理docker）
+</code></pre><p>$sudo curl -L <a href="https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$" target="_blank" rel="noopener">https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$</a>(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose</p>
+<p>$sudo chmod +x /usr/local/bin/docker-compose</p>
+<h1 id="验证docker-compose-已安装完毕"><a href="#验证docker-compose-已安装完毕" class="headerlink" title="验证docker compose 已安装完毕"></a>验证docker compose 已安装完毕</h1><p>$docker-compose –version<br><code>`</code></p>
 <p>上个周末在daocloud里面体验了一把基于docker的持续集成与部署。demo比较简单，没有太多参考价值。自己有空再思考跟找一下持续集成与部署跟git flow流程如何结合。然后再写一个demo出来。</p>
 
         
@@ -599,7 +628,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/archives/2019/06/">六月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         
@@ -617,7 +646,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/cordova系列/">cordova系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/css系列/">css系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/docker/">docker<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hexo/">hexo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/js/">js<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/翻译系列/">翻译系列<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/cordova系列/">cordova系列<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css系列/">css系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/docker/">docker<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hexo/">hexo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/js/">js<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/翻译系列/">翻译系列<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -647,7 +676,7 @@
         <li>
             <a href="/archives">
                 文章总数
-                <span class="sidebar-badge">9</span>
+                <span class="sidebar-badge">11</span>
             </a>
         </li>
         

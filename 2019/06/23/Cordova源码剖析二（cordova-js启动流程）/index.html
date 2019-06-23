@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            Cordova源码剖析二（cordova.js启动流程） | 
+        
+        aasailan的blog
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" href="/img/favicon.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="aasailan的blog">
+    <meta name="keywords" content=",前端,cordova,源码剖析">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #3F3F3F;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?ezyEvm8ST5CGfpA+kFFi1g==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="aasailan的blog">
+    <meta name="msapplication-starturl" content="http://yoursite.com/2019/06/23/Cordova源码剖析二（cordova-js启动流程）/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="aasailan的blog">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yoursite.com/2019/06/23/Cordova源码剖析二（cordova-js启动流程）/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Cordova源码剖析二（cordova.js启动流程） | aasailan的blog">
+    <meta property="og:image" content="/img/favicon.png">
+    <meta property="og:description" content="aasailan的blog">
+    <meta property="og:article:tag" content="前端"> <meta property="og:article:tag" content="cordova"> <meta property="og:article:tag" content="源码剖析"> 
+
+    
+        <meta property="article:published_time" content="Sun Jun 23 2019 14:37:53 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jun 23 2019 14:39:12 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yoursite.com/2019/06/23/Cordova源码剖析二（cordova-js启动流程）/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yoursite.com/2019/06/23/Cordova源码剖析二（cordova-js启动流程）/index.html",
+    "headline": "Cordova源码剖析二（cordova.js启动流程）",
+    "datePublished": "Sun Jun 23 2019 14:37:53 GMT+0800",
+    "dateModified": "Sun Jun 23 2019 14:39:12 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "aasailan",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/touxiang.jpg"
+        },
+        "description": "程序员是一个值得自豪的职业"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "aasailan的blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",前端,cordova,源码剖析",
+    "description": "aasailan的blog",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span id="MD-burger-id" class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#android-cordova-js的启动流程"><span class="post-toc-number">1.</span> <span class="post-toc-text">android cordova.js的启动流程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#立即执行函数"><span class="post-toc-number">2.</span> <span class="post-toc-text">立即执行函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#阶段一：初始化define和require函数"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">阶段一：初始化define和require函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#阶段二：通过define函数定义一系列的cordova-module"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">阶段二：通过define函数定义一系列的cordova module</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#阶段三：加载’cordova’-module"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">阶段三：加载’cordova’ module</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#阶段四：运行’cordova-init’-module"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">阶段四：运行’cordova/init’ module</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Cordova-js中自定义channel的注册表和触发表"><span class="post-toc-number">3.</span> <span class="post-toc-text">Cordova.js中自定义channel的注册表和触发表</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                Cordova源码剖析二（cordova.js启动流程）
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/touxiang.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>aasailan</strong>
+        <span>6月 23, 2019</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/cordova/">cordova</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/前端/">前端</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/源码剖析/">源码剖析</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h2 id="android-cordova-js的启动流程"><a href="#android-cordova-js的启动流程" class="headerlink" title="android cordova.js的启动流程"></a>android cordova.js的启动流程</h2><p>在cordovaWebview加载html之后，html会加载cordova.js文件，cordova.js文件中包含了cordova框架在js一侧的启动和初始化流程，这一节就来探究一下cordova.js到底做了什么</p>
+<h2 id="立即执行函数"><a href="#立即执行函数" class="headerlink" title="立即执行函数"></a>立即执行函数</h2><p>cordova.js内定义了一个立即执行函数，这个立即执行函数内完成了cordova框架在js一侧的启动和初始化。<br>它主要做了以下几件事情：</p>
+<ol>
+<li>定义require、define函数</li>
+<li>通过define函数定义一系列的cordova modules</li>
+<li>require ‘cordova’ modules，并将export的对象添加到window.cordova</li>
+<li><p>require ‘cordova/init’ modules，开始运行初始化代码</p>
+<pre><code class="javascript">;(function() {
+// 定义require、define变量
+var require;
+var define;
+
+// 然后通过一个立即执行函数为require和define变量赋值
+(function() {
+ ...
+})();
+
+...
+// 接下来通过define函数定义一系列的modules
+define(&#39;cordova&#39;, ....);
+
+....
+
+// 加载&#39;cordova&#39;模块，导出对象并添加window.cordova对象
+window.cordova = require(&#39;cordova&#39;);
+
+// 初始化框架
+require(&#39;cordova/init&#39;);
+})();
+</code></pre>
+</li>
+</ol>
+<h3 id="阶段一：初始化define和require函数"><a href="#阶段一：初始化define和require函数" class="headerlink" title="阶段一：初始化define和require函数"></a>阶段一：初始化define和require函数</h3><p>在定义了require和define两个变量后，紧接着就是一个立即执行函数，为这两个变量进行赋值。这个立即执行函数非常关键，主要做了以下两件事情：</p>
+<ol>
+<li>定义了modules对象，该对象以module id为key，以module对象为value。每一个module对象包括id、factory、exports三个属性</li>
+<li>定义了define和require方法，为cordova框架的模块化提供了基础。define方法负责定义cordova module，require方法负责加载cordova module，并且返回module.exports对象</li>
+</ol>
+<p>下面深入这个立即执行函数进行查看</p>
+<pre><code class="javascript">(function() {
+  // NOTE: 关键对象，存储module对象
+  var modules = {};
+  ...
+ /**
+  * @description 由require函数调用，运行module的factory函数，对module进行初始化
+  * @param {{ id: string, factory: function }} module 需要构建的module对象
+  * @returns {object} module.exports
+  */
+  function build(module) {
+    var factory = module.factory;
+    // 定义module factory函数内使用的require函数
+    var localRequire = function (id) {
+      var resultantId = id;
+      // Its a relative path, so lop off the last portion and add the id (minus &quot;./&quot;)
+      if (id.charAt(0) === &#39;.&#39;) {
+        resultantId = module.id.slice(0, module.id.lastIndexOf(SEPARATOR)) + SEPARATOR + id.slice(2);
+      }
+      return require(resultantId);
+    };
+    module.exports = {};
+    delete module.factory;
+    // 运行factory，在这个函数产生副作用，完成对module.exports的初始化
+    factory(localRequire, module.exports, module);
+    return module.exports;
+  }
+
+ /** 
+  * @description 模块加载函数，传入id，运行模块工厂函数，返回模块exports对象
+  * @param {string} id module id
+  * @return {object} module.exports module对象的导出对象
+  */
+  require = function(id) {
+    ...
+    return build(modules[id]);
+  }
+ /** 
+  * @description 定义一个module，在modules对象中添加一个id和相应的module对象
+  * @param {string} id module id
+  * @param {function} factory module factory，该函数用来执行module的初始化，在该函数内完成对module.export的设置
+  */
+  define = function(id, factory) {
+    ...
+    // 在modules对象中添加一个module对象
+    modules[id] = {
+      id: id,
+      factory: factory
+    };
+  }
+
+  // 在define函数上添加modules对象的引用
+  define.moduleMap = modules;
+})();
+</code></pre>
+<p>modules对象的结构和factory函数的注释如下：</p>
+<pre><code class="javascript">// modules 对象的结构如下：
+modules = {
+  [id]: { // 通过module id引用module对象，一个module对象包含id、factory、exports三个属性
+    id: id, // module id
+    factory: factory, // 用来初始化module的factory函数
+    exports: {} // module导出的对象
+  }
+}
+
+// factory函数的接口定义如下
+ /** 
+  * @description 执行module初始化逻辑，完成对module.exports的初始化
+  * @param {function} localRequire 模块内使用的require函数，返回module.exports对象
+  * @param {object} module.exports module的导出对象
+  * @param {object} module module对象
+  */
+function factory(localRequire, module.exports, module) {
+  // 在函数内执行逻辑并且完成对
+}
+</code></pre>
+<h3 id="阶段二：通过define函数定义一系列的cordova-module"><a href="#阶段二：通过define函数定义一系列的cordova-module" class="headerlink" title="阶段二：通过define函数定义一系列的cordova module"></a>阶段二：通过define函数定义一系列的cordova module</h3><p>在这个阶段定义的cordova module及其主要作用分别如下，其中加粗的module是重要module：</p>
+<ul>
+<li><strong>cordova</strong>: 初始化cordova对象，对document和window对象上的addEventListener和removeEventListener方法进行替换</li>
+<li><strong>cordova/android/nativeapiprovider</strong>：导出用来执行Native方法的对象</li>
+<li><strong>cordova/android/promptbasednativeapi</strong>：导出一个对象，提供基于window.prompt来调用Native方法的功能</li>
+<li>cordova/argscheck：导出一个对象 提供参数检查功能（该模块似乎没有被任何一个module引用）</li>
+<li>cordova/base64：导出一个对象，将数组转换为base64编码，以及将base64编码转换为数组，在cordova/exec 模块中被引用</li>
+<li>cordova/builder：被cordova/modulemapper模块使用，功能未知</li>
+<li><strong>cordova/channel</strong>：导出了一个channel对象，这个对象实现了发布订阅者模型，提供了自定义事件的注册和触发api</li>
+<li><strong>cordova/exec</strong>：提供了androidExec方法，调用cordova.exec时，就是调用了androidExec方法</li>
+<li>cordova/exec/proxy：未知，没有被任何模块引用</li>
+<li><strong>cordova/init</strong>：执行一些初始化框架的逻辑</li>
+<li>cordova/modulemapper：将指定的module.exports对象设置到指定的命名空间</li>
+<li>cordova/platform：导出一个对象，其中包含的<strong>bootstrap</strong>方法会执行一系列初始化行为</li>
+<li>cordova/plugin/android/app：该模块封装了对内置插件CoreAndroid的调用，监听返回键，音量键等等功能都在这个模块内完成</li>
+<li><strong>cordova/pluginloader</strong>：提供动态加载cordova_plugins.js和plugins文件夹内js文件的能力</li>
+<li>cordova/urlutil：提供辅助函数的模块</li>
+<li>cordova/utils：提供辅助函数的模块</li>
+</ul>
+<h3 id="阶段三：加载’cordova’-module"><a href="#阶段三：加载’cordova’-module" class="headerlink" title="阶段三：加载’cordova’ module"></a>阶段三：加载’cordova’ module</h3><p>cordova module内主要做了三件事情</p>
+<ol>
+<li>require ‘cordova/channel’ module，在这个module内注册了 ‘ondeviceready’ 等重要事件</li>
+<li>替换了window和document对象上面的addEventListener和removeEventListener方法，这是后续能够使用document.addEventListener(‘deviceReady’)的原因;</li>
+<li><p>初始化了cordova对象，该对象被添加到window.cordova上</p>
+<pre><code class="javascript">define(&quot;cordova&quot;, function (require, exports, module) {
+// require &#39;cordova/channel&#39; 的时候注册好了cordova的各种自定义事件，等待触发
+var channel = require(&#39;cordova/channel&#39;);
+// cordova/platform module内部只是单纯export出了一个对象，没有多余操作，在这里不重要
+var platform = require(&#39;cordova/platform&#39;);
+
+// 保存document.addEventListener;和document.removeEventListener;
+var m_document_addEventListener = document.addEventListener;
+var m_document_removeEventListener = document.removeEventListener;
+// documentEventHandlers用来注册的自定义channel和对应的channel实例，Channel类定义在&#39;cordova/channel&#39; module中
+// documentEventHandlers = { event: channel实例 } 
+var documentEventHandlers = {};
+// 替换document.addEventListener
+document.addEventListener = function (evt, handler, capture) {
+ var e = evt.toLowerCase();
+ if (typeof documentEventHandlers[e] !== &#39;undefined&#39;) {
+   // 如果是自定义事件则注册到自定义事件进行处理
+   documentEventHandlers[e].subscribe(handler);
+ } else {
+   // 否则调用原生api进行注册
+   m_document_addEventListener.call(document, evt, handler, capture);
+ }
+};
+// 替换document.removeEventListener
+document.removeEventListener = function (evt, handler, capture) {
+ var e = evt.toLowerCase();
+ // If unsubscribing from an event that is handled by a plugin
+ if (typeof documentEventHandlers[e] !== &#39;undefined&#39;) {
+   documentEventHandlers[e].unsubscribe(handler);
+ } else {
+   m_document_removeEventListener.call(document, evt, handler, capture);
+ }
+};
+
+// window对象中addEventListener和removeEventListener 也是如此处理，这里没有列出相应代码
+...
+
+// 定义cordova对象，后续会被添加到window.cordova上
+var cordova = {
+ // define和require就是上一步定义的define函数和require函数
+ define: define,
+ require: require,
+ version: PLATFORM_VERSION_BUILD_LABEL,
+ platformVersion: PLATFORM_VERSION_BUILD_LABEL,
+ platformId: platform.id,
+
+ /* eslint-enable no-undef */
+
+ /**
+   * Methods to add/remove your own addEventListener hijacking on document + window.
+   * 在windowEventHandlers对象添加一个自定义事件
+   */
+ addWindowEventHandler: function (event) {
+   return (windowEventHandlers[event] = channel.create(event));
+ },
+ // 在documentEventHandlers对象添加粘性的自定义事件
+ addStickyDocumentEventHandler: function (event) {
+   return (documentEventHandlers[event] = channel.createSticky(event));
+ },
+ // 在documentEventHandlers添加自定义事件
+ addDocumentEventHandler: function (event) {
+   return (documentEventHandlers[event] = channel.create(event));
+ },
+ removeWindowEventHandler: function (event) {
+   delete windowEventHandlers[event];
+ },
+ removeDocumentEventHandler: function (event) {
+   delete documentEventHandlers[event];
+ },
+ /**
+   * Retrieve original event handlers that were replaced by Cordova
+   * 获取原生的window和document事件处理函数
+   * @return object
+   */
+ getOriginalHandlers: function () {
+   return {
+     &#39;document&#39;: { &#39;addEventListener&#39;: m_document_addEventListener, &#39;removeEventListener&#39;: m_document_removeEventListener },
+     &#39;window&#39;: { &#39;addEventListener&#39;: m_window_addEventListener, &#39;removeEventListener&#39;: m_window_removeEventListener }
+   };
+ },
+ /**
+   * 原生代码用来触发事件的方法。
+   * 会在&#39;cordova/platform&#39; module内的onMessageFromNative方法内被调用
+   * Method to fire event from native code
+   * bNoDetach is required for events which cause an exception which needs to be caught in native code
+   * @param {string} type 需要触发的自定义channel
+   * @param {object} data 触发channel需要携带的数据
+   * @param {} bNoDetach ？？ 
+   */
+ fireDocumentEvent: function (type, data, bNoDetach) {
+   var evt = createEvent(type, data);
+   if (typeof documentEventHandlers[type] !== &#39;undefined&#39;) {
+     if (bNoDetach) {
+       // 不知道为何一个同步触发，一个异步触发
+       documentEventHandlers[type].fire(evt);
+     } else {
+       setTimeout(function () {
+         // Fire deviceready on listeners that were registered before cordova.js was loaded.
+         if (type === &#39;deviceready&#39;) {
+           // 有一些deviceready的监听可能在cordova框架没初始化好(document.addEventListener还没被替换)之前，就设置了
+           // 需要触发这些监听
+           document.dispatchEvent(evt);
+         }
+         // 触发相应的channel事件
+         documentEventHandlers[type].fire(evt);
+       }, 0);
+     }
+   } else {
+     // 如果不是自定义channel，则需要触发document上相应事件
+     document.dispatchEvent(evt);
+   }
+ },
+ // 与fireDocumentEvent同理
+ fireWindowEvent: function (type, data) {
+   var evt = createEvent(type, data);
+   if (typeof windowEventHandlers[type] !== &#39;undefined&#39;) {
+     setTimeout(function () {
+       windowEventHandlers[type].fire(evt);
+     }, 0);
+   } else {
+     window.dispatchEvent(evt);
+   }
+ },
+
+ /**
+   * Plugin callback mechanism.
+   */
+ // Randomize the starting callbackId to avoid collisions after refreshing or navigating.
+ // This way, it&#39;s very unlikely that any new callback would get the same callbackId as an old callback.
+ // js调用了原生代码后，回调函数对应的回调id
+ callbackId: Math.floor(Math.random() * 2000000000),
+ // js调用原生代码后，回调函数会被添加到callbacks对象，对象结构如下:
+ /**
+  * callbacks = {
+       [callbackId]: {
+         success: successCallBack, // 插件调用注册的成功回调函数
+         fail: failCallBack, // 插件调用注册的失败回调函数
+       }
+    }
+  */
+ callbacks: {},
+ // 回调状态定义，对应Native代码中PluginResult类内部的Status枚举类
+ callbackStatus: {
+   NO_RESULT: 0,
+   OK: 1,
+   CLASS_NOT_FOUND_EXCEPTION: 2,
+   ILLEGAL_ACCESS_EXCEPTION: 3,
+   INSTANTIATION_EXCEPTION: 4,
+   MALFORMED_URL_EXCEPTION: 5,
+   IO_EXCEPTION: 6,
+   INVALID_ACTION: 7,
+   JSON_EXCEPTION: 8,
+   ERROR: 9
+ },
+
+ /**
+   * Called by native code when returning successful result from an action.
+   * 由原生回调该方法，
+   */
+ callbackSuccess: function (callbackId, args) {
+   cordova.callbackFromNative(callbackId, true, args.status, [args.message], args.keepCallback);
+ },
+
+ /**
+   * Called by native code when returning error result from an action.
+   * 由原生回调该方法，
+   */
+ callbackError: function (callbackId, args) {
+   // TODO: Deprecate callbackSuccess and callbackError in favour of callbackFromNative.
+   // Derive success from status.
+   cordova.callbackFromNative(callbackId, false, args.status, [args.message], args.keepCallback);
+ },
+
+ /**
+   * Called by native code when returning the result from an action.
+   * 由原生回调该方法，调用之前插件调用注册callback函数
+   */
+ callbackFromNative: function (callbackId, isSuccess, status, args, keepCallback) {
+   try {
+     var callback = cordova.callbacks[callbackId];
+     if (callback) {
+       // 如果是成功并且状态是OK，则回调函数
+       if (isSuccess &amp;&amp; status === cordova.callbackStatus.OK) {
+         callback.success &amp;&amp; callback.success.apply(null, args);
+       } else if (!isSuccess) {
+         callback.fail &amp;&amp; callback.fail.apply(null, args);
+       }
+       /*
+       else
+           Note, this case is intentionally not caught.
+           this can happen if isSuccess is true, but callbackStatus is NO_RESULT
+           which is used to remove a callback from the list without calling the callbacks
+           typically keepCallback is false in this case
+       */
+       // Clear callback if not expecting any more results
+       if (!keepCallback) {
+         // 如果不需要保存回调函数，则回调完后删除该函数
+         delete cordova.callbacks[callbackId];
+       }
+     }
+   } catch (err) {
+     // 如果处理回调时发生了错误，则触发一次cordovacallbackerror事件
+     var msg = &#39;Error in &#39; + (isSuccess ? &#39;Success&#39; : &#39;Error&#39;) + &#39; callbackId: &#39; + callbackId + &#39; : &#39; + err;
+     console &amp;&amp; console.log &amp;&amp; console.log(msg);
+     console &amp;&amp; console.log &amp;&amp; err.stack &amp;&amp; console.log(err.stack);
+     cordova.fireWindowEvent(&#39;cordovacallbackerror&#39;, { &#39;message&#39;: msg });
+     throw err;
+   }
+ },
+ // 在&#39;cordovaReady&#39; channel 上注册一个回调
+ addConstructor: function (func) {
+   channel.onCordovaReady.subscribe(function () {
+     try {
+       func();
+     } catch (e) {
+       console.log(&#39;Failed to run constructor: &#39; + e);
+     }
+   });
+ }
+};
+
+module.exports = cordova;
+});
+</code></pre>
+<p>上面的代码中，已经很清楚的说明了如何替换掉document上addEventListener和removeEventListener方法以及如何定义cordova对象。现在需要深入到 ‘cordova/channel’ 模块中，这个模块非常重要，cordova中的自定义事件（自定义事件在cordova中用自定义channel代称，之后用自定义channel指代自定义事件）主要由这个模块实现。</p>
+</li>
+</ol>
+<p>cordova/channel做了两件非常重要的事情</p>
+<ol>
+<li>内部定义Channel类，类的每一个实例都代表一个自定义channel和提供subscribe、unsubscribe、fire等方法；对外暴露一个channel对象（该对象封装了Channel类实例，但本身不是Channel类实例，只是命名有些误导），依靠这个对象对外提供注册自定义channel的能力</li>
+<li>注册了’onDeviceReady’、’onCordovaReady’、’onPluginsReady’、’onNativeReady’等自定义channel。这些事件在后续cordova初始化的过程中会一一触发</li>
+</ol>
+<pre><code class="javascript">define(&quot;cordova/channel&quot;, function (require, exports, module) {
+/**
+  * Channel类，一个channel实例代表一个自定义事件(channel)
+  * 其内部维护着自定义channel以及注册的handlers。并且提供subscribe、unsubscribe、fire等操作接口
+  * @constructor
+  * @param type  String the channel name
+  * @sticky NOTE: 是否粘性的（粘性的channel在触发后会进入“已触发”这个状态，此时如果添加一个回调函数，则会立即调用。例如deviceready，如果已经触发过了，则会立即回调监听事件。非粘性的channel则每次注册回调函数后，都需要下一次fire时，才会触发回调函数）
+  */
+  var Channel = function (type, sticky) {
+    this.type = type;
+    // Map of guid -&gt; function.
+    this.handlers = {};
+    // 0 = Non-sticky, 1 = Sticky non-fired, 2 = Sticky fired.
+    this.state = sticky ? 1 : 0;
+    // Used in sticky mode to remember args passed to fire().
+    this.fireArgs = null;
+    // Used by onHasSubscribersChange to know if there are any listeners.
+    this.numHandlers = 0;
+    // Function that is called when the first listener is subscribed, or when
+    // the last listener is unsubscribed.
+    // 当第一个函数注册时，或者最后一个函数被注销时，回调该属性引用的函数
+    this.onHasSubscribersChange = null;
+  };
+
+  // 向指定channel注册一个处理函数
+  Channel.prototype.subscribe = function (eventListenerOrFunction, eventListener) {
+    ...
+    if (this.state === 2) {
+      // 当前channel的state为2，代表当前channel是Sticky的，并且已经fired，需要立即回调订阅函数
+      handleEvent.apply(eventListener || this, this.fireArgs);
+      return;
+    }
+
+    ...
+    // 对注册函数添加一个observer_guid属性，用来标志该函数是注册在channel的监听函数，在unsubscribe的时候用得上
+    handleEvent.observer_guid = guid;
+    eventListenerOrFunction.observer_guid = guid;
+
+    if (!this.handlers[guid]) {
+      // 将回调函数注册到handlers，等待回调
+      this.handlers[guid] = handleEvent;
+      this.numHandlers++;
+      if (this.numHandlers === 1) {
+        // 当channel中注册了第一个回调函数时，尝试调用下面的钩子，进行逻辑处理
+        this.onHasSubscribersChange &amp;&amp; this.onHasSubscribersChange();
+      }
+    }
+  }
+
+  // 在指定channel上注销一个处理函数
+  Channel.prototype.unsubscribe = function (eventListenerOrFunction) {
+    ...
+    // 获取注册函数内的guid，以此为key，在handlers中获取对应函数，然后删除
+    guid = handleEvent.observer_guid;
+    handler = this.handlers[guid];
+    if (handler) {
+      delete this.handlers[guid];
+      this.numHandlers--;
+      if (this.numHandlers === 0) {
+        this.onHasSubscribersChange &amp;&amp; this.onHasSubscribersChange();
+      }
+    }
+  }
+
+  // 触发指定channel上的所有处理函数 
+  Channel.prototype.fire = function (e) {
+    var fail = false; // eslint-disable-line no-unused-vars
+    var fireArgs = Array.prototype.slice.call(arguments);
+    // Apply stickiness.
+    if (this.state === 1) {
+      // 如果当前channel是stick的，那么在fire内将状态设置为2，代表已经fire过，并且保存fire的参数
+      this.state = 2;
+      this.fireArgs = fireArgs;
+    }
+    if (this.numHandlers) {
+      // Copy the values first so that it is safe to modify it from within
+      // callbacks.
+      var toCall = [];
+      for (var item in this.handlers) {
+        toCall.push(this.handlers[item]);
+      }
+      // 逐一调用注册的函数
+      for (var i = 0; i &lt; toCall.length; ++i) {
+        toCall[i].apply(this, fireArgs);
+      }
+      // 清空触发后的处理函数
+      if (this.state === 2 &amp;&amp; this.numHandlers) {
+        this.numHandlers = 0;
+        this.handlers = {};
+        // 在清空函数后，回调一次对应钩子
+        this.onHasSubscribersChange &amp;&amp; this.onHasSubscribersChange();
+      }
+    }
+  }
+
+   // 导出的module.exports对象，该对象封装了Channel类，但是本身不是Channel类实例
+   // 对象提供create等接口来创建channel
+  var channel = {
+    /**
+      * Calls the provided function only after all of the channels specified
+      * have been fired. All channels must be sticky channels.
+      * 在指定的Channel（由参数二指定）都fire之后，会立即回调一次h 函数
+      * @param {function} h 需要注册的回调函数
+      * @param {Channel[]} c Channel类实例组成的数组，所有的Channel类实例必须都是sticky channels
+      */
+    join: function (h, c) {
+      var len = c.length;
+      var i = len;
+      var f = function () {
+        if (!(--i)) h();
+      };
+      for (var j = 0; j &lt; len; j++) {
+        if (c[j].state === 0) {
+          throw Error(&#39;Can only use join with sticky channels.&#39;);
+        }
+        c[j].subscribe(f);
+      }
+      if (!len) h();
+    },
+    /* eslint-disable no-return-assign */
+    // 创建一个channel，返回新建的channel对象
+    create: function (type) {
+      return channel[type] = new Channel(type, false);
+    },
+    // 创建一个sticky channel，返回新建的channel对象
+    createSticky: function (type) {
+      return channel[type] = new Channel(type, true);
+    },
+    /* eslint-enable no-return-assign */
+    /**
+      * cordova Channels that must fire before &quot;deviceready&quot; is fired.
+      * 这两个属性用来记录 deviceready 触发之前，必须被触发的channels
+      */
+    deviceReadyChannelsArray: [],
+    deviceReadyChannelsMap: {},
+
+  /**
+    * Indicate that a feature needs to be initialized before it is ready to be used.
+    * This holds up Cordova&#39;s &quot;deviceready&quot; event until the feature has been initialized
+    * and Cordova.initComplete(feature) is called.
+    * @description 创建一个自定义channel放入到 deviceReadyChannelsArray 和 deviceReadyChannelsMap
+    * deviceReadyChannelsArray数组内的channel都触发后，就会触发 deviceready channel，这段代码在 &#39;cordova/init&#39; module内
+    * @param feature {String}     The unique feature name
+    */
+    waitForInitialization: function (feature) {
+      if (feature) {
+        var c = channel[feature] || this.createSticky(feature);
+        this.deviceReadyChannelsMap[feature] = c;
+        this.deviceReadyChannelsArray.push(c);
+      }
+    },
+
+    /**
+      * Indicate that initialization code has completed and the feature is ready to be used.
+      * @description 触发deviceReadyChannelsMap中的指定channel
+      * @param feature {String}     The unique feature name
+      */
+    initializationComplete: function (feature) {
+      var c = this.deviceReadyChannelsMap[feature];
+      if (c) {
+        c.fire();
+      }
+    }
+  };
+
+  // NOTE:  以下注册一系列的重要channel
+  channel.createSticky(&#39;onDOMContentLoaded&#39;);
+  // Event to indicate the Cordova native side is ready.
+  channel.createSticky(&#39;onNativeReady&#39;);
+  // Event to indicate that all Cordova JavaScript objects have been created
+  // and it&#39;s time to run plugin constructors.
+  channel.createSticky(&#39;onCordovaReady&#39;);
+  // Event to indicate that all automatically loaded JS plugins are loaded and ready.
+  // FIXME remove this
+  channel.createSticky(&#39;onPluginsReady&#39;);
+  // Event to indicate that Cordova is ready
+  channel.createSticky(&#39;onDeviceReady&#39;);
+  // Event to indicate a resume lifecycle event
+  channel.create(&#39;onResume&#39;);
+  // Event to indicate a pause lifecycle event
+  channel.create(&#39;onPause&#39;);
+  // Channels that must fire before &quot;deviceready&quot; is fired.
+  // 让deviceready在onCordovaReady和onDOMContentLoaded都触发后立即触发
+  channel.waitForInitialization(&#39;onCordovaReady&#39;);
+  channel.waitForInitialization(&#39;onDOMContentLoaded&#39;);
+
+  module.exports = channel;
+})
+</code></pre>
+<h3 id="阶段四：运行’cordova-init’-module"><a href="#阶段四：运行’cordova-init’-module" class="headerlink" title="阶段四：运行’cordova/init’ module"></a>阶段四：运行’cordova/init’ module</h3><p>‘cordova/init’ module内部主要做了四件比较重要的事情：</p>
+<ol>
+<li>使用自定义的对象替换掉了原生的window.navigator</li>
+<li>在document上注册pause、resume、activated、deviceready等自定义事件，使得后续可以使用document.addEventListener来监听这些事件</li>
+<li>运行 ‘cordova/platform’ module导出的bootstrap方法，该方法在document上注册了 backbutton、menubutton、searchbutton、volumeup、volumedown等自定义channel，并且调用原生方法，将NativeToJs的mode设置为EvalBridgeMode</li>
+<li>设置好一系列自定义channel的触发时机和回调函数，其中最后触发的是deviceready。</li>
+</ol>
+<pre><code class="javascript">  define(&quot;cordova/init&quot;, function (require, exports, module) {
+    var channel = require(&#39;cordova/channel&#39;);
+    var cordova = require(&#39;cordova&#39;);
+    var modulemapper = require(&#39;cordova/modulemapper&#39;);
+    var platform = require(&#39;cordova/platform&#39;);
+    var pluginloader = require(&#39;cordova/pluginloader&#39;);
+    var utils = require(&#39;cordova/utils&#39;);
+
+    // 后续会用channel.join方法在这两个事件触发后添加回调方法，进行一些初始化
+    var platformInitChannelsArray = [channel.onNativeReady, channel.onPluginsReady];
+
+    function logUnfiredChannels(arr) {
+      for (var i = 0; i &lt; arr.length; ++i) {
+        if (arr[i].state !== 2) {
+          console.log(&#39;Channel not fired: &#39; + arr[i].type);
+        }
+      }
+    }
+
+    // 5s后如果onDeviceReady还没有触发，则打印相关提示
+    window.setTimeout(function () {
+      if (channel.onDeviceReady.state !== 2) {
+        console.log(&#39;deviceready has not fired after 5 seconds.&#39;);
+        logUnfiredChannels(platformInitChannelsArray);
+        logUnfiredChannels(channel.deviceReadyChannelsArray);
+      }
+    }, 5000);
+
+    // Replace navigator before any modules are required(), to ensure it happens as soon as possible.
+    // We replace it so that properties that can&#39;t be clobbered can instead be overridden.
+    // 不清楚替换原生的navigator有什么好处
+    function replaceNavigator(origNavigator) {
+      var CordovaNavigator = function () { };
+      CordovaNavigator.prototype = origNavigator;
+      var newNavigator = new CordovaNavigator();
+      // This work-around really only applies to new APIs that are newer than Function.bind.
+      // Without it, APIs such as getGamepads() break.
+      if (CordovaNavigator.bind) {
+        for (var key in origNavigator) {
+          if (typeof origNavigator[key] === &#39;function&#39;) {
+            newNavigator[key] = origNavigator[key].bind(origNavigator);
+          } else {
+            (function (k) {
+              utils.defineGetterSetter(newNavigator, key, function () {
+                return origNavigator[k];
+              });
+            })(key);
+          }
+        }
+      }
+      return newNavigator;
+    }
+
+    // NOTE: 步骤1：替换掉原生的navigator对象
+    if (window.navigator) {
+      window.navigator = replaceNavigator(window.navigator);
+    }
+
+    if (!window.console) {
+      window.console = {
+        log: function () { }
+      };
+    }
+    if (!window.console.warn) {
+      window.console.warn = function (msg) {
+        this.log(&#39;warn: &#39; + msg);
+      };
+    }
+
+    // NOTE: 步骤二：在document上注册pause、resume、activated、deviceready等自定义事件
+    // Register pause, resume and deviceready channels as events on document.
+    // 在document上注册pause、resume、activated、deviceready事件，
+    // pause、resume、activated事件后续在Activity进入相应状态时，会通过CoreAndroid内置插件，由原生代码触发
+    // 这些事件到时候由native触发
+    channel.onPause = cordova.addDocumentEventHandler(&#39;pause&#39;);
+    channel.onResume = cordova.addDocumentEventHandler(&#39;resume&#39;);
+    channel.onActivated = cordova.addDocumentEventHandler(&#39;activated&#39;);
+    // 这里重新注册了一个deviceready channel替换掉了之前注册的onDeviceReady（不知道之前的注册有什么意义），之后可以使用document.addEventListener(&#39;deviceready&#39;, handler);
+    channel.onDeviceReady = cordova.addStickyDocumentEventHandler(&#39;deviceready&#39;);
+
+    // Listen for DOMContentLoaded and notify our channel subscribers.
+    // 在DOMContentLoaded的时候触发&#39;DOMContentLoaded&#39; channel
+    if (document.readyState === &#39;complete&#39; || document.readyState === &#39;interactive&#39;) {
+      channel.onDOMContentLoaded.fire();
+    } else {
+      document.addEventListener(&#39;DOMContentLoaded&#39;, function () {
+        channel.onDOMContentLoaded.fire();
+      }, false);
+    }
+
+    // _nativeReady is global variable that the native side can set
+    // to signify that the native code is ready. It is a global since
+    // it may be called before any cordova JS is ready.
+    // cordova android中并没有设置window._nativeReady
+    if (window._nativeReady) {
+      channel.onNativeReady.fire();
+    }
+
+    // 将cordova模块导出对象映射到cordova对象上
+    modulemapper.clobbers(&#39;cordova&#39;, &#39;cordova&#39;);
+    // 将&#39;cordova/exec&#39; module的exports对象 映射到cordova.exec属性上
+    modulemapper.clobbers(&#39;cordova/exec&#39;, &#39;cordova.exec&#39;);
+    modulemapper.clobbers(&#39;cordova/exec&#39;, &#39;Cordova.exec&#39;);
+
+    // Call the platform-specific initialization.
+    // NOTE: 步骤三：运行相应平台的初始化代码，TODO: 其内部完成了什么任务
+    platform.bootstrap &amp;&amp; platform.bootstrap();
+
+    // NOTE: 步骤四：设置好一系列自定义channel的触发时机和回调函数
+    // Wrap in a setTimeout to support the use-case of having plugin JS appended to cordova.js.
+    // The delay allows the attached modules to be defined before the plugin loader looks for them.
+    setTimeout(function () {
+      // 在下一个event loop动态加载cordova_plugins.js文件和plugins文件夹下的js插件文件
+      // 加载完后触发一个onPluginsReady 事件
+      pluginloader.load(function () {
+        console.log(&#39;all plugins loaded&#39;);
+        channel.onPluginsReady.fire();
+      });
+    }, 0);
+
+    /**
+     * Create all cordova objects once native side is ready.
+     * 在onNativeReady, onPluginsReady触发之后，回调一个函数
+     */
+    channel.join(function () {
+      // 运行模块映射代码
+      modulemapper.mapModules(window);
+
+      // 并没有这个方法
+      platform.initialize &amp;&amp; platform.initialize();
+
+      // Fire event to notify that all objects are created
+      // 触发CordovaReady事件
+      channel.onCordovaReady.fire();
+
+      // Fire onDeviceReady event once page has fully loaded, all
+      // constructors have run and cordova info has been received from native
+      // side.
+      // 在deviceReadyChannelsArray数组内的channel都触发了之后，触发deviceready 事件
+      // 此时deviceReadyChannelsArray内包含 onCordovaReady、onDOMContentLoaded 事件
+      channel.join(function () {
+        console.log(&#39;deviceready is going to fire&#39;);
+        // 触发deviceready事件
+        require(&#39;cordova&#39;).fireDocumentEvent(&#39;deviceready&#39;);
+      }, channel.deviceReadyChannelsArray);
+
+    }, platformInitChannelsArray);
+
+    console.log(&#39;init cordova/init end&#39;);
+
+  });
+</code></pre>
+<p>platform.bootstrap方法是由’cordova/platform’ module导出的方法。bootstrap主要实现了四个比较重要的步骤：</p>
+<ol>
+<li>调用androidExec.init方法。在方法内部使用prompt方式调用原生代码，设置NativeToJs mode为EvalBridgeMode，并且获取bridgeSecret的初始值，然后触发onNativeReady事件</li>
+<li>将 ‘cordova/plugin/android/app’ module内export出来的对象添加到 window.navigator.app 上。’cordova/plugin/android/app’ module是对CorAndroid内置插件的封装，其导出的对象包含了一系列调用该插件的接口方法</li>
+<li>在document上注册backbutton、menubutton、searchbutton、volumeup、volumedown等自定义channel，这些事件会在相应动作发生时，通过CoreAndroid插件来通知js，进而触发这些事件</li>
+<li><p>调用CoreAndroid插件的messageChannel action，注册onMessageFromNative方法，这个方法会被Native端keep住作为Native向Js发送消息的通道。</p>
+<pre><code class="javascript">define(&quot;cordova/platform&quot;, function (require, exports, module) {
+
+ console.log(&#39;init cordova/platform start&#39;);
+
+ // The last resume event that was received that had the result of a plugin call.
+ var lastResumeEvent = null;
+
+ module.exports = {
+   id: &#39;android&#39;,
+   bootstrap: function () {
+     var channel = require(&#39;cordova/channel&#39;),
+       cordova = require(&#39;cordova&#39;),
+       exec = require(&#39;cordova/exec&#39;),
+       modulemapper = require(&#39;cordova/modulemapper&#39;);
+
+     // Get the shared secret needed to use the bridge.
+     // NOTE:  步骤1：调用androidExec.init方法，使用prompt方式调用原生代码，设置NativeToJs mode为EvalBridgeMode
+     // 并且获取bridgeSecret的初始值，然后触发onNativeReady事件
+     exec.init();
+
+     // Extract this as a proper plugin.
+     // NOTE: 步骤2：将 &#39;cordova/plugin/android/app&#39; module内export出来的对象添加到 window.navigator.app 上
+     // &#39;cordova/plugin/android/app&#39; module是对CorAndroid内置插件的封装，其导出的对象包含了一系列调用该插件的接口方法
+     modulemapper.clobbers(&#39;cordova/plugin/android/app&#39;, &#39;navigator.app&#39;);
+
+     var APP_PLUGIN_NAME = Number(cordova.platformVersion.split(&#39;.&#39;)[0]) &gt;= 4 ? &#39;CoreAndroid&#39; : &#39;App&#39;;
+
+     // Inject a listener for the backbutton on the document.
+     // NOTE: 步骤3：在document上注册backbutton、menubutton、searchbutton、volumeup、volumedown等自定义channel，这些事件会在相应动作发生时，通过CoreAndroid
+     // 插件来通知js，进而触发这些事件
+     // 注册backbutton事件，使得后续可以使用document.addEventListener(&#39;backbutton&#39;, ...)
+     var backButtonChannel = cordova.addDocumentEventHandler(&#39;backbutton&#39;);
+     backButtonChannel.onHasSubscribersChange = function () {
+       // If we just attached the first handler or detached the last handler,
+       // let native know we need to override the back button.
+       // 当注册第一个backbutton监听函数时，调用插件的overrideBackbutton，传入true，表示native端遇到用户点击backbutton时，
+       // 阻止webview的默认行为（回退浏览器历史），当注销掉所有的backbutton监听时，传入 false，表示native恢复backbutton的默认行为
+       // 执行内置插件 CoreAndroid 的overrideBackbutton action动作
+       exec(null, null, APP_PLUGIN_NAME, &quot;overrideBackbutton&quot;, [this.numHandlers == 1]);
+     };
+
+     // Add hardware MENU and SEARCH button handlers
+     // NOTE: 在document上添加menubutton和searchbutton的自定义channel
+     cordova.addDocumentEventHandler(&#39;menubutton&#39;);
+     cordova.addDocumentEventHandler(&#39;searchbutton&#39;);
+
+     // NOTE: 与backbutton的逻辑一样，提供volumeupbutton和volumedownbutton两种channel
+     // 当js这边注册了这两种channel监听时，则会阻止原生的默认行为
+     // js这边注销了所有channel监听后，则恢复原生的默认行为
+     function bindButtonChannel(buttonName) {
+       // generic button bind used for volumeup/volumedown buttons
+       var volumeButtonChannel = cordova.addDocumentEventHandler(buttonName + &#39;button&#39;);
+       volumeButtonChannel.onHasSubscribersChange = function () {
+         exec(null, null, APP_PLUGIN_NAME, &quot;overrideButton&quot;, [buttonName, this.numHandlers == 1]);
+       };
+     }
+     // Inject a listener for the volume buttons on the document.
+     bindButtonChannel(&#39;volumeup&#39;);
+     bindButtonChannel(&#39;volumedown&#39;);
+
+     // The resume event is not &quot;sticky&quot;, but it is possible that the event
+     // will contain the result of a plugin call. We need to ensure that the
+     // plugin result is delivered even after the event is fired (CB-10498)
+     // 再一次替换document.addEventListener，之前已经替换过一次
+     var cordovaAddEventListener = document.addEventListener;
+
+     document.addEventListener = function (evt, handler, capture) {
+       cordovaAddEventListener(evt, handler, capture);
+
+       // 如果监听的事件是resume，并且有lastResumeEvent则立即运行，意义何在？？
+       if (evt === &#39;resume&#39; &amp;&amp; lastResumeEvent) {
+         handler(lastResumeEvent);
+       }
+     };
+
+     // Let native code know we are all done on the JS side.
+     // Native code will then un-hide the WebView.
+     channel.onCordovaReady.subscribe(function () {
+       // NOTE: 步骤四 调用CoreAndroid插件的messageChannel action，注册onMessageFromNative回调函数
+       // native端会keep住这个回调函数，作为native到js的一条发布消息的通道。
+       exec(onMessageFromNative, null, APP_PLUGIN_NAME, &#39;messageChannel&#39;, []);
+       exec(null, null, APP_PLUGIN_NAME, &quot;show&quot;, []);
+     });
+   }
+ };
+
+ // 该函数是Native到js的发布消息的通道，由CoreAndroid插件调用
+ function onMessageFromNative(msg) {
+   var cordova = require(&#39;cordova&#39;);
+   var action = msg.action;
+
+   switch (action) {
+     // Button events
+     case &#39;backbutton&#39;:
+     case &#39;menubutton&#39;:
+     case &#39;searchbutton&#39;:
+     // App life cycle events
+     case &#39;pause&#39;:
+     // Volume events
+     case &#39;volumedownbutton&#39;:
+     case &#39;volumeupbutton&#39;:
+       cordova.fireDocumentEvent(action);
+       break;
+     case &#39;resume&#39;:
+       if (arguments.length &gt; 1 &amp;&amp; msg.pendingResult) {
+         if (arguments.length === 2) {
+           msg.pendingResult.result = arguments[1];
+         } else {
+           // The plugin returned a multipart message
+           var res = [];
+           for (var i = 1; i &lt; arguments.length; i++) {
+             res.push(arguments[i]);
+           }
+           msg.pendingResult.result = res;
+         }
+
+         // Save the plugin result so that it can be delivered to the js
+         // even if they miss the initial firing of the event
+         lastResumeEvent = msg;
+       }
+       cordova.fireDocumentEvent(action, msg);
+       break;
+     default:
+       throw new Error(&#39;Unknown event action &#39; + action);
+   }
+ }
+
+ console.log(&#39;init cordova/platform end&#39;);
+});
+</code></pre>
+</li>
+</ol>
+<p>至此Cordova.js的初始化工作就完毕了，总结一下Cordova.js的初始化工作主要做了以下几件最重要的事情：</p>
+<ol>
+<li>添加了window.cordova对象，该对象作为cordova对外提供接口方法的媒介，特别是cordova.exec方法，成为调用插件的统一入口</li>
+<li>修改了docuemnt和window的addEventListener和removeEventListener方法，进而实现了’deviceReady’等自定义事件</li>
+<li>动态加载了cordova_plugin.js文件，以及根据文件内的记录动态加载安装的cordova插件的js文件，并且在做好所有初始化工作后，触发’deviceReady’事件</li>
+</ol>
+<h2 id="Cordova-js中自定义channel的注册表和触发表"><a href="#Cordova-js中自定义channel的注册表和触发表" class="headerlink" title="Cordova.js中自定义channel的注册表和触发表"></a>Cordova.js中自定义channel的注册表和触发表</h2><table>
+<thead>
+<tr>
+<th>channel注册表（channel在表格内的顺序代表了注册顺序）</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>channel名称</td>
+<td>是否sticky</td>
+<td>注册位置</td>
+<td>注册时函数调用栈</td>
+<td>是否注册在document上</td>
+<td>备注</td>
+</tr>
+<tr>
+<td>onDOMContentLoaded</td>
+<td>true</td>
+<td>‘cordova/channel’ module内</td>
+<td>cordova立即执行函数 -&gt; require(‘cordova’) -&gt; require(‘cordova/channel’)</td>
+<td>false</td>
+<td>当document的DOMContentLoaded事件触发时，会触发’onDOMContentLoaded’</td>
+</tr>
+<tr>
+<td>onNativeReady</td>
+<td>true</td>
+<td>‘cordova/channel’ module内</td>
+<td>cordova立即执行函数 -&gt; require(‘cordova’) -&gt; require(‘cordova/channel’)</td>
+<td>false</td>
+<td>在androidExec.init方法内触发，触发前设置了NativeToJs的mode</td>
+</tr>
+<tr>
+<td>onCordovaReady</td>
+<td>true</td>
+<td>‘cordova/channel’ module内</td>
+<td>cordova立即执行函数 -&gt; require(‘cordova’) -&gt; require(‘cordova/channel’)</td>
+<td>false</td>
+<td>在’onNativeReady’和’onPluginsReady’触发之后立即触发</td>
+</tr>
+<tr>
+<td>onPluginsReady</td>
+<td>true</td>
+<td>‘cordova/channel’ module内</td>
+<td>cordova立即执行函数 -&gt; require(‘cordova’) -&gt; require(‘cordova/channel’)</td>
+<td>false</td>
+<td>在动态加载cordova_plugin.js和plugins文件夹下面的js文件都动态加载完后触发</td>
+</tr>
+<tr>
+<td>onDeviceReady</td>
+<td>true</td>
+<td>‘cordova/channel’ module内</td>
+<td>cordova立即执行函数 -&gt; require(‘cordova’) -&gt; require(‘cordova/channel’)</td>
+<td>false</td>
+<td>后续会在’cordova/init’ module内用 cordova.addDocumentEventHandler重新生成channel类实例覆盖，channel.onPause与channel.pause指向同一个Channel类实例；onDeviceReady会在onCordovaReady和onDOMContentLoaded都触发后，立即触发</td>
+</tr>
+<tr>
+<td>onResume</td>
+<td>false</td>
+<td>‘cordova/channel’ module内</td>
+<td>cordova立即执行函数 -&gt; require(‘cordova’) -&gt; require(‘cordova/channel’)</td>
+<td>false</td>
+<td>后续会在’cordova/init’ module内用 cordova.addDocumentEventHandler重新生成channel类实例覆盖，channel.onPause与channel.pause指向同一个Channel类实例</td>
+</tr>
+<tr>
+<td>onPause</td>
+<td>false</td>
+<td>‘cordova/channel’ module内</td>
+<td>cordova立即执行函数 -&gt; require(‘cordova’) -&gt; require(‘cordova/channel’)</td>
+<td>false</td>
+<td>后续会在’cordova/init’ module内用 cordova.addDocumentEventHandler重新生成channel类实例覆盖，channel.onPause与channel.pause指向同一个Channel类实例</td>
+</tr>
+<tr>
+<td>pause</td>
+<td>false</td>
+<td>‘cordova/init’ module内</td>
+<td>cordova立即执行函数 -&gt; require(‘cordova/init’)</td>
+<td>true</td>
+<td>当Activity进入后台时，由CoreAndroid在js中触发该事件</td>
+</tr>
+<tr>
+<td>resume</td>
+<td>false</td>
+<td>‘cordova/init’ module内</td>
+<td>cordova立即执行函数 -&gt; require(‘cordova/init’)</td>
+<td>true</td>
+<td>当Activity从后台返回到前台的时候，由CoreAndroid在js中触发该事件</td>
+</tr>
+<tr>
+<td>activated</td>
+<td>false</td>
+<td>‘cordova/init’ module内</td>
+<td>cordova立即执行函数 -&gt; require(‘cordova/init’)</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td>deviceready</td>
+<td>true</td>
+<td>‘cordova/init’ module内</td>
+<td>cordova立即执行函数 -&gt; require(‘cordova/init’)</td>
+<td>true</td>
+<td>当’onCordovaReady’ 和 ‘onDOMContentLoaded’ 触发后，’deviceready’会立即触发</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>channel触发过程</p>
+<pre><code>调用androidExec.init方法设置NativeToJs的mode -&gt; 触发&#39;onNativeReady&#39; -&gt; 步骤1
+动态加载cordova_plugins.js和plugins文件夹下文件完成 -&gt; 触发&#39;onPluginsReady&#39; -&gt; 步骤2
+等待原生DOMContentLoaded事件触发 -&gt; 触发&#39;onDOMContentLoaded&#39; -&gt; 步骤3
+
+步骤1 -&gt; 
+         -&gt; 触发onCordovaReady -&gt; 步骤4
+步骤2 -&gt; 
+
+步骤4 -&gt;
+          -&gt; 触发&#39;deviceready&#39;
+步骤3 -&gt; 
+</code></pre>
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2019/06/23/Cordova源码剖析一（Cordova-android启动流程）/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/random/material-13.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/touxiang.jpg" alt="aasailan's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        joeaasailan@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:joeaasailan@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2019/06/">六月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/cordova系列/">cordova系列<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/css系列/">css系列<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/docker/">docker<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hexo/">hexo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/js/">js<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/翻译系列/">翻译系列<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                标签云
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/timeline" title="时间轴">
+                
+                时间轴
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">11</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/aasailan" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2018&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>aasailan的blog
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?wgjW/HuQG9JDgvPDPoRAng==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?d+XW6aNuIPgOn1iA7NnB4g==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+    
+        <script>lsloader.load("sm_js","/js/smoothscroll.js?tNQK2Tw2SUL8a1Scn/Mgew==", true)</script>
+    
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+    
+        <script>lsloader.load("hanabi","/js/hanabi-browser-bundle.js?5+2z7ZZmFuZK5IcimlZbxw==", true)</script>
+    
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+        
+        
+        HanabiBrowser.start('pre code',true);
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+            <script type="text/javascript" color="112,255,59" opacity='1' zIndex="0" count="99" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+        </body>
+    
+</html>
