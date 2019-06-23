@@ -15,7 +15,7 @@ comments: false
 3. js调用native的过程
 4. native调用js的过程
 
-这篇文章主要包括Cordova Android native的启动流程和包括一些Cordova Android中重要类的说明两大部分。
+这篇文章主要包括Cordova Android native的启动流程和一些Cordova Android中重要类的说明两大部分。
 
 ## cordova android native的启动流程
 首先运行CordovaActivity的onCreate方法，其中调用loadConfig()方法，用来从config.xml文件中加载cordova插件

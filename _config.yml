@@ -39,7 +39,7 @@ post_asset_folder: false
 relative_link: false
 future: true
 highlight:
-  enable: true
+  enable: false
   line_number: true
   auto_detect: false
   tab_replace:
@@ -75,6 +75,10 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 # theme: landscape
 theme: material
+
+prettify:
+  enable: true
+  theme: "github-v2"
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
